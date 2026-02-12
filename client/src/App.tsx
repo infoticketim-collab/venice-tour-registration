@@ -4,15 +4,27 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+import TourInfo from "./pages/TourInfo";
+import RegisterStep1 from "./pages/RegisterStep1";
+import RegisterStep2 from "./pages/RegisterStep2";
+import Confirmation from "./pages/Confirmation";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
+      <Route path={"/"} component={TourInfo} />
+      <Route path="/admin" component={AdminDashboard} />
+      <Route path="/register/:tourId">
+        {(params) => <RegisterStep1 />}
+      </Route>
+      <Route path="/register/:tourId/step2">
+        {(params) => <RegisterStep2 />}
+      </Route>
+      <Route path="/register/confirmation/:orderNumber">
+        {(params) => <Confirmation />}
+      </Route>
       <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
   );

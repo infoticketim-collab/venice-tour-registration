@@ -1,0 +1,76 @@
+# Venice Tour Registration System - TODO
+
+## Database Schema
+- [x] Create tours table (id, title, description, date, time, price, capacity, available_spots)
+- [x] Create registrations table (id, tour_id, user_id, status, order_number, created_at)
+- [x] Create participants table (id, registration_id, first_name_he, last_name_he, first_name_en, last_name_en, phone, email, birth_date, passport_confirmed)
+- [x] Create admin_emails table (id, email, created_at)
+- [x] Add proper relationships and indexes
+
+## Backend API (tRPC Procedures)
+- [x] Public procedure: Get all available tours with remaining spots
+- [x] Public procedure: Get tour details by ID
+- [x] Public procedure: Create new registration with participant details
+- [x] Protected procedure: Get all registrations (admin only)
+- [x] Protected procedure: Approve registration (admin only)
+- [x] Protected procedure: Reject registration (admin only)
+- [x] Protected procedure: Cancel approved registration (admin only)
+- [x] Protected procedure: Get tour inventory statistics
+- [x] Protected procedure: Create/update/delete tours (admin only)
+- [x] Protected procedure: Manage admin emails
+
+## User Registration Flow
+- [x] Screen 1: Tour information display with flight, luggage, hotel, itinerary details
+- [x] Screen 1: "I want to register" button leading to Screen 2
+- [x] Screen 2: Welcome message and personal info form (first name, last name, phone, email)
+- [x] Screen 2: Radio button selection for tour dates (May 4-6, May 25-27, No preference)
+- [x] Screen 2: "Continue to details" button leading to Screen 3
+- [x] Screen 3: Passport details form (English names, birth date)
+- [x] Screen 3: Checkbox confirmation for valid passport (6 months validity)
+- [x] Screen 3: "Complete registration" button
+- [x] Confirmation screen: Display order number (starting from 1000)
+- [x] Confirmation screen: Message that registration will be approved soon
+- [x] Back navigation support between all screens
+
+## Admin Dashboard
+- [x] Admin authentication and role-based access control
+- [x] Dashboard layout with sidebar navigation
+- [x] Tour management page: Create/edit/delete tours
+- [x] Inventory tracking: Display available spots per tour date
+- [x] Registration list: Three columns (Pending, Approved, Rejected)
+- [x] Pending column: Green approve button and red reject button per registration
+- [x] Approved column: Green "Approved" status badge and red "Cancel registration" button
+- [x] Rejected column: Red "Rejected" status badge and green "Approve registration" button
+- [x] Confirmation dialog for cancel registration action
+- [x] Real-time counter update when approving/rejecting registrations
+- [x] Admin email management interface
+
+## Email Notifications
+- [x] Send email to admin(s) when new registration is submitted
+- [x] Include participant details in new registration email
+- [x] Daily automated email with registration status summary
+- [x] Daily email includes: remaining spots, pending registrations count
+- [x] Email template design with branding
+
+## Design & Styling
+- [x] Elegant and minimalistic design with light blue headers
+- [x] Very light gray background (no pink)
+- [x] Header background with incentive tourism images
+- [x] Responsive design for mobile and desktop
+- [x] Consistent typography and spacing
+- [x] Smooth transitions and animations
+- [x] Professional color palette
+
+## Testing
+- [x] Write vitest tests for registration creation
+- [x] Write vitest tests for approval workflow
+- [x] Write vitest tests for inventory tracking
+- [x] Write vitest tests for admin procedures
+- [x] Test email notification triggers
+- [x] Test back navigation in user flow
+- [x] Test role-based access control
+
+## Deployment
+- [x] Final testing of all features
+- [x] Create checkpoint for deployment
+- [x] Verify all environment variables
