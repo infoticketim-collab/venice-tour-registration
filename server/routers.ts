@@ -4,7 +4,9 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+import { eq } from "drizzle-orm";
 import * as db from "./db";
+import { registrations } from "../drizzle/schema";
 import { notifyAdminNewRegistration, notifyRegistrationApproved, notifyRegistrationRejected, sendDailySummaryEmail } from "./emailNotifications";
 
 // Admin-only procedure
@@ -116,6 +118,41 @@ export const appRouter = router({
       );
       return registrationsWithParticipants;
     }),
+
+    // Assign date and approve registration (for no_preference)
+    assignDateAndApprove: adminProcedure
+      .input(z.object({ 
+        registrationId: z.number(),
+        assignedDate: z.enum(["may_4_6", "may_25_27"])
+      }))
+      .mutation(async ({ input }) => {
+        const registration = await db.getRegistrationById(input.registrationId);
+        if (!registration) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Registration not found' });
+        }
+        
+        // Update assigned date
+        const dbInstance = await db.getDb();
+        if (dbInstance) {
+          await dbInstance.update(registrations).set({ assignedDate: input.assignedDate }).where(eq(registrations.id, input.registrationId));
+        }
+        
+        // Decrease available spots
+        if (registration.status === "pending") {
+          await db.updateTourAvailableSpots(registration.tourId, -1);
+        } else if (registration.status === "rejected") {
+          await db.updateTourAvailableSpots(registration.tourId, -1);
+        }
+        
+        const updated = await db.updateRegistrationStatus(input.registrationId, "approved");
+        
+        // Send approval notification
+        notifyRegistrationApproved(input.registrationId).catch(err => 
+          console.error("Failed to send approval notification:", err)
+        );
+        
+        return { success: true, registration: updated };
+      }),
 
     // Approve registration
     approveRegistration: adminProcedure

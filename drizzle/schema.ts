@@ -51,6 +51,7 @@ export const registrations = mysqlTable("registrations", {
   orderNumber: int("orderNumber").notNull().unique(),
   status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("pending").notNull(),
   datePreference: mysqlEnum("datePreference", ["may_4_6", "may_25_27", "no_preference"]),
+  assignedDate: mysqlEnum("assignedDate", ["may_4_6", "may_25_27"]),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

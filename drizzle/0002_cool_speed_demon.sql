@@ -1,0 +1,1 @@
+ALTER TABLE `registrations` ADD `assignedDate` enum('may_4_6','may_25_27');

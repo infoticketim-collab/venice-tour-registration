@@ -74,3 +74,11 @@
 - [x] Final testing of all features
 - [x] Create checkpoint for deployment
 - [x] Verify all environment variables
+
+## Admin Dashboard Improvements
+- [x] Remove test tour data from database
+- [x] Separate admin dashboard by tour dates (May 4-6 and May 25-27)
+- [x] Each date gets its own section with Pending/Approved/Rejected columns
+- [x] Add date assignment dropdown for "no preference" registrations
+- [x] Admin must assign date before approving "no preference" registrations
+- [x] Update backend to support date assignment during approval
