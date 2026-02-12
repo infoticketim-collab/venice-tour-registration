@@ -273,7 +273,7 @@ export default function AdminDashboard() {
           <Calendar className="w-6 h-6 text-primary" />
           <h2 className="text-2xl font-bold">{title}</h2>
           <Badge variant="outline" className="text-sm">
-            {approved.length} מאושרים / 32 מקומות
+            32 איש בקבוצה / {approved.length} רשומים / {32 - approved.length} מקומות פנויים
           </Badge>
         </div>
 

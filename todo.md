@@ -82,3 +82,9 @@
 - [x] Add date assignment dropdown for "no preference" registrations
 - [x] Admin must assign date before approving "no preference" registrations
 - [x] Update backend to support date assignment during approval
+
+## RTL and Status Format Improvements
+- [x] Add RTL (right-to-left) support to all pages
+- [x] Set HTML dir="rtl" for Hebrew content
+- [x] Update admin dashboard status format to: "32 איש בקבוצה / X רשומים / Y מקומות פנויים"
+- [x] Ensure all UI components work correctly in RTL mode
