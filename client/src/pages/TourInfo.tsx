@@ -5,6 +5,14 @@ import { Plane, Luggage, Hotel, MapPin, Calendar, Clock } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { Skeleton } from "@/components/ui/skeleton";
 
+// Helper function to convert markdown bold to HTML
+function renderMarkdown(text: string) {
+  // Convert **text** to <strong>text</strong>
+  const withBold = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  // Convert line breaks to <br/>
+  return withBold.replace(/\n/g, '<br/>');
+}
+
 export default function TourInfo() {
   const [, setLocation] = useLocation();
   const { data: tours, isLoading } = trpc.tours.getAll.useQuery();
@@ -61,9 +69,10 @@ export default function TourInfo() {
                 <CardTitle className="text-2xl">אודות הסיור</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-lg leading-relaxed text-muted-foreground whitespace-pre-wrap">
-                  {tour.description}
-                </p>
+                <div 
+                  className="text-lg leading-relaxed text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(tour.description) }}
+                />
               </CardContent>
             </Card>
           )}
@@ -78,7 +87,10 @@ export default function TourInfo() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground whitespace-pre-wrap">{tour.flightDetails}</p>
+                <div 
+                  className="text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(tour.flightDetails) }}
+                />
               </CardContent>
             </Card>
           )}
@@ -93,7 +105,10 @@ export default function TourInfo() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground whitespace-pre-wrap">{tour.luggageDetails}</p>
+                <div 
+                  className="text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(tour.luggageDetails) }}
+                />
               </CardContent>
             </Card>
           )}
@@ -108,7 +123,10 @@ export default function TourInfo() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground whitespace-pre-wrap">{tour.hotelDetails}</p>
+                <div 
+                  className="text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(tour.hotelDetails) }}
+                />
               </CardContent>
             </Card>
           )}
@@ -123,7 +141,10 @@ export default function TourInfo() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground whitespace-pre-wrap">{tour.itinerary}</p>
+                <div 
+                  className="text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(tour.itinerary) }}
+                />
               </CardContent>
             </Card>
           )}

@@ -154,3 +154,8 @@
 ## Content Formatting Improvements
 - [x] Add bold formatting to flight cycle headers (מחזור ראשון, מחזור שני)
 - [x] Add bold formatting to daily itinerary headers (יום 1, יום 2, יום 3)
+
+## Markdown Rendering Fix
+- [x] Update TourInfo component to render markdown content as HTML
+- [x] Convert markdown bold (**text**) to actual bold HTML tags
+- [x] Ensure proper line breaks and formatting
