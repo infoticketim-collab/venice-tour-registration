@@ -99,3 +99,10 @@
 ## Table Column Alignment Fix
 - [x] Fix table column widths to match header widths
 - [x] Ensure proper alignment between headers and data cells
+
+## RTL Table Alignment and Status Column Fix
+- [x] Add text-right alignment to all table headers and cells
+- [x] Remove status column from approved registrations table
+- [x] Remove status column from rejected registrations table
+- [x] Keep status column only in pending registrations table
+- [x] Make action buttons smaller and more elegant

@@ -177,7 +177,7 @@ export default function AdminDashboard() {
   const may25_27Registrations = registrations?.filter(r => getEffectiveDate(r) === "may_25_27") || [];
   const noPreferenceRegistrations = registrations?.filter(r => getEffectiveDate(r) === null) || [];
 
-  const renderRegistrationRow = (reg: any, showDateSelector: boolean = false) => {
+  const renderRegistrationRow = (reg: any, showDateSelector: boolean = false, showStatus: boolean = true) => {
     const isPending = reg.status === "pending";
     const isApproved = reg.status === "approved";
     const isRejected = reg.status === "rejected";
@@ -185,31 +185,31 @@ export default function AdminDashboard() {
 
     return (
       <Collapsible key={reg.id} open={isExpanded} onOpenChange={() => toggleRow(reg.id)}>
-        <TableRow className={`${isApproved ? 'bg-green-50/50' : isRejected ? 'bg-red-50/50' : ''}`}>
-          <TableCell className="w-10 p-2">
+        <TableRow className={`${isApproved ? 'bg-green-50/30' : isRejected ? 'bg-red-50/30' : ''}`}>
+          <TableCell className="w-8 p-2 text-right">
             <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm" className="p-0 h-6 w-6">
-                {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+              <Button variant="ghost" size="sm" className="p-0 h-5 w-5">
+                {isExpanded ? <ChevronDown className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
               </Button>
             </CollapsibleTrigger>
           </TableCell>
-          <TableCell className="w-24 font-medium p-2">#{reg.orderNumber}</TableCell>
-          <TableCell className="p-2">
+          <TableCell className="w-20 font-medium p-2 text-right text-sm">#{reg.orderNumber}</TableCell>
+          <TableCell className="p-2 text-right text-sm">
             {reg.participants[0]?.firstNameHe} {reg.participants[0]?.lastNameHe}
           </TableCell>
-          <TableCell className="w-24 p-2">
-            {isApproved && <Badge className="bg-green-600 text-xs">מאושר</Badge>}
-            {isRejected && <Badge variant="destructive" className="text-xs">נדחה</Badge>}
-            {isPending && showDateSelector && <Badge variant="outline" className="text-xs">אין העדפה</Badge>}
-            {isPending && !showDateSelector && <Badge variant="outline" className="text-xs bg-yellow-50">ממתין</Badge>}
-          </TableCell>
-          <TableCell className="w-32 p-2">
-            {isPending && showDateSelector && (
+          {showStatus && (
+            <TableCell className="w-24 p-2 text-right">
+              {isPending && !showDateSelector && <Badge variant="outline" className="text-xs bg-yellow-50">ממתין</Badge>}
+              {isPending && showDateSelector && <Badge variant="outline" className="text-xs">אין העדפה</Badge>}
+            </TableCell>
+          )}
+          {showDateSelector && (
+            <TableCell className="w-32 p-2 text-right">
               <Select
                 value={selectedDates[reg.id] || ""}
                 onValueChange={(value) => setSelectedDates({ ...selectedDates, [reg.id]: value as DateOption })}
               >
-                <SelectTrigger className="w-32 h-8 text-xs">
+                <SelectTrigger className="w-full h-7 text-xs">
                   <SelectValue placeholder="בחר תאריך" />
                 </SelectTrigger>
                 <SelectContent>
@@ -217,15 +217,15 @@ export default function AdminDashboard() {
                   <SelectItem value="may_25_27">25-27 במאי</SelectItem>
                 </SelectContent>
               </Select>
-            )}
-          </TableCell>
-          <TableCell className="w-40 text-left p-2">
-            <div className="flex gap-1">
+            </TableCell>
+          )}
+          <TableCell className="w-32 text-left p-2">
+            <div className="flex gap-1 justify-start">
               {isPending && (
                 <>
                   <Button
                     size="sm"
-                    className="h-7 px-2 bg-green-600 hover:bg-green-700 text-xs"
+                    className="h-6 px-2 bg-green-600 hover:bg-green-700 text-xs"
                     onClick={() => handleApprove(reg.id, reg.datePreference, reg.assignedDate)}
                     disabled={approveMutation.isPending || assignAndApproveMutation.isPending}
                   >
@@ -235,7 +235,7 @@ export default function AdminDashboard() {
                   <Button
                     size="sm"
                     variant="destructive"
-                    className="h-7 px-2 text-xs"
+                    className="h-6 px-2 text-xs"
                     onClick={() => rejectMutation.mutate({ registrationId: reg.id })}
                     disabled={rejectMutation.isPending}
                   >
@@ -248,8 +248,8 @@ export default function AdminDashboard() {
               {isApproved && (
                 <Button
                   size="sm"
-                  variant="destructive"
-                  className="h-7 px-2 text-xs"
+                  variant="outline"
+                  className="h-6 px-2 text-xs border-red-300 text-red-600 hover:bg-red-50"
                   onClick={() => handleCancelClick(reg.id)}
                   disabled={cancelMutation.isPending}
                 >
@@ -261,7 +261,7 @@ export default function AdminDashboard() {
               {isRejected && (
                 <Button
                   size="sm"
-                  className="h-7 px-2 bg-green-600 hover:bg-green-700 text-xs"
+                  className="h-6 px-2 bg-green-600 hover:bg-green-700 text-xs"
                   onClick={() => approveMutation.mutate({ registrationId: reg.id })}
                   disabled={approveMutation.isPending}
                 >
@@ -273,9 +273,9 @@ export default function AdminDashboard() {
           </TableCell>
         </TableRow>
         <CollapsibleContent asChild>
-          <TableRow className="bg-muted/30">
-            <TableCell colSpan={6} className="py-2">
-              <div className="text-sm space-y-1 pr-8">
+          <TableRow className="bg-muted/20">
+            <TableCell colSpan={showStatus ? (showDateSelector ? 6 : 5) : 4} className="py-2">
+              <div className="text-xs space-y-1 pr-6">
                 <div><span className="font-medium">מייל:</span> {reg.participants[0]?.email}</div>
                 <div><span className="font-medium">טלפון:</span> {reg.participants[0]?.phone}</div>
                 <div><span className="font-medium">תאריך לידה:</span> {new Date(reg.participants[0]?.birthDate).toLocaleDateString('he-IL')}</div>
@@ -306,29 +306,28 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Pending */}
           <Card>
-            <CardHeader className="bg-yellow-50 border-b py-3">
-              <CardTitle className="text-base flex items-center gap-2">
+            <CardHeader className="bg-yellow-50 border-b py-2">
+              <CardTitle className="text-sm flex items-center gap-2">
                 <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                 ממתינים ({pending.length})
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               {pending.length === 0 ? (
-                <p className="text-center text-muted-foreground py-6 text-sm">אין הרשמות ממתינות</p>
+                <p className="text-center text-muted-foreground py-6 text-xs">אין הרשמות ממתינות</p>
               ) : (
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-10"></TableHead>
-                      <TableHead className="w-24">#</TableHead>
-                      <TableHead>שם</TableHead>
-                      <TableHead className="w-24">סטטוס</TableHead>
-                      <TableHead className="w-32"></TableHead>
-                      <TableHead className="w-40 text-left">פעולות</TableHead>
+                    <TableRow className="text-xs">
+                      <TableHead className="w-8 text-right"></TableHead>
+                      <TableHead className="w-20 text-right">#</TableHead>
+                      <TableHead className="text-right">שם</TableHead>
+                      <TableHead className="w-24 text-right">סטטוס</TableHead>
+                      <TableHead className="w-32 text-left">פעולות</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {pending.map(reg => renderRegistrationRow(reg))}
+                    {pending.map(reg => renderRegistrationRow(reg, false, true))}
                   </TableBody>
                 </Table>
               )}
@@ -337,29 +336,27 @@ export default function AdminDashboard() {
 
           {/* Approved */}
           <Card>
-            <CardHeader className="bg-green-50 border-b py-3">
-              <CardTitle className="text-base flex items-center gap-2">
+            <CardHeader className="bg-green-50 border-b py-2">
+              <CardTitle className="text-sm flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 מאושרים ({approved.length})
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               {approved.length === 0 ? (
-                <p className="text-center text-muted-foreground py-6 text-sm">אין הרשמות מאושרות</p>
+                <p className="text-center text-muted-foreground py-6 text-xs">אין הרשמות מאושרות</p>
               ) : (
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-10"></TableHead>
-                      <TableHead className="w-24">#</TableHead>
-                      <TableHead>שם</TableHead>
-                      <TableHead className="w-24">סטטוס</TableHead>
-                      <TableHead className="w-32"></TableHead>
-                      <TableHead className="w-40 text-left">פעולות</TableHead>
+                    <TableRow className="text-xs">
+                      <TableHead className="w-8 text-right"></TableHead>
+                      <TableHead className="w-20 text-right">#</TableHead>
+                      <TableHead className="text-right">שם</TableHead>
+                      <TableHead className="w-32 text-left">פעולות</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {approved.map(reg => renderRegistrationRow(reg))}
+                    {approved.map(reg => renderRegistrationRow(reg, false, false))}
                   </TableBody>
                 </Table>
               )}
@@ -368,29 +365,27 @@ export default function AdminDashboard() {
 
           {/* Rejected */}
           <Card>
-            <CardHeader className="bg-red-50 border-b py-3">
-              <CardTitle className="text-base flex items-center gap-2">
+            <CardHeader className="bg-red-50 border-b py-2">
+              <CardTitle className="text-sm flex items-center gap-2">
                 <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                 נדחו ({rejected.length})
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               {rejected.length === 0 ? (
-                <p className="text-center text-muted-foreground py-6 text-sm">אין הרשמות נדחות</p>
+                <p className="text-center text-muted-foreground py-6 text-xs">אין הרשמות נדחות</p>
               ) : (
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-10"></TableHead>
-                      <TableHead className="w-24">#</TableHead>
-                      <TableHead>שם</TableHead>
-                      <TableHead className="w-24">סטטוס</TableHead>
-                      <TableHead className="w-32"></TableHead>
-                      <TableHead className="w-40 text-left">פעולות</TableHead>
+                    <TableRow className="text-xs">
+                      <TableHead className="w-8 text-right"></TableHead>
+                      <TableHead className="w-20 text-right">#</TableHead>
+                      <TableHead className="text-right">שם</TableHead>
+                      <TableHead className="w-32 text-left">פעולות</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {rejected.map(reg => renderRegistrationRow(reg))}
+                    {rejected.map(reg => renderRegistrationRow(reg, false, false))}
                   </TableBody>
                 </Table>
               )}
@@ -429,23 +424,23 @@ export default function AdminDashboard() {
                   </Badge>
                 </div>
                 <Card>
-                  <CardHeader className="bg-orange-50 border-b py-3">
-                    <CardTitle className="text-base">נרשמים שלא ציינו העדפת תאריך</CardTitle>
+                  <CardHeader className="bg-orange-50 border-b py-2">
+                    <CardTitle className="text-sm">נרשמים שלא ציינו העדפת תאריך</CardTitle>
                   </CardHeader>
                   <CardContent className="p-0">
                     <Table>
                       <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-10"></TableHead>
-                          <TableHead className="w-24">#</TableHead>
-                          <TableHead>שם</TableHead>
-                          <TableHead className="w-24">סטטוס</TableHead>
-                          <TableHead className="w-32">בחר תאריך</TableHead>
-                          <TableHead className="w-40 text-left">פעולות</TableHead>
+                        <TableRow className="text-xs">
+                          <TableHead className="w-8 text-right"></TableHead>
+                          <TableHead className="w-20 text-right">#</TableHead>
+                          <TableHead className="text-right">שם</TableHead>
+                          <TableHead className="w-24 text-right">סטטוס</TableHead>
+                          <TableHead className="w-32 text-right">בחר תאריך</TableHead>
+                          <TableHead className="w-32 text-left">פעולות</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {noPreferenceRegistrations.map(reg => renderRegistrationRow(reg, true))}
+                        {noPreferenceRegistrations.map(reg => renderRegistrationRow(reg, true, true))}
                       </TableBody>
                     </Table>
                   </CardContent>
