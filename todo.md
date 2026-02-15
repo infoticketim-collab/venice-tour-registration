@@ -95,3 +95,7 @@
 - [x] Email and phone in expandable details (click to expand)
 - [x] Small inline action buttons (approve/reject/cancel) in same row
 - [x] Significant vertical space savings
+
+## Table Column Alignment Fix
+- [x] Fix table column widths to match header widths
+- [x] Ensure proper alignment between headers and data cells

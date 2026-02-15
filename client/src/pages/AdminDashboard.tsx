@@ -186,24 +186,24 @@ export default function AdminDashboard() {
     return (
       <Collapsible key={reg.id} open={isExpanded} onOpenChange={() => toggleRow(reg.id)}>
         <TableRow className={`${isApproved ? 'bg-green-50/50' : isRejected ? 'bg-red-50/50' : ''}`}>
-          <TableCell className="w-10">
+          <TableCell className="w-10 p-2">
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm" className="p-0 h-6 w-6">
                 {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
               </Button>
             </CollapsibleTrigger>
           </TableCell>
-          <TableCell className="font-medium">#{reg.orderNumber}</TableCell>
-          <TableCell>
+          <TableCell className="w-24 font-medium p-2">#{reg.orderNumber}</TableCell>
+          <TableCell className="p-2">
             {reg.participants[0]?.firstNameHe} {reg.participants[0]?.lastNameHe}
           </TableCell>
-          <TableCell>
+          <TableCell className="w-24 p-2">
             {isApproved && <Badge className="bg-green-600 text-xs">מאושר</Badge>}
             {isRejected && <Badge variant="destructive" className="text-xs">נדחה</Badge>}
             {isPending && showDateSelector && <Badge variant="outline" className="text-xs">אין העדפה</Badge>}
             {isPending && !showDateSelector && <Badge variant="outline" className="text-xs bg-yellow-50">ממתין</Badge>}
           </TableCell>
-          <TableCell>
+          <TableCell className="w-32 p-2">
             {isPending && showDateSelector && (
               <Select
                 value={selectedDates[reg.id] || ""}
@@ -219,7 +219,7 @@ export default function AdminDashboard() {
               </Select>
             )}
           </TableCell>
-          <TableCell className="text-left">
+          <TableCell className="w-40 text-left p-2">
             <div className="flex gap-1">
               {isPending && (
                 <>
@@ -320,11 +320,11 @@ export default function AdminDashboard() {
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-10"></TableHead>
-                      <TableHead className="w-20">#</TableHead>
+                      <TableHead className="w-24">#</TableHead>
                       <TableHead>שם</TableHead>
-                      <TableHead className="w-20">סטטוס</TableHead>
+                      <TableHead className="w-24">סטטוס</TableHead>
                       <TableHead className="w-32"></TableHead>
-                      <TableHead className="w-32 text-left">פעולות</TableHead>
+                      <TableHead className="w-40 text-left">פעולות</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -351,11 +351,11 @@ export default function AdminDashboard() {
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-10"></TableHead>
-                      <TableHead className="w-20">#</TableHead>
+                      <TableHead className="w-24">#</TableHead>
                       <TableHead>שם</TableHead>
-                      <TableHead className="w-20">סטטוס</TableHead>
+                      <TableHead className="w-24">סטטוס</TableHead>
                       <TableHead className="w-32"></TableHead>
-                      <TableHead className="w-32 text-left">פעולות</TableHead>
+                      <TableHead className="w-40 text-left">פעולות</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -382,11 +382,11 @@ export default function AdminDashboard() {
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-10"></TableHead>
-                      <TableHead className="w-20">#</TableHead>
+                      <TableHead className="w-24">#</TableHead>
                       <TableHead>שם</TableHead>
-                      <TableHead className="w-20">סטטוס</TableHead>
+                      <TableHead className="w-24">סטטוס</TableHead>
                       <TableHead className="w-32"></TableHead>
-                      <TableHead className="w-32 text-left">פעולות</TableHead>
+                      <TableHead className="w-40 text-left">פעולות</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -437,11 +437,11 @@ export default function AdminDashboard() {
                       <TableHeader>
                         <TableRow>
                           <TableHead className="w-10"></TableHead>
-                          <TableHead className="w-20">#</TableHead>
+                          <TableHead className="w-24">#</TableHead>
                           <TableHead>שם</TableHead>
                           <TableHead className="w-24">סטטוס</TableHead>
-                          <TableHead className="w-40">בחר תאריך</TableHead>
-                          <TableHead className="w-32 text-left">פעולות</TableHead>
+                          <TableHead className="w-32">בחר תאריך</TableHead>
+                          <TableHead className="w-40 text-left">פעולות</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
