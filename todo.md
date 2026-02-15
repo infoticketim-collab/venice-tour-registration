@@ -131,3 +131,7 @@
 - [x] Add table-layout: fixed to all Table components
 - [x] Define explicit column widths using percentage widths in inline styles
 - [x] Ensure headers and data cells have identical widths
+
+## Actions Column Header Alignment Fix
+- [x] Fix "פעולות" header alignment - wrapped in flex container with justify-end
+- [x] Ensure action buttons and their header are both aligned to the right
