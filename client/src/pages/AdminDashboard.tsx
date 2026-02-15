@@ -2,9 +2,8 @@ import { useState } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
 import { 
   Select,
   SelectContent,
@@ -22,7 +21,20 @@ import {
   AlertDialogHeader, 
   AlertDialogTitle 
 } from "@/components/ui/alert-dialog";
-import { Check, X, Loader2, Calendar, Users } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Check, X, Loader2, Calendar, Users, ChevronDown, ChevronLeft } from "lucide-react";
 import { toast } from "sonner";
 import { getLoginUrl } from "@/const";
 
@@ -33,13 +45,9 @@ export default function AdminDashboard() {
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
   const [selectedRegistrationId, setSelectedRegistrationId] = useState<number | null>(null);
   const [selectedDates, setSelectedDates] = useState<Record<number, DateOption>>({});
+  const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>({});
 
   const { data: registrations, isLoading, refetch } = trpc.admin.getAllRegistrations.useQuery(
-    undefined,
-    { enabled: user?.role === "admin" }
-  );
-
-  const { data: inventoryStats } = trpc.admin.getInventoryStats.useQuery(
     undefined,
     { enabled: user?.role === "admin" }
   );
@@ -116,6 +124,10 @@ export default function AdminDashboard() {
     }
   };
 
+  const toggleRow = (id: number) => {
+    setExpandedRows(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
   // Auth check
   if (authLoading) {
     return (
@@ -131,7 +143,6 @@ export default function AdminDashboard() {
         <Card className="max-w-md">
           <CardHeader>
             <CardTitle>נדרשת התחברות</CardTitle>
-            <CardDescription>יש להתחבר כדי לגשת לממשק הניהול</CardDescription>
           </CardHeader>
           <CardContent>
             <Button onClick={() => window.location.href = getLoginUrl()} className="w-full">
@@ -149,7 +160,6 @@ export default function AdminDashboard() {
         <Card className="max-w-md">
           <CardHeader>
             <CardTitle>אין הרשאה</CardTitle>
-            <CardDescription>רק מנהלים יכולים לגשת לדף זה</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -167,38 +177,39 @@ export default function AdminDashboard() {
   const may25_27Registrations = registrations?.filter(r => getEffectiveDate(r) === "may_25_27") || [];
   const noPreferenceRegistrations = registrations?.filter(r => getEffectiveDate(r) === null) || [];
 
-  const renderRegistrationCard = (reg: any, showDateSelector: boolean = false) => {
-    const effectiveDate = getEffectiveDate(reg);
+  const renderRegistrationRow = (reg: any, showDateSelector: boolean = false) => {
     const isPending = reg.status === "pending";
     const isApproved = reg.status === "approved";
     const isRejected = reg.status === "rejected";
+    const isExpanded = expandedRows[reg.id];
 
     return (
-      <Card key={reg.id} className={`border-2 ${isApproved ? 'border-green-200' : isRejected ? 'border-red-200' : ''}`}>
-        <CardContent className="p-4 space-y-2">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="font-semibold">#{reg.orderNumber}</p>
-              <p className="text-sm text-muted-foreground">
-                {reg.participants[0]?.firstNameHe} {reg.participants[0]?.lastNameHe}
-              </p>
-            </div>
+      <Collapsible key={reg.id} open={isExpanded} onOpenChange={() => toggleRow(reg.id)}>
+        <TableRow className={`${isApproved ? 'bg-green-50/50' : isRejected ? 'bg-red-50/50' : ''}`}>
+          <TableCell className="w-10">
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="p-0 h-6 w-6">
+                {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+              </Button>
+            </CollapsibleTrigger>
+          </TableCell>
+          <TableCell className="font-medium">#{reg.orderNumber}</TableCell>
+          <TableCell>
+            {reg.participants[0]?.firstNameHe} {reg.participants[0]?.lastNameHe}
+          </TableCell>
+          <TableCell>
             {isApproved && <Badge className="bg-green-600 text-xs">מאושר</Badge>}
             {isRejected && <Badge variant="destructive" className="text-xs">נדחה</Badge>}
+            {isPending && showDateSelector && <Badge variant="outline" className="text-xs">אין העדפה</Badge>}
+            {isPending && !showDateSelector && <Badge variant="outline" className="text-xs bg-yellow-50">ממתין</Badge>}
+          </TableCell>
+          <TableCell>
             {isPending && showDateSelector && (
-              <Badge variant="outline" className="text-xs">אין העדפה</Badge>
-            )}
-          </div>
-          <p className="text-xs text-muted-foreground">{reg.participants[0]?.email}</p>
-          <p className="text-xs text-muted-foreground">{reg.participants[0]?.phone}</p>
-          
-          {isPending && showDateSelector && (
-            <div className="pt-2">
               <Select
                 value={selectedDates[reg.id] || ""}
                 onValueChange={(value) => setSelectedDates({ ...selectedDates, [reg.id]: value as DateOption })}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-32 h-8 text-xs">
                   <SelectValue placeholder="בחר תאריך" />
                 </SelectTrigger>
                 <SelectContent>
@@ -206,59 +217,74 @@ export default function AdminDashboard() {
                   <SelectItem value="may_25_27">25-27 במאי</SelectItem>
                 </SelectContent>
               </Select>
+            )}
+          </TableCell>
+          <TableCell className="text-left">
+            <div className="flex gap-1">
+              {isPending && (
+                <>
+                  <Button
+                    size="sm"
+                    className="h-7 px-2 bg-green-600 hover:bg-green-700 text-xs"
+                    onClick={() => handleApprove(reg.id, reg.datePreference, reg.assignedDate)}
+                    disabled={approveMutation.isPending || assignAndApproveMutation.isPending}
+                  >
+                    <Check className="w-3 h-3 ml-1" />
+                    אשר
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    className="h-7 px-2 text-xs"
+                    onClick={() => rejectMutation.mutate({ registrationId: reg.id })}
+                    disabled={rejectMutation.isPending}
+                  >
+                    <X className="w-3 h-3 ml-1" />
+                    דחה
+                  </Button>
+                </>
+              )}
+              
+              {isApproved && (
+                <Button
+                  size="sm"
+                  variant="destructive"
+                  className="h-7 px-2 text-xs"
+                  onClick={() => handleCancelClick(reg.id)}
+                  disabled={cancelMutation.isPending}
+                >
+                  <X className="w-3 h-3 ml-1" />
+                  בטל
+                </Button>
+              )}
+              
+              {isRejected && (
+                <Button
+                  size="sm"
+                  className="h-7 px-2 bg-green-600 hover:bg-green-700 text-xs"
+                  onClick={() => approveMutation.mutate({ registrationId: reg.id })}
+                  disabled={approveMutation.isPending}
+                >
+                  <Check className="w-3 h-3 ml-1" />
+                  אשר
+                </Button>
+              )}
             </div>
-          )}
-          
-          {isPending && (
-            <div className="flex gap-2 pt-2">
-              <Button
-                size="sm"
-                className="flex-1 bg-green-600 hover:bg-green-700"
-                onClick={() => handleApprove(reg.id, reg.datePreference, reg.assignedDate)}
-                disabled={approveMutation.isPending || assignAndApproveMutation.isPending}
-              >
-                <Check className="w-4 h-4 ml-1" />
-                אשר
-              </Button>
-              <Button
-                size="sm"
-                variant="destructive"
-                className="flex-1"
-                onClick={() => rejectMutation.mutate({ registrationId: reg.id })}
-                disabled={rejectMutation.isPending}
-              >
-                <X className="w-4 h-4 ml-1" />
-                דחה
-              </Button>
-            </div>
-          )}
-          
-          {isApproved && (
-            <Button
-              size="sm"
-              variant="destructive"
-              className="w-full mt-2"
-              onClick={() => handleCancelClick(reg.id)}
-              disabled={cancelMutation.isPending}
-            >
-              <X className="w-4 h-4 ml-1" />
-              בטל רישום
-            </Button>
-          )}
-          
-          {isRejected && (
-            <Button
-              size="sm"
-              className="w-full mt-2 bg-green-600 hover:bg-green-700"
-              onClick={() => approveMutation.mutate({ registrationId: reg.id })}
-              disabled={approveMutation.isPending}
-            >
-              <Check className="w-4 h-4 ml-1" />
-              אשר רישום
-            </Button>
-          )}
-        </CardContent>
-      </Card>
+          </TableCell>
+        </TableRow>
+        <CollapsibleContent asChild>
+          <TableRow className="bg-muted/30">
+            <TableCell colSpan={6} className="py-2">
+              <div className="text-sm space-y-1 pr-8">
+                <div><span className="font-medium">מייל:</span> {reg.participants[0]?.email}</div>
+                <div><span className="font-medium">טלפון:</span> {reg.participants[0]?.phone}</div>
+                <div><span className="font-medium">תאריך לידה:</span> {new Date(reg.participants[0]?.birthDate).toLocaleDateString('he-IL')}</div>
+                <div><span className="font-medium">שם באנגלית:</span> {reg.participants[0]?.firstNameEn} {reg.participants[0]?.lastNameEn}</div>
+              </div>
+            </TableCell>
+          </TableRow>
+        </CollapsibleContent>
+      </Collapsible>
     );
   };
 
@@ -277,54 +303,96 @@ export default function AdminDashboard() {
           </Badge>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Pending */}
-          <Card className="card-shadow">
-            <CardHeader className="bg-yellow-50 border-b">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+          <Card>
+            <CardHeader className="bg-yellow-50 border-b py-3">
+              <CardTitle className="text-base flex items-center gap-2">
+                <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                 ממתינים ({pending.length})
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 space-y-3 max-h-[500px] overflow-y-auto">
+            <CardContent className="p-0">
               {pending.length === 0 ? (
-                <p className="text-center text-muted-foreground py-8 text-sm">אין הרשמות ממתינות</p>
+                <p className="text-center text-muted-foreground py-6 text-sm">אין הרשמות ממתינות</p>
               ) : (
-                pending.map(reg => renderRegistrationCard(reg))
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-10"></TableHead>
+                      <TableHead className="w-20">#</TableHead>
+                      <TableHead>שם</TableHead>
+                      <TableHead className="w-20">סטטוס</TableHead>
+                      <TableHead className="w-32"></TableHead>
+                      <TableHead className="w-32 text-left">פעולות</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {pending.map(reg => renderRegistrationRow(reg))}
+                  </TableBody>
+                </Table>
               )}
             </CardContent>
           </Card>
 
           {/* Approved */}
-          <Card className="card-shadow">
-            <CardHeader className="bg-green-50 border-b">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+          <Card>
+            <CardHeader className="bg-green-50 border-b py-3">
+              <CardTitle className="text-base flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 מאושרים ({approved.length})
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 space-y-3 max-h-[500px] overflow-y-auto">
+            <CardContent className="p-0">
               {approved.length === 0 ? (
-                <p className="text-center text-muted-foreground py-8 text-sm">אין הרשמות מאושרות</p>
+                <p className="text-center text-muted-foreground py-6 text-sm">אין הרשמות מאושרות</p>
               ) : (
-                approved.map(reg => renderRegistrationCard(reg))
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-10"></TableHead>
+                      <TableHead className="w-20">#</TableHead>
+                      <TableHead>שם</TableHead>
+                      <TableHead className="w-20">סטטוס</TableHead>
+                      <TableHead className="w-32"></TableHead>
+                      <TableHead className="w-32 text-left">פעולות</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {approved.map(reg => renderRegistrationRow(reg))}
+                  </TableBody>
+                </Table>
               )}
             </CardContent>
           </Card>
 
           {/* Rejected */}
-          <Card className="card-shadow">
-            <CardHeader className="bg-red-50 border-b">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+          <Card>
+            <CardHeader className="bg-red-50 border-b py-3">
+              <CardTitle className="text-base flex items-center gap-2">
+                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                 נדחו ({rejected.length})
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 space-y-3 max-h-[500px] overflow-y-auto">
+            <CardContent className="p-0">
               {rejected.length === 0 ? (
-                <p className="text-center text-muted-foreground py-8 text-sm">אין הרשמות נדחות</p>
+                <p className="text-center text-muted-foreground py-6 text-sm">אין הרשמות נדחות</p>
               ) : (
-                rejected.map(reg => renderRegistrationCard(reg))
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-10"></TableHead>
+                      <TableHead className="w-20">#</TableHead>
+                      <TableHead>שם</TableHead>
+                      <TableHead className="w-20">סטטוס</TableHead>
+                      <TableHead className="w-32"></TableHead>
+                      <TableHead className="w-32 text-left">פעולות</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {rejected.map(reg => renderRegistrationRow(reg))}
+                  </TableBody>
+                </Table>
               )}
             </CardContent>
           </Card>
@@ -336,37 +404,50 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-8">
+      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-6">
         <div className="container">
-          <h1 className="text-3xl font-bold">ממשק ניהול - סיורים בוונציה</h1>
-          <p className="text-blue-100 mt-2">ניהול הרשמות לפי תאריכים</p>
+          <h1 className="text-2xl font-bold">ממשק ניהול - סיורים בוונציה</h1>
+          <p className="text-blue-100 mt-1 text-sm">ניהול הרשמות לפי תאריכים</p>
         </div>
       </div>
 
-      <div className="container py-8 space-y-12">
+      <div className="container py-6 space-y-8">
         {isLoading ? (
           <div className="flex justify-center py-12">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : (
           <>
-            {/* No Preference Section - Shows first */}
+            {/* No Preference Section */}
             {noPreferenceRegistrations.length > 0 && (
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <Users className="w-6 h-6 text-orange-500" />
                   <h2 className="text-2xl font-bold">ללא העדפת תאריך</h2>
                   <Badge variant="outline" className="text-sm bg-orange-50">
-                    דורש הקצאת תאריך
+                    דורש הקצאת תאריך ({noPreferenceRegistrations.length})
                   </Badge>
                 </div>
-                <Card className="card-shadow">
-                  <CardHeader className="bg-orange-50 border-b">
-                    <CardTitle className="text-lg">נרשמים שלא ציינו העדפת תאריך ({noPreferenceRegistrations.length})</CardTitle>
-                    <CardDescription>יש לבחור תאריך לפני אישור ההרשמה</CardDescription>
+                <Card>
+                  <CardHeader className="bg-orange-50 border-b py-3">
+                    <CardTitle className="text-base">נרשמים שלא ציינו העדפת תאריך</CardTitle>
                   </CardHeader>
-                  <CardContent className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {noPreferenceRegistrations.map(reg => renderRegistrationCard(reg, true))}
+                  <CardContent className="p-0">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="w-10"></TableHead>
+                          <TableHead className="w-20">#</TableHead>
+                          <TableHead>שם</TableHead>
+                          <TableHead className="w-24">סטטוס</TableHead>
+                          <TableHead className="w-40">בחר תאריך</TableHead>
+                          <TableHead className="w-32 text-left">פעולות</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {noPreferenceRegistrations.map(reg => renderRegistrationRow(reg, true))}
+                      </TableBody>
+                    </Table>
                   </CardContent>
                 </Card>
               </div>

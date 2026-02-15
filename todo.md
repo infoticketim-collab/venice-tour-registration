@@ -88,3 +88,10 @@
 - [x] Set HTML dir="rtl" for Hebrew content
 - [x] Update admin dashboard status format to: "32 איש בקבוצה / X רשומים / Y מקומות פנויים"
 - [x] Ensure all UI components work correctly in RTL mode
+
+## Compact Admin Dashboard Layout
+- [x] Replace card layout with compact table rows
+- [x] Each registration displayed as single row with: order number, name, action buttons
+- [x] Email and phone in expandable details (click to expand)
+- [x] Small inline action buttons (approve/reject/cancel) in same row
+- [x] Significant vertical space savings
