@@ -333,7 +333,7 @@ export default function AdminDashboard() {
                       <TableHead style={{ width: '15%', textAlign: 'right' }}>#</TableHead>
                       <TableHead style={{ width: '35%', textAlign: 'right' }}>שם</TableHead>
                       <TableHead style={{ width: '15%', textAlign: 'right' }}>סטטוס</TableHead>
-                      <TableHead style={{ width: '30%', textAlign: 'right' }}><div className="flex justify-end">פעולות</div></TableHead>
+                      <TableHead style={{ width: '30%', textAlign: 'right' }}><div className="flex justify-start">פעולות</div></TableHead>
                       <TableHead style={{ width: '5%', textAlign: 'right' }}></TableHead>
                     </TableRow>
                   </TableHeader>
@@ -362,7 +362,7 @@ export default function AdminDashboard() {
                     <TableRow className="text-xs">
                       <TableHead style={{ width: '15%', textAlign: 'right' }}>#</TableHead>
                       <TableHead style={{ width: '50%', textAlign: 'right' }}>שם</TableHead>
-                      <TableHead style={{ width: '30%', textAlign: 'right' }}><div className="flex justify-end">פעולות</div></TableHead>
+                      <TableHead style={{ width: '30%', textAlign: 'right' }}><div className="flex justify-start">פעולות</div></TableHead>
                       <TableHead style={{ width: '5%', textAlign: 'right' }}></TableHead>
                     </TableRow>
                   </TableHeader>
@@ -391,7 +391,7 @@ export default function AdminDashboard() {
                     <TableRow className="text-xs">
                       <TableHead style={{ width: '15%', textAlign: 'right' }}>#</TableHead>
                       <TableHead style={{ width: '50%', textAlign: 'right' }}>שם</TableHead>
-                      <TableHead style={{ width: '30%', textAlign: 'right' }}><div className="flex justify-end">פעולות</div></TableHead>
+                      <TableHead style={{ width: '30%', textAlign: 'right' }}><div className="flex justify-start">פעולות</div></TableHead>
                       <TableHead style={{ width: '5%', textAlign: 'right' }}></TableHead>
                     </TableRow>
                   </TableHeader>
@@ -446,7 +446,7 @@ export default function AdminDashboard() {
                           <TableHead style={{ width: '25%', textAlign: 'right' }}>שם</TableHead>
                           <TableHead style={{ width: '12%', textAlign: 'right' }}>סטטוס</TableHead>
                           <TableHead style={{ width: '20%', textAlign: 'right' }}>בחר תאריך</TableHead>
-                          <TableHead style={{ width: '26%', textAlign: 'right' }}><div className="flex justify-end">פעולות</div></TableHead>
+                          <TableHead style={{ width: '26%', textAlign: 'right' }}><div className="flex justify-start">פעולות</div></TableHead>
                           <TableHead style={{ width: '5%', textAlign: 'right' }}></TableHead>
                         </TableRow>
                       </TableHeader>

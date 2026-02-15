@@ -135,3 +135,7 @@
 ## Actions Column Header Alignment Fix
 - [x] Fix "פעולות" header alignment - wrapped in flex container with justify-end
 - [x] Ensure action buttons and their header are both aligned to the right
+
+## RTL Flex Direction Fix for Actions Header
+- [x] Change justify-end to justify-start in actions header flex containers
+- [x] In RTL, flex-end points to the left, flex-start points to the right
