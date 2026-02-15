@@ -111,3 +111,9 @@
 - [x] Change all TableHead elements to text-right
 - [x] Change action column data cells to text-right and justify-end
 - [x] Ensure headers align vertically with their data cells
+
+## Explicit RTL Table Direction Fix
+- [x] Add dir="rtl" attribute to all Table components
+- [x] Override shadcn/ui default LTR alignment
+- [x] Reverse column order in all tables for proper RTL layout
+- [x] Update renderRegistrationRow to output cells in RTL order
