@@ -159,3 +159,6 @@
 - [x] Update TourInfo component to render markdown content as HTML
 - [x] Convert markdown bold (**text**) to actual bold HTML tags
 - [x] Ensure proper line breaks and formatting
+
+## Confirmation Screen Text Update
+- [x] Change "תודה שנרשמת לסיור בוונציה" to "תודה שנרשמת לסיור הלימודי בוונציה"

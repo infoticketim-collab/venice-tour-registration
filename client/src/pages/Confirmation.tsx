@@ -21,7 +21,7 @@ export default function Confirmation() {
             <div>
               <CardTitle className="text-3xl mb-3">ההרשמה התקבלה בהצלחה!</CardTitle>
               <CardDescription className="text-lg">
-                תודה שנרשמת לסיור בוונציה
+                תודה שנרשמת לסיור הלימודי בוונציה
               </CardDescription>
             </div>
           </CardHeader>
