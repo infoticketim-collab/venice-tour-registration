@@ -41,19 +41,13 @@ export default function TourInfo() {
       {/* Hero Header with gradient */}
       <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-16">
         <div className="container">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
-            {tour.title}
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">
+            סיור לימודי לצפון איטליה - מאי 2026
           </h1>
-          <div className="flex items-center justify-center gap-6 text-lg">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-5 h-5" />
-              <span>{new Date(tour.startDate).toLocaleDateString('he-IL')} - {new Date(tour.endDate).toLocaleDateString('he-IL')}</span>
-            </div>
-            {tour.price && (
-              <div className="flex items-center gap-2">
-                <span className="font-semibold">₪{tour.price}</span>
-              </div>
-            )}
+          <div className="text-center space-y-2 text-lg">
+            <div className="font-semibold">תאריכים:</div>
+            <div>4.5.2026-6.5.2026</div>
+            <div>25.5.2026-27.5.2026</div>
           </div>
         </div>
       </div>
@@ -134,22 +128,7 @@ export default function TourInfo() {
             </Card>
           )}
 
-          {/* Available Spots */}
-          <Card className="card-shadow bg-accent/20 border-accent">
-            <CardContent className="pt-6">
-              <div className="text-center">
-                <p className="text-lg font-semibold mb-2">
-                  מקומות פנויים: <span className="text-2xl text-primary">{tour.availableSpots}</span> מתוך {tour.capacity}
-                </p>
-                {tour.availableSpots < 10 && tour.availableSpots > 0 && (
-                  <p className="text-sm text-destructive font-medium">מקומות אחרונים!</p>
-                )}
-                {tour.availableSpots === 0 && (
-                  <p className="text-sm text-destructive font-medium">הסיור מלא - רישום למתנה</p>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+
 
           {/* Registration Button */}
           <div className="flex justify-center pt-6">

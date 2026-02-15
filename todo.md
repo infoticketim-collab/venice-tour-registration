@@ -139,3 +139,14 @@
 ## RTL Flex Direction Fix for Actions Header
 - [x] Change justify-end to justify-start in actions header flex containers
 - [x] In RTL, flex-end points to the left, flex-start points to the right
+
+## Tour Content Updates
+- [x] Update main title to "סיור לימודי לצפון איטליה - מאי 2026"
+- [x] Add two separate date lines for both tour groups
+- [x] Remove price display
+- [x] Update tour description to focus on pasta and flour factories
+- [x] Split flight details into two sections (first cycle and second cycle)
+- [x] Update luggage allowance details
+- [x] Update hotel information (Leonardo Royal Venice)
+- [x] Update detailed 3-day itinerary
+- [x] Remove available spots counter from main page
