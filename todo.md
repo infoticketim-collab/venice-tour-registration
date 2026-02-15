@@ -122,3 +122,7 @@
 - [x] Fix table column order from right to left: # (order number) → name → actions → expand button
 - [x] Update all table headers with correct order
 - [x] Update renderRegistrationRow to output cells in correct order
+
+## Table Header Text Alignment Fix
+- [x] Add inline style={{ textAlign: 'right' }} to all TableHead components to override shadcn default
+- [x] Ensure "שם" and "פעולות" headers align with their data cells

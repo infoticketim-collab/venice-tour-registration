@@ -330,11 +330,11 @@ export default function AdminDashboard() {
                 <Table dir="rtl">
                   <TableHeader>
                     <TableRow className="text-xs">
-                      <TableHead className="w-20 text-right">#</TableHead>
-                      <TableHead className="text-right">שם</TableHead>
-                      <TableHead className="w-24 text-right">סטטוס</TableHead>
-                      <TableHead className="w-32 text-right">פעולות</TableHead>
-                      <TableHead className="w-8 text-right"></TableHead>
+                      <TableHead className="w-20" style={{ textAlign: 'right' }}>#</TableHead>
+                      <TableHead style={{ textAlign: 'right' }}>שם</TableHead>
+                      <TableHead className="w-24" style={{ textAlign: 'right' }}>סטטוס</TableHead>
+                      <TableHead className="w-32" style={{ textAlign: 'right' }}>פעולות</TableHead>
+                      <TableHead className="w-8" style={{ textAlign: 'right' }}></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -360,10 +360,10 @@ export default function AdminDashboard() {
                 <Table dir="rtl">
                   <TableHeader>
                     <TableRow className="text-xs">
-                      <TableHead className="w-20 text-right">#</TableHead>
-                      <TableHead className="text-right">שם</TableHead>
-                      <TableHead className="w-32 text-right">פעולות</TableHead>
-                      <TableHead className="w-8 text-right"></TableHead>
+                      <TableHead className="w-20" style={{ textAlign: 'right' }}>#</TableHead>
+                      <TableHead style={{ textAlign: 'right' }}>שם</TableHead>
+                      <TableHead className="w-32" style={{ textAlign: 'right' }}>פעולות</TableHead>
+                      <TableHead className="w-8" style={{ textAlign: 'right' }}></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -389,10 +389,10 @@ export default function AdminDashboard() {
                 <Table dir="rtl">
                   <TableHeader>
                     <TableRow className="text-xs">
-                      <TableHead className="w-20 text-right">#</TableHead>
-                      <TableHead className="text-right">שם</TableHead>
-                      <TableHead className="w-32 text-right">פעולות</TableHead>
-                      <TableHead className="w-8 text-right"></TableHead>
+                      <TableHead className="w-20" style={{ textAlign: 'right' }}>#</TableHead>
+                      <TableHead style={{ textAlign: 'right' }}>שם</TableHead>
+                      <TableHead className="w-32" style={{ textAlign: 'right' }}>פעולות</TableHead>
+                      <TableHead className="w-8" style={{ textAlign: 'right' }}></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -442,12 +442,12 @@ export default function AdminDashboard() {
                     <Table dir="rtl">
                       <TableHeader>
                         <TableRow className="text-xs">
-                          <TableHead className="w-20 text-right">#</TableHead>
-                          <TableHead className="text-right">שם</TableHead>
-                          <TableHead className="w-24 text-right">סטטוס</TableHead>
-                          <TableHead className="w-32 text-right">בחר תאריך</TableHead>
-                          <TableHead className="w-32 text-right">פעולות</TableHead>
-                          <TableHead className="w-8 text-right"></TableHead>
+                          <TableHead className="w-20" style={{ textAlign: 'right' }}>#</TableHead>
+                          <TableHead style={{ textAlign: 'right' }}>שם</TableHead>
+                          <TableHead className="w-24" style={{ textAlign: 'right' }}>סטטוס</TableHead>
+                          <TableHead className="w-32" style={{ textAlign: 'right' }}>בחר תאריך</TableHead>
+                          <TableHead className="w-32" style={{ textAlign: 'right' }}>פעולות</TableHead>
+                          <TableHead className="w-8" style={{ textAlign: 'right' }}></TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
