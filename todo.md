@@ -117,3 +117,8 @@
 - [x] Override shadcn/ui default LTR alignment
 - [x] Reverse column order in all tables for proper RTL layout
 - [x] Update renderRegistrationRow to output cells in RTL order
+
+## Correct RTL Column Order
+- [x] Fix table column order from right to left: # (order number) → name → actions → expand button
+- [x] Update all table headers with correct order
+- [x] Update renderRegistrationRow to output cells in correct order
