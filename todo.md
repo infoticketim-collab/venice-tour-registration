@@ -126,3 +126,8 @@
 ## Table Header Text Alignment Fix
 - [x] Add inline style={{ textAlign: 'right' }} to all TableHead components to override shadcn default
 - [x] Ensure "שם" and "פעולות" headers align with their data cells
+
+## Table Layout Fixed Width Solution
+- [x] Add table-layout: fixed to all Table components
+- [x] Define explicit column widths using percentage widths in inline styles
+- [x] Ensure headers and data cells have identical widths

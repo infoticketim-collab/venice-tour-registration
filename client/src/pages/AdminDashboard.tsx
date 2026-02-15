@@ -327,14 +327,14 @@ export default function AdminDashboard() {
               {pending.length === 0 ? (
                 <p className="text-center text-muted-foreground py-6 text-xs">אין הרשמות ממתינות</p>
               ) : (
-                <Table dir="rtl">
+                <Table dir="rtl" style={{ tableLayout: 'fixed', width: '100%' }}>
                   <TableHeader>
                     <TableRow className="text-xs">
-                      <TableHead className="w-20" style={{ textAlign: 'right' }}>#</TableHead>
-                      <TableHead style={{ textAlign: 'right' }}>שם</TableHead>
-                      <TableHead className="w-24" style={{ textAlign: 'right' }}>סטטוס</TableHead>
-                      <TableHead className="w-32" style={{ textAlign: 'right' }}>פעולות</TableHead>
-                      <TableHead className="w-8" style={{ textAlign: 'right' }}></TableHead>
+                      <TableHead style={{ width: '15%', textAlign: 'right' }}>#</TableHead>
+                      <TableHead style={{ width: '35%', textAlign: 'right' }}>שם</TableHead>
+                      <TableHead style={{ width: '15%', textAlign: 'right' }}>סטטוס</TableHead>
+                      <TableHead style={{ width: '30%', textAlign: 'right' }}>פעולות</TableHead>
+                      <TableHead style={{ width: '5%', textAlign: 'right' }}></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -357,13 +357,13 @@ export default function AdminDashboard() {
               {approved.length === 0 ? (
                 <p className="text-center text-muted-foreground py-6 text-xs">אין הרשמות מאושרות</p>
               ) : (
-                <Table dir="rtl">
+                <Table dir="rtl" style={{ tableLayout: 'fixed', width: '100%' }}>
                   <TableHeader>
                     <TableRow className="text-xs">
-                      <TableHead className="w-20" style={{ textAlign: 'right' }}>#</TableHead>
-                      <TableHead style={{ textAlign: 'right' }}>שם</TableHead>
-                      <TableHead className="w-32" style={{ textAlign: 'right' }}>פעולות</TableHead>
-                      <TableHead className="w-8" style={{ textAlign: 'right' }}></TableHead>
+                      <TableHead style={{ width: '15%', textAlign: 'right' }}>#</TableHead>
+                      <TableHead style={{ width: '50%', textAlign: 'right' }}>שם</TableHead>
+                      <TableHead style={{ width: '30%', textAlign: 'right' }}>פעולות</TableHead>
+                      <TableHead style={{ width: '5%', textAlign: 'right' }}></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -386,13 +386,13 @@ export default function AdminDashboard() {
               {rejected.length === 0 ? (
                 <p className="text-center text-muted-foreground py-6 text-xs">אין הרשמות נדחות</p>
               ) : (
-                <Table dir="rtl">
+                <Table dir="rtl" style={{ tableLayout: 'fixed', width: '100%' }}>
                   <TableHeader>
                     <TableRow className="text-xs">
-                      <TableHead className="w-20" style={{ textAlign: 'right' }}>#</TableHead>
-                      <TableHead style={{ textAlign: 'right' }}>שם</TableHead>
-                      <TableHead className="w-32" style={{ textAlign: 'right' }}>פעולות</TableHead>
-                      <TableHead className="w-8" style={{ textAlign: 'right' }}></TableHead>
+                      <TableHead style={{ width: '15%', textAlign: 'right' }}>#</TableHead>
+                      <TableHead style={{ width: '50%', textAlign: 'right' }}>שם</TableHead>
+                      <TableHead style={{ width: '30%', textAlign: 'right' }}>פעולות</TableHead>
+                      <TableHead style={{ width: '5%', textAlign: 'right' }}></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -439,15 +439,15 @@ export default function AdminDashboard() {
                     <CardTitle className="text-sm">נרשמים שלא ציינו העדפת תאריך</CardTitle>
                   </CardHeader>
                   <CardContent className="p-0">
-                    <Table dir="rtl">
+                    <Table dir="rtl" style={{ tableLayout: 'fixed', width: '100%' }}>
                       <TableHeader>
                         <TableRow className="text-xs">
-                          <TableHead className="w-20" style={{ textAlign: 'right' }}>#</TableHead>
-                          <TableHead style={{ textAlign: 'right' }}>שם</TableHead>
-                          <TableHead className="w-24" style={{ textAlign: 'right' }}>סטטוס</TableHead>
-                          <TableHead className="w-32" style={{ textAlign: 'right' }}>בחר תאריך</TableHead>
-                          <TableHead className="w-32" style={{ textAlign: 'right' }}>פעולות</TableHead>
-                          <TableHead className="w-8" style={{ textAlign: 'right' }}></TableHead>
+                          <TableHead style={{ width: '12%', textAlign: 'right' }}>#</TableHead>
+                          <TableHead style={{ width: '25%', textAlign: 'right' }}>שם</TableHead>
+                          <TableHead style={{ width: '12%', textAlign: 'right' }}>סטטוס</TableHead>
+                          <TableHead style={{ width: '20%', textAlign: 'right' }}>בחר תאריך</TableHead>
+                          <TableHead style={{ width: '26%', textAlign: 'right' }}>פעולות</TableHead>
+                          <TableHead style={{ width: '5%', textAlign: 'right' }}></TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
