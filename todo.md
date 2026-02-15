@@ -106,3 +106,8 @@
 - [x] Remove status column from rejected registrations table
 - [x] Keep status column only in pending registrations table
 - [x] Make action buttons smaller and more elegant
+
+## Table Header Alignment Fix
+- [x] Change all TableHead elements to text-right
+- [x] Change action column data cells to text-right and justify-end
+- [x] Ensure headers align vertically with their data cells

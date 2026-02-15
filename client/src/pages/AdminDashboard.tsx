@@ -219,8 +219,8 @@ export default function AdminDashboard() {
               </Select>
             </TableCell>
           )}
-          <TableCell className="w-32 text-left p-2">
-            <div className="flex gap-1 justify-start">
+          <TableCell className="w-32 text-right p-2">
+            <div className="flex gap-1 justify-end">
               {isPending && (
                 <>
                   <Button
@@ -323,7 +323,7 @@ export default function AdminDashboard() {
                       <TableHead className="w-20 text-right">#</TableHead>
                       <TableHead className="text-right">שם</TableHead>
                       <TableHead className="w-24 text-right">סטטוס</TableHead>
-                      <TableHead className="w-32 text-left">פעולות</TableHead>
+                      <TableHead className="w-32 text-right">פעולות</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -352,7 +352,7 @@ export default function AdminDashboard() {
                       <TableHead className="w-8 text-right"></TableHead>
                       <TableHead className="w-20 text-right">#</TableHead>
                       <TableHead className="text-right">שם</TableHead>
-                      <TableHead className="w-32 text-left">פעולות</TableHead>
+                      <TableHead className="w-32 text-right">פעולות</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -381,7 +381,7 @@ export default function AdminDashboard() {
                       <TableHead className="w-8 text-right"></TableHead>
                       <TableHead className="w-20 text-right">#</TableHead>
                       <TableHead className="text-right">שם</TableHead>
-                      <TableHead className="w-32 text-left">פעולות</TableHead>
+                      <TableHead className="w-32 text-right">פעולות</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -436,7 +436,7 @@ export default function AdminDashboard() {
                           <TableHead className="text-right">שם</TableHead>
                           <TableHead className="w-24 text-right">סטטוס</TableHead>
                           <TableHead className="w-32 text-right">בחר תאריך</TableHead>
-                          <TableHead className="w-32 text-left">פעולות</TableHead>
+                          <TableHead className="w-32 text-right">פעולות</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
