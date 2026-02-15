@@ -150,3 +150,7 @@
 - [x] Update hotel information (Leonardo Royal Venice)
 - [x] Update detailed 3-day itinerary
 - [x] Remove available spots counter from main page
+
+## Content Formatting Improvements
+- [x] Add bold formatting to flight cycle headers (מחזור ראשון, מחזור שני)
+- [x] Add bold formatting to daily itinerary headers (יום 1, יום 2, יום 3)
