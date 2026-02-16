@@ -109,29 +109,30 @@ export default function RegisterStep1() {
 
             {/* Date Preference */}
             <div className="space-y-4 pt-4 border-t">
-              <Label className="text-lg font-semibold">בחר את התאריך המועדף עליך</Label>
+              <Label className="text-lg font-semibold text-right block">בחר את התאריך המועדף עליך</Label>
               <RadioGroup
                 value={formData.datePreference}
                 onValueChange={(value) => setFormData({ ...formData, datePreference: value as any })}
                 className="space-y-3"
+                dir="rtl"
               >
-                <div className="flex items-center space-x-2 space-x-reverse p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer">
+                <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer">
                   <RadioGroupItem value="may_4_6" id="may_4_6" />
-                  <Label htmlFor="may_4_6" className="flex-1 cursor-pointer font-normal">
-                    <div className="font-semibold">4-6 במאי</div>
-                    <div className="text-sm text-muted-foreground">סוף שבוע ראשון</div>
+                  <Label htmlFor="may_4_6" className="flex-1 cursor-pointer font-normal text-right">
+                    <div className="font-semibold">סבב ראשון</div>
+                    <div className="text-sm text-muted-foreground">4-6 במאי 2026</div>
                   </Label>
                 </div>
-                <div className="flex items-center space-x-2 space-x-reverse p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer">
+                <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer">
                   <RadioGroupItem value="may_25_27" id="may_25_27" />
-                  <Label htmlFor="may_25_27" className="flex-1 cursor-pointer font-normal">
-                    <div className="font-semibold">25-27 במאי</div>
-                    <div className="text-sm text-muted-foreground">סוף שבוע שני</div>
+                  <Label htmlFor="may_25_27" className="flex-1 cursor-pointer font-normal text-right">
+                    <div className="font-semibold">סבב שני</div>
+                    <div className="text-sm text-muted-foreground">25-27 במאי 2026</div>
                   </Label>
                 </div>
-                <div className="flex items-center space-x-2 space-x-reverse p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer">
+                <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer">
                   <RadioGroupItem value="no_preference" id="no_preference" />
-                  <Label htmlFor="no_preference" className="flex-1 cursor-pointer font-normal">
+                  <Label htmlFor="no_preference" className="flex-1 cursor-pointer font-normal text-right">
                     <div className="font-semibold">אין לי העדפה</div>
                     <div className="text-sm text-muted-foreground">כל תאריך מתאים לי</div>
                   </Label>

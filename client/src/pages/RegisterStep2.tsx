@@ -19,6 +19,8 @@ export default function RegisterStep2() {
     lastNameEn: "",
     birthDate: "",
     passportConfirmed: false,
+    insuranceAcknowledged: false,
+    additionalLuggage: false,
   });
 
   const [step1Data, setStep1Data] = useState<any>(null);
@@ -63,6 +65,8 @@ export default function RegisterStep2() {
         lastNameEn: formData.lastNameEn,
         birthDate: formData.birthDate,
         passportConfirmed: formData.passportConfirmed,
+        insuranceAcknowledged: formData.insuranceAcknowledged,
+        additionalLuggage: formData.additionalLuggage,
       },
     });
   };
@@ -71,7 +75,8 @@ export default function RegisterStep2() {
     formData.firstNameEn.trim() !== "" &&
     formData.lastNameEn.trim() !== "" &&
     formData.birthDate !== "" &&
-    formData.passportConfirmed;
+    formData.passportConfirmed &&
+    formData.insuranceAcknowledged;
 
   if (!step1Data) {
     return null;
@@ -142,21 +147,60 @@ export default function RegisterStep2() {
               </div>
             </div>
 
-            {/* Passport Confirmation */}
+            {/* Confirmations and Additional Options */}
             <div className="space-y-4 pt-4 border-t">
-              <div className="flex items-start space-x-3 space-x-reverse p-4 border rounded-lg bg-muted/30">
+              {/* Passport Confirmation */}
+              <div className="flex items-start gap-3 p-4 border rounded-lg bg-muted/30">
                 <Checkbox
                   id="passportConfirmed"
                   checked={formData.passportConfirmed}
                   onCheckedChange={(checked) => 
                     setFormData({ ...formData, passportConfirmed: checked as boolean })
                   }
+                  className="mt-0.5"
                 />
                 <Label 
                   htmlFor="passportConfirmed" 
-                  className="text-sm font-medium leading-relaxed cursor-pointer"
+                  className="text-sm font-medium leading-relaxed cursor-pointer flex-1"
                 >
                   אני מאשר/ת שאני מצויד/ה בדרכון בתוקף למשך 6 חודשים לפחות מיום הנסיעה
+                </Label>
+              </div>
+
+              {/* Travel Insurance Acknowledgment */}
+              <div className="flex items-start gap-3 p-4 border rounded-lg bg-muted/30">
+                <Checkbox
+                  id="insuranceAcknowledged"
+                  checked={formData.insuranceAcknowledged}
+                  onCheckedChange={(checked) => 
+                    setFormData({ ...formData, insuranceAcknowledged: checked as boolean })
+                  }
+                  className="mt-0.5"
+                />
+                <Label 
+                  htmlFor="insuranceAcknowledged" 
+                  className="text-sm font-medium leading-relaxed cursor-pointer flex-1"
+                >
+                  ידוע לי שעלי לרכוש ביטוח נסיעות המותאם לצרכי בטרם היציאה מהארץ
+                </Label>
+              </div>
+
+              {/* Additional Luggage (Optional) */}
+              <div className="flex items-start gap-3 p-4 border rounded-lg hover:bg-accent/20 transition-colors">
+                <Checkbox
+                  id="additionalLuggage"
+                  checked={formData.additionalLuggage}
+                  onCheckedChange={(checked) => 
+                    setFormData({ ...formData, additionalLuggage: checked as boolean })
+                  }
+                  className="mt-0.5"
+                />
+                <Label 
+                  htmlFor="additionalLuggage" 
+                  className="text-sm font-medium leading-relaxed cursor-pointer flex-1"
+                >
+                  ברצוני להוסיף מזוודה לשליחה לבטן המטוס בעלות של 60 יורו
+                  <span className="text-xs text-muted-foreground block mt-1">(אופציונלי)</span>
                 </Label>
               </div>
             </div>

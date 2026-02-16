@@ -62,6 +62,8 @@ export const appRouter = router({
           email: z.string().email(),
           birthDate: z.string(), // Will be converted to Date
           passportConfirmed: z.boolean(),
+          insuranceAcknowledged: z.boolean(),
+          additionalLuggage: z.boolean(),
         }),
       }))
       .mutation(async ({ input }) => {
@@ -87,6 +89,8 @@ export const appRouter = router({
           email: input.participant.email,
           birthDate: input.participant.birthDate as any,
           passportConfirmed: input.participant.passportConfirmed ? 1 : 0,
+          insuranceAcknowledged: input.participant.insuranceAcknowledged ? 1 : 0,
+          additionalLuggage: input.participant.additionalLuggage ? 1 : 0,
         });
         
         // Send email notification to admin

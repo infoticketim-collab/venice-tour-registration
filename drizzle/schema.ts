@@ -73,6 +73,8 @@ export const participants = mysqlTable("participants", {
   email: varchar("email", { length: 320 }).notNull(),
   birthDate: date("birthDate").notNull(),
   passportConfirmed: int("passportConfirmed").notNull().default(0), // 1 = confirmed, 0 = not confirmed
+  insuranceAcknowledged: int("insuranceAcknowledged").notNull().default(0), // 1 = acknowledged, 0 = not acknowledged
+  additionalLuggage: int("additionalLuggage").notNull().default(0), // 1 = requested, 0 = not requested
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 

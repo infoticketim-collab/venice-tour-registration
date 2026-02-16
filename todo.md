@@ -182,3 +182,11 @@
 - [x] Generate cherry favicon
 - [x] Download and integrate Nizat logo from https://www.nizat.com/images/headerright.jpg
 - [x] Add Nizat logo to website header
+
+## Form Improvements
+- [x] Right-align date preference selection in first form
+- [x] Change "סוף שבוע ראשון/שני" to "סבב ראשון/שני" with dates
+- [x] Add spacing between checkboxes and text
+- [x] Add required checkbox for travel insurance acknowledgment
+- [x] Add optional checkbox for additional luggage (60 EUR)
+- [x] Update database schema for new checkbox fields
