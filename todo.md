@@ -200,3 +200,7 @@
 - [x] Implement session management with localStorage
 - [x] Update admin dashboard to check authentication
 - [x] Add logout functionality
+
+## Logo Positioning Fix
+- [x] Fix logo positioning on mobile - make it full width above the title
+- [x] Ensure title is not covered by logo
