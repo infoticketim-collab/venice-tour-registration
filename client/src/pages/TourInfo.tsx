@@ -46,8 +46,12 @@ export default function TourInfo() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background">
-      {/* Hero Header with gradient */}
-      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-16">
+      {/* Hero Header with gradient and logo */}
+      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-16 relative">
+        {/* Nizat Logo */}
+        <div className="absolute top-4 left-4">
+          <img src="/nizat-logo.jpg" alt="ניצת הדובדבן" className="h-16 w-auto" />
+        </div>
         <div className="container">
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">
             סיור לימודי לצפון איטליה - מאי 2026

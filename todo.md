@@ -176,3 +176,9 @@
 
 ## Table Header Alignment Fix
 - [x] Fix text alignment in pending registrations table headers (admin panel)
+
+## Branding and Visual Identity
+- [x] Remove "Made with Manus" branding from website (add CSS to hide badge)
+- [x] Generate cherry favicon
+- [x] Download and integrate Nizat logo from https://www.nizat.com/images/headerright.jpg
+- [x] Add Nizat logo to website header
