@@ -173,3 +173,6 @@
 - [x] Send daily summary email to admin (Ori@nizat.co.il) with pending registrations
 - [x] Add Ori@nizat.co.il contact info to confirmation screen
 - [x] Test all email scenarios
+
+## Table Header Alignment Fix
+- [x] Fix text alignment in pending registrations table headers (admin panel)

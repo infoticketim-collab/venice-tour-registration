@@ -330,11 +330,11 @@ export default function AdminDashboard() {
                 <Table dir="rtl" style={{ tableLayout: 'fixed', width: '100%' }}>
                   <TableHeader>
                     <TableRow className="text-xs">
-                      <TableHead style={{ width: '15%', textAlign: 'right' }}>#</TableHead>
-                      <TableHead style={{ width: '35%', textAlign: 'right' }}>שם</TableHead>
-                      <TableHead style={{ width: '15%', textAlign: 'right' }}>סטטוס</TableHead>
-                      <TableHead style={{ width: '30%', textAlign: 'right' }}><div className="flex justify-start">פעולות</div></TableHead>
-                      <TableHead style={{ width: '5%', textAlign: 'right' }}></TableHead>
+                      <TableHead className="text-right" style={{ width: '15%' }}>#</TableHead>
+                      <TableHead className="text-right" style={{ width: '35%' }}>שם</TableHead>
+                      <TableHead className="text-right" style={{ width: '15%' }}>סטטוס</TableHead>
+                      <TableHead className="text-right" style={{ width: '30%' }}><div className="flex justify-start">פעולות</div></TableHead>
+                      <TableHead className="text-right" style={{ width: '5%' }}></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -442,12 +442,12 @@ export default function AdminDashboard() {
                     <Table dir="rtl" style={{ tableLayout: 'fixed', width: '100%' }}>
                       <TableHeader>
                         <TableRow className="text-xs">
-                          <TableHead style={{ width: '12%', textAlign: 'right' }}>#</TableHead>
-                          <TableHead style={{ width: '25%', textAlign: 'right' }}>שם</TableHead>
-                          <TableHead style={{ width: '12%', textAlign: 'right' }}>סטטוס</TableHead>
-                          <TableHead style={{ width: '20%', textAlign: 'right' }}>בחר תאריך</TableHead>
-                          <TableHead style={{ width: '26%', textAlign: 'right' }}><div className="flex justify-start">פעולות</div></TableHead>
-                          <TableHead style={{ width: '5%', textAlign: 'right' }}></TableHead>
+                          <TableHead className="text-right" style={{ width: '12%' }}>#</TableHead>
+                          <TableHead className="text-right" style={{ width: '25%' }}>שם</TableHead>
+                          <TableHead className="text-right" style={{ width: '12%' }}>סטטוס</TableHead>
+                          <TableHead className="text-right" style={{ width: '20%' }}>בחר תאריך</TableHead>
+                          <TableHead className="text-right" style={{ width: '26%' }}><div className="flex justify-start">פעולות</div></TableHead>
+                          <TableHead className="text-right" style={{ width: '5%' }}></TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
