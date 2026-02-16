@@ -190,3 +190,6 @@
 - [x] Add required checkbox for travel insurance acknowledgment
 - [x] Add optional checkbox for additional luggage (60 EUR)
 - [x] Update database schema for new checkbox fields
+
+## Admin Dashboard Enhancement
+- [x] Add additional luggage field (Yes/No) to customer information display in admin dashboard
