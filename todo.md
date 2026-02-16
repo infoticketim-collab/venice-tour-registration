@@ -162,3 +162,14 @@
 
 ## Confirmation Screen Text Update
 - [x] Change "תודה שנרשמת לסיור בוונציה" to "תודה שנרשמת לסיור הלימודי בוונציה"
+
+## Email System Improvements (Resend Integration)
+- [x] Install Resend package
+- [x] Configure Resend API key as environment variable
+- [x] Create email service module with Resend
+- [x] Send confirmation email to customer after registration with all details
+- [x] Send approval email to customer when admin approves registration
+- [x] Send rejection email to customer when admin rejects registration
+- [x] Send daily summary email to admin (Ori@nizat.co.il) with pending registrations
+- [x] Add Ori@nizat.co.il contact info to confirmation screen
+- [x] Test all email scenarios

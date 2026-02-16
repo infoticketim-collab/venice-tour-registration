@@ -1,5 +1,6 @@
 import { notifyOwner } from "./_core/notification";
 import * as db from "./db";
+import { sendAdminDailySummaryEmail } from "./emailService";
 
 /**
  * Send email notification to admin when new registration is created
@@ -83,34 +84,35 @@ export async function sendDailySummaryEmail(): Promise<boolean> {
       return true;
     }
 
-    let summaryContent = "**סיכום יומי - מערכת רישום לסיורים בוונציה**\n\n";
+    const totalPending = registrations.filter(r => r.status === "pending").length;
+    
+    // Only send if there are pending registrations
+    if (totalPending === 0) {
+      console.log("[Email] No pending registrations, skipping daily summary");
+      return true;
+    }
 
-    for (const tour of tours) {
+    const tourStats = tours.map(tour => {
       const tourRegistrations = registrations.filter(r => r.tourId === tour.id);
       const pending = tourRegistrations.filter(r => r.status === "pending").length;
       const approved = tourRegistrations.filter(r => r.status === "approved").length;
       const rejected = tourRegistrations.filter(r => r.status === "rejected").length;
 
-      summaryContent += `**${tour.title}**\n`;
-      summaryContent += `📅 ${new Date(tour.startDate).toLocaleDateString('he-IL')} - ${new Date(tour.endDate).toLocaleDateString('he-IL')}\n`;
-      summaryContent += `- מקומות פנויים: ${tour.availableSpots}/${tour.capacity}\n`;
-      summaryContent += `- ממתינים לאישור: ${pending}\n`;
-      summaryContent += `- מאושרים: ${approved}\n`;
-      summaryContent += `- נדחו: ${rejected}\n\n`;
-    }
+      return {
+        tourTitle: tour.title,
+        dateRange: `${new Date(tour.startDate).toLocaleDateString('he-IL')} - ${new Date(tour.endDate).toLocaleDateString('he-IL')}`,
+        availableSpots: tour.availableSpots,
+        capacity: tour.capacity,
+        pending,
+        approved,
+        rejected,
+      };
+    });
 
-    const totalPending = registrations.filter(r => r.status === "pending").length;
-    
-    if (totalPending > 0) {
-      summaryContent += `\n⚠️ **יש ${totalPending} הרשמות ממתינות לאישור**\n`;
-      summaryContent += `אנא היכנס לממשק הניהול לטיפול בהרשמות.`;
-    } else {
-      summaryContent += `\n✅ אין הרשמות ממתינות לאישור`;
-    }
-
-    const title = `📊 סיכום יומי - ${new Date().toLocaleDateString('he-IL')}`;
-    
-    const success = await notifyOwner({ title, content: summaryContent });
+    const success = await sendAdminDailySummaryEmail({
+      pendingCount: totalPending,
+      tourStats,
+    });
     
     if (success) {
       console.log("[Email] Daily summary sent successfully");

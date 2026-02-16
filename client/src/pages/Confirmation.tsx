@@ -61,9 +61,15 @@ export default function Confirmation() {
 
             {/* Contact Information */}
             <div className="pt-6 border-t">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground mb-2">
                 יש לך שאלות? צור קשר עם צוות ניצת הדובדבן
               </p>
+              <a 
+                href="mailto:Ori@nizat.co.il" 
+                className="text-primary hover:underline font-medium"
+              >
+                Ori@nizat.co.il
+              </a>
             </div>
           </CardContent>
         </Card>

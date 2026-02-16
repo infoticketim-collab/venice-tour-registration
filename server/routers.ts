@@ -8,6 +8,7 @@ import { eq } from "drizzle-orm";
 import * as db from "./db";
 import { registrations } from "../drizzle/schema";
 import { notifyAdminNewRegistration, notifyRegistrationApproved, notifyRegistrationRejected, sendDailySummaryEmail } from "./emailNotifications";
+import { sendCustomerConfirmationEmail, sendCustomerApprovalEmail, sendCustomerRejectionEmail } from "./emailService";
 
 // Admin-only procedure
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -90,8 +91,28 @@ export const appRouter = router({
         
         // Send email notification to admin
         notifyAdminNewRegistration(registration.id).catch(err => 
-          console.error("Failed to send email notification:", err)
+          console.error("Failed to send admin notification:", err)
         );
+        
+        // Send confirmation email to customer
+        const tour = await db.getTourById(input.tourId);
+        if (tour) {
+          const datePreferenceText = 
+            input.datePreference === "may_4_6" ? "4-6 במאי 2026" :
+            input.datePreference === "may_25_27" ? "25-27 במאי 2026" :
+            "אין העדפה";
+          
+          sendCustomerConfirmationEmail({
+            customerEmail: input.participant.email,
+            orderNumber: registration.orderNumber,
+            customerName: `${input.participant.firstNameHe} ${input.participant.lastNameHe}`,
+            tourTitle: tour.title,
+            datePreference: datePreferenceText,
+            birthDate: new Date(input.participant.birthDate).toLocaleDateString('he-IL'),
+          }).catch(err => 
+            console.error("Failed to send customer confirmation email:", err)
+          );
+        }
         
         return {
           success: true,
@@ -146,10 +167,24 @@ export const appRouter = router({
         
         const updated = await db.updateRegistrationStatus(input.registrationId, "approved");
         
-        // Send approval notification
+        // Send approval notification to admin
         notifyRegistrationApproved(input.registrationId).catch(err => 
-          console.error("Failed to send approval notification:", err)
+          console.error("Failed to send admin approval notification:", err)
         );
+        
+        // Send approval email to customer
+        const participants = await db.getParticipantsByRegistrationId(input.registrationId);
+        const tour = await db.getTourById(registration.tourId);
+        if (participants[0] && tour) {
+          sendCustomerApprovalEmail({
+            customerEmail: participants[0].email,
+            orderNumber: registration.orderNumber,
+            customerName: `${participants[0].firstNameHe} ${participants[0].lastNameHe}`,
+            tourTitle: tour.title,
+          }).catch(err => 
+            console.error("Failed to send customer approval email:", err)
+          );
+        }
         
         return { success: true, registration: updated };
       }),
@@ -174,10 +209,24 @@ export const appRouter = router({
         
         const updated = await db.updateRegistrationStatus(input.registrationId, "approved");
         
-        // Send approval notification
+        // Send approval notification to admin
         notifyRegistrationApproved(input.registrationId).catch(err => 
-          console.error("Failed to send approval notification:", err)
+          console.error("Failed to send admin approval notification:", err)
         );
+        
+        // Send approval email to customer
+        const participants = await db.getParticipantsByRegistrationId(input.registrationId);
+        const tour = await db.getTourById(registration.tourId);
+        if (participants[0] && tour) {
+          sendCustomerApprovalEmail({
+            customerEmail: participants[0].email,
+            orderNumber: registration.orderNumber,
+            customerName: `${participants[0].firstNameHe} ${participants[0].lastNameHe}`,
+            tourTitle: tour.title,
+          }).catch(err => 
+            console.error("Failed to send customer approval email:", err)
+          );
+        }
         
         return { success: true, registration: updated };
       }),
@@ -198,10 +247,24 @@ export const appRouter = router({
         
         const updated = await db.updateRegistrationStatus(input.registrationId, "rejected");
         
-        // Send rejection notification
+        // Send rejection notification to admin
         notifyRegistrationRejected(input.registrationId).catch(err => 
-          console.error("Failed to send rejection notification:", err)
+          console.error("Failed to send admin rejection notification:", err)
         );
+        
+        // Send rejection email to customer
+        const participants = await db.getParticipantsByRegistrationId(input.registrationId);
+        const tour = await db.getTourById(registration.tourId);
+        if (participants[0] && tour) {
+          sendCustomerRejectionEmail({
+            customerEmail: participants[0].email,
+            orderNumber: registration.orderNumber,
+            customerName: `${participants[0].firstNameHe} ${participants[0].lastNameHe}`,
+            tourTitle: tour.title,
+          }).catch(err => 
+            console.error("Failed to send customer rejection email:", err)
+          );
+        }
         
         return { success: true, registration: updated };
       }),
