@@ -9,11 +9,13 @@ import RegisterStep1 from "./pages/RegisterStep1";
 import RegisterStep2 from "./pages/RegisterStep2";
 import Confirmation from "./pages/Confirmation";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminLogin from "./pages/AdminLogin";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={TourInfo} />
+      <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/register/:tourId">
         {(params) => <RegisterStep1 />}

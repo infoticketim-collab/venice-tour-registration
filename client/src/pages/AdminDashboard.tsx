@@ -34,14 +34,47 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { Check, X, Loader2, Calendar, Users, ChevronDown, ChevronLeft } from "lucide-react";
+import { Check, X, Loader2, Calendar, Users, ChevronDown, ChevronLeft, LogOut } from "lucide-react";
 import { toast } from "sonner";
 import { getLoginUrl } from "@/const";
+import { useLocation } from "wouter";
+import { useEffect } from "react";
 
 type DateOption = "may_4_6" | "may_25_27";
 
 export default function AdminDashboard() {
   const { user, loading: authLoading } = useAuth();
+  const [, setLocation] = useLocation();
+
+  // Check password authentication
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("adminAuthenticated");
+    const authTime = localStorage.getItem("adminAuthTime");
+    
+    if (!isAuthenticated) {
+      setLocation("/admin/login");
+      return;
+    }
+    
+    // Check if session is expired (24 hours)
+    if (authTime) {
+      const elapsed = Date.now() - parseInt(authTime);
+      const twentyFourHours = 24 * 60 * 60 * 1000;
+      if (elapsed > twentyFourHours) {
+        localStorage.removeItem("adminAuthenticated");
+        localStorage.removeItem("adminAuthTime");
+        toast.error("פג תוקף ההתחברות");
+        setLocation("/admin/login");
+      }
+    }
+  }, [setLocation]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("adminAuthenticated");
+    localStorage.removeItem("adminAuthTime");
+    toast.success("התנתקת בהצלחה");
+    setLocation("/admin/login");
+  };
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
   const [selectedRegistrationId, setSelectedRegistrationId] = useState<number | null>(null);
   const [selectedDates, setSelectedDates] = useState<Record<number, DateOption>>({});
@@ -413,8 +446,20 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-6">
         <div className="container">
-          <h1 className="text-2xl font-bold">ממשק ניהול - סיורים בוונציה</h1>
-          <p className="text-blue-100 mt-1 text-sm">ניהול הרשמות לפי תאריכים</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold">ממשק ניהול - סיורים בוונציה</h1>
+              <p className="text-blue-100 mt-1 text-sm">ניהול הרשמות לפי תאריכים</p>
+            </div>
+            <Button 
+              onClick={handleLogout}
+              variant="outline"
+              className="bg-white/10 hover:bg-white/20 text-white border-white/30"
+            >
+              <LogOut className="h-4 w-4 ml-2" />
+              התנתקות
+            </Button>
+          </div>
         </div>
       </div>
 
