@@ -221,3 +221,6 @@
   - Available spots (red bold)
   - Single room requests (blue bold)
   - Additional luggage requests (purple bold)
+
+## Bug Fixes
+- [x] Fix admin dashboard error when accessing singleRoomUpgrade field on old registrations
