@@ -165,6 +165,7 @@ export default function RegisterStep2() {
                   htmlFor="passportConfirmed" 
                   className="text-sm font-medium leading-relaxed cursor-pointer flex-1"
                 >
+                  <span className="text-red-500 font-bold">* </span>
                   אני מאשר/ת שאני מצויד/ה בדרכון בתוקף למשך 6 חודשים לפחות מיום הנסיעה
                 </Label>
               </div>
@@ -183,6 +184,7 @@ export default function RegisterStep2() {
                   htmlFor="insuranceAcknowledged" 
                   className="text-sm font-medium leading-relaxed cursor-pointer flex-1"
                 >
+                  <span className="text-red-500 font-bold">* </span>
                   ידוע לי שעלי לרכוש ביטוח נסיעות המותאם לצרכי בטרם היציאה מהארץ
                 </Label>
               </div>

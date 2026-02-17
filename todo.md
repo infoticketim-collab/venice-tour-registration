@@ -210,3 +210,6 @@
 - [x] Update database schema to include single room upgrade field
 - [x] Add single room upgrade field to admin dashboard display
 - [x] Update email templates to include single room upgrade information
+
+## Required Checkbox Indicator
+- [x] Add red asterisk (*) indicator to required checkboxes (passport and insurance)
