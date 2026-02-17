@@ -1,0 +1,26 @@
+{
+  "query": "SELECT p.* FROM registrations r JOIN participants p ON r.id = p.registrationId WHERE r.orderNumber = 1024",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3B86zBQzCDtZnPP.42020c08beca --database mDCqxtLbyjEfeXNALj3Bf7 --execute SELECT p.* FROM registrations r JOIN participants p ON r.id = p.registrationId WHERE r.orderNumber = 1024",
+  "rows": [
+    {
+      "id": "210003",
+      "registrationId": "210003",
+      "firstNameHe": "חככח",
+      "lastNameHe": "כצהח",
+      "firstNameEn": "Dhdhd",
+      "lastNameEn": "Bdbdd",
+      "phone": "656565",
+      "email": "eyalr@mona.co.il",
+      "birthDate": "2026-02-20",
+      "passportConfirmed": "1",
+      "createdAt": "2026-02-17 05:14:13",
+      "insuranceAcknowledged": "1",
+      "additionalLuggage": "1",
+      "singleRoomUpgrade": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tregistrationId\tfirstNameHe\tlastNameHe\tfirstNameEn\tlastNameEn\tphone\temail\tbirthDate\tpassportConfirmed\tcreatedAt\tinsuranceAcknowledged\tadditionalLuggage\tsingleRoomUpgrade\n210003\t210003\tחככח\tכצהח\tDhdhd\tBdbdd\t656565\teyalr@mona.co.il\t2026-02-20\t1\t2026-02-17 05:14:13\t1\t1\t1\n",
+  "stderr": "",
+  "execution_time_ms": 1597
+}

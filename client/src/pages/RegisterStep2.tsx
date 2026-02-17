@@ -195,7 +195,7 @@ export default function RegisterStep2() {
                   id="additionalLuggage"
                   checked={formData.additionalLuggage}
                   onCheckedChange={(checked) => 
-                    setFormData({ ...formData, additionalLuggage: checked as boolean })
+                    setFormData({ ...formData, additionalLuggage: checked === true })
                   }
                   className="mt-0.5"
                 />
@@ -214,7 +214,7 @@ export default function RegisterStep2() {
                   id="singleRoomUpgrade"
                   checked={formData.singleRoomUpgrade}
                   onCheckedChange={(checked) => 
-                    setFormData({ ...formData, singleRoomUpgrade: checked as boolean })
+                    setFormData({ ...formData, singleRoomUpgrade: checked === true })
                   }
                   className="mt-0.5"
                 />

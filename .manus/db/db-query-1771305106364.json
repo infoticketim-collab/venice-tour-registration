@@ -1,0 +1,31 @@
+{
+  "query": "SHOW CREATE TABLE participants",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3B86zBQzCDtZnPP.42020c08beca --database mDCqxtLbyjEfeXNALj3Bf7 --execute SHOW CREATE TABLE participants",
+  "rows": [
+    {
+      "Table": "participants",
+      "Create Table": "CREATE TABLE `participants` ("
+    }
+  ],
+  "messages": [
+    "  `id` int(11) NOT NULL AUTO_INCREMENT,",
+    "  `registrationId` int(11) NOT NULL,",
+    "  `firstNameHe` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `lastNameHe` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `firstNameEn` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `lastNameEn` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `email` varchar(320) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `birthDate` date NOT NULL,",
+    "  `passportConfirmed` int(11) NOT NULL DEFAULT '0',",
+    "  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,",
+    "  `insuranceAcknowledged` int(11) NOT NULL DEFAULT '0',",
+    "  `additionalLuggage` int(11) NOT NULL DEFAULT '0',",
+    "  `singleRoomUpgrade` int(11) NOT NULL DEFAULT '0',",
+    "  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */",
+    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=240001"
+  ],
+  "stdout": "Table\tCreate Table\nparticipants\tCREATE TABLE `participants` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `registrationId` int(11) NOT NULL,\n  `firstNameHe` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `lastNameHe` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `firstNameEn` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `lastNameEn` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `email` varchar(320) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `birthDate` date NOT NULL,\n  `passportConfirmed` int(11) NOT NULL DEFAULT '0',\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `insuranceAcknowledged` int(11) NOT NULL DEFAULT '0',\n  `additionalLuggage` int(11) NOT NULL DEFAULT '0',\n  `singleRoomUpgrade` int(11) NOT NULL DEFAULT '0',\n  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=240001\n",
+  "stderr": "",
+  "execution_time_ms": 1541
+}

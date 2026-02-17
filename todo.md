@@ -224,3 +224,4 @@
 
 ## Bug Fixes
 - [x] Fix admin dashboard error when accessing singleRoomUpgrade field on old registrations
+- [x] Fix singleRoomUpgrade and additionalLuggage checkboxes not saving to database - Fixed display logic to handle database integer values (0/1) correctly

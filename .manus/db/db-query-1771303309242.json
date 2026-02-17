@@ -1,0 +1,34 @@
+{
+  "query": "SELECT id, firstNameHe, lastNameHe, additionalLuggage, singleRoomUpgrade, createdAt FROM participants ORDER BY id DESC LIMIT 3",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3B86zBQzCDtZnPP.42020c08beca --database mDCqxtLbyjEfeXNALj3Bf7 --execute SELECT id, firstNameHe, lastNameHe, additionalLuggage, singleRoomUpgrade, createdAt FROM participants ORDER BY id DESC LIMIT 3",
+  "rows": [
+    {
+      "id": "180001",
+      "firstNameHe": "Fjfj",
+      "lastNameHe": "Bfhf",
+      "additionalLuggage": "1",
+      "singleRoomUpgrade": "1",
+      "createdAt": "2026-02-17 04:38:43"
+    },
+    {
+      "id": "150001",
+      "firstNameHe": "אייל",
+      "lastNameHe": "רימר",
+      "additionalLuggage": "1",
+      "singleRoomUpgrade": "1",
+      "createdAt": "2026-02-17 03:54:21"
+    },
+    {
+      "id": "120001",
+      "firstNameHe": "אביבית ",
+      "lastNameHe": "מעודה ",
+      "additionalLuggage": "1",
+      "singleRoomUpgrade": "0",
+      "createdAt": "2026-02-16 20:22:51"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tfirstNameHe\tlastNameHe\tadditionalLuggage\tsingleRoomUpgrade\tcreatedAt\n180001\tFjfj\tBfhf\t1\t1\t2026-02-17 04:38:43\n150001\tאייל\tרימר\t1\t1\t2026-02-17 03:54:21\n120001\tאביבית \tמעודה \t1\t0\t2026-02-16 20:22:51\n",
+  "stderr": "",
+  "execution_time_ms": 1597
+}

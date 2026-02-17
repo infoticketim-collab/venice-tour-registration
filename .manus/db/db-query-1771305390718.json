@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE participants p \nJOIN registrations r ON p.registrationId = r.id \nSET p.additionalLuggage = 1, p.singleRoomUpgrade = 1 \nWHERE r.orderNumber = 1024",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3B86zBQzCDtZnPP.42020c08beca --database mDCqxtLbyjEfeXNALj3Bf7 --execute UPDATE participants p \nJOIN registrations r ON p.registrationId = r.id \nSET p.additionalLuggage = 1, p.singleRoomUpgrade = 1 \nWHERE r.orderNumber = 1024",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1663
+}

@@ -82,7 +82,12 @@ export default function AdminDashboard() {
 
   const { data: registrations, isLoading, refetch } = trpc.admin.getAllRegistrations.useQuery(
     undefined,
-    { enabled: user?.role === "admin" }
+    { 
+      enabled: user?.role === "admin",
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      staleTime: 0,
+    }
   );
 
   const utils = trpc.useUtils();
@@ -324,8 +329,8 @@ export default function AdminDashboard() {
                 <div><span className="font-medium">טלפון:</span> {reg.participants[0]?.phone}</div>
                 <div><span className="font-medium">תאריך לידה:</span> {new Date(reg.participants[0]?.birthDate).toLocaleDateString('he-IL')}</div>
                 <div><span className="font-medium">שם באנגלית:</span> {reg.participants[0]?.firstNameEn} {reg.participants[0]?.lastNameEn}</div>
-                <div><span className="font-medium">תוספת מזוודה:</span> {reg.participants[0]?.additionalLuggage === true ? <span className="text-green-600 font-semibold">כן</span> : <span className="text-muted-foreground">לא</span>}</div>
-                <div><span className="font-medium">שדרוג חדר יחיד:</span> {reg.participants[0]?.singleRoomUpgrade === true ? <span className="text-green-600 font-semibold">כן</span> : <span className="text-muted-foreground">לא</span>}</div>
+                <div><span className="font-medium">תוספת מזוודה:</span> {reg.participants[0]?.additionalLuggage ? <span className="text-green-600 font-semibold">כן</span> : <span className="text-muted-foreground">לא</span>}</div>
+                <div><span className="font-medium">שדרוג חדר יחיד:</span> {reg.participants[0]?.singleRoomUpgrade ? <span className="text-green-600 font-semibold">כן</span> : <span className="text-muted-foreground">לא</span>}</div>
               </div>
             </TableCell>
           </TableRow>
@@ -340,8 +345,8 @@ export default function AdminDashboard() {
     const rejected = registrations.filter(r => r.status === "rejected");
     
     // Calculate statistics
-    const singleRoomCount = approved.filter(r => r.participants?.[0]?.singleRoomUpgrade === true).length;
-    const luggageCount = approved.filter(r => r.participants?.[0]?.additionalLuggage === true).length;
+    const singleRoomCount = approved.filter(r => r.participants?.[0]?.singleRoomUpgrade).length;
+    const luggageCount = approved.filter(r => r.participants?.[0]?.additionalLuggage).length;
 
     return (
       <div className="space-y-4">
