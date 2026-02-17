@@ -54,6 +54,10 @@ export async function sendCustomerConfirmationEmail(params: {
   tourTitle: string;
   datePreference: string;
   birthDate: string;
+  phone: string;
+  email: string;
+  additionalLuggage: boolean;
+  singleRoomUpgrade: boolean;
 }): Promise<boolean> {
   const html = `
 <!DOCTYPE html>
@@ -83,11 +87,21 @@ export async function sendCustomerConfirmationEmail(params: {
 
     <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
       <h2 style="color: #1e293b; font-size: 18px; margin-top: 0;">פרטי ההזמנה</h2>
-      <p><strong>שם:</strong> ${params.customerName}</p>
-      <p><strong>סיור:</strong> ${params.tourTitle}</p>
-      <p><strong>תאריך מועדף:</strong> ${params.datePreference}</p>
-      <p><strong>תאריך לידה:</strong> ${params.birthDate}</p>
+      <p style="margin: 8px 0;"><strong>שם:</strong> ${params.customerName}</p>
+      <p style="margin: 8px 0;"><strong>סיור:</strong> ${params.tourTitle}</p>
+      <p style="margin: 8px 0;"><strong>תאריך מועדף:</strong> ${params.datePreference}</p>
+      <p style="margin: 8px 0;"><strong>תאריך לידה:</strong> ${params.birthDate}</p>
+      <p style="margin: 8px 0;"><strong>טלפון:</strong> ${params.phone}</p>
+      <p style="margin: 8px 0;"><strong>דוא\"ל:</strong> ${params.email}</p>
     </div>
+
+    ${params.additionalLuggage || params.singleRoomUpgrade ? `
+    <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #f59e0b;">
+      <h3 style="color: #92400e; font-size: 16px; margin-top: 0;">שירותים נלווים שהוזמנו:</h3>
+      ${params.additionalLuggage ? '<p style="margin: 5px 0;">✓ תוספת מזוודה (60 יורו)</p>' : ''}
+      ${params.singleRoomUpgrade ? '<p style="margin: 5px 0;">✓ שדרוג לחדר יחיד (275 יורו)</p>' : ''}
+    </div>
+    ` : ''}
 
     <div style="background-color: #eff6ff; padding: 15px; border-radius: 8px; border-right: 4px solid #2563eb; margin-bottom: 20px;">
       <p style="margin: 0; font-size: 14px;">
@@ -124,6 +138,9 @@ export async function sendCustomerApprovalEmail(params: {
   orderNumber: number;
   customerName: string;
   tourTitle: string;
+  datePreference: string;
+  additionalLuggage: boolean;
+  singleRoomUpgrade: boolean;
 }): Promise<boolean> {
   const html = `
 <!DOCTYPE html>
@@ -147,14 +164,36 @@ export async function sendCustomerApprovalEmail(params: {
     </p>
 
     <div style="background-color: #f0fdf4; padding: 20px; border-radius: 8px; border-right: 4px solid #22c55e; margin-bottom: 20px;">
-      <p style="margin: 0; font-size: 16px;">
-        שמחים לבשר לך שההזמנה שלך לסיור "${params.tourTitle}" אושרה בהצלחה!
+      <p style="margin: 0 0 10px 0; font-size: 16px;">
+        ברכות! ההזמנה שלך לסיור "${params.tourTitle}" אושרה בהצלחה!
+      </p>
+      <p style="margin: 0; font-size: 14px; color: #166534;">
+        <strong>תאריך הסיור:</strong> ${params.datePreference}
       </p>
     </div>
+
+    ${params.additionalLuggage || params.singleRoomUpgrade ? `
+    <div style="background-color: #fef3c7; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #f59e0b;">
+      <h3 style="color: #92400e; font-size: 16px; margin-top: 0;">שירותים נלווים</h3>
+      <p style="margin: 0 0 10px 0; font-size: 14px;">קיבלנו את בקשתכם ל:</p>
+      ${params.additionalLuggage ? '<p style="margin: 5px 0 5px 20px;">✓ תוספת מזוודה (60 יורו)</p>' : ''}
+      ${params.singleRoomUpgrade ? '<p style="margin: 5px 0 5px 20px;">✓ שדרוג לחדר יחיד (275 יורו)</p>' : ''}
+      <p style="margin: 10px 0 0 0; font-size: 14px; font-weight: bold; color: #92400e;">נציגנו יצרו עמכם קשר בהקדם</p>
+    </div>
+    ` : ''}
 
     <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
       <p style="margin: 0 0 10px 0; color: #64748b; font-size: 14px;">מספר הזמנה</p>
       <p style="margin: 0; font-size: 28px; font-weight: bold; color: #22c55e;">${params.orderNumber}</p>
+    </div>
+
+    <div style="background-color: #fef2f2; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #dc2626;">
+      <p style="margin: 0; font-size: 16px; font-weight: bold; color: #991b1b;">
+        ⚠️ תזכורת חשובה
+      </p>
+      <p style="margin: 10px 0 0 0; font-size: 14px; color: #991b1b;">
+        מזכירים שוב, חובה להצטייד מבעוד מועד בביטוח בריאות חו"ל המותאם לצרכיכם
+      </p>
     </div>
 
     <div style="background-color: #eff6ff; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
@@ -215,7 +254,7 @@ export async function sendCustomerRejectionEmail(params: {
 
     <div style="background-color: #fef2f2; padding: 20px; border-radius: 8px; border-right: 4px solid #dc2626; margin-bottom: 20px;">
       <p style="margin: 0; font-size: 16px;">
-        לצערנו, ההזמנה שלך לסיור "${params.tourTitle}" לא אושרה.
+        ההזמנה שלך לסיור "${params.tourTitle}" נדחתה.
       </p>
     </div>
 
@@ -224,10 +263,13 @@ export async function sendCustomerRejectionEmail(params: {
       <p style="margin: 0; font-size: 28px; font-weight: bold; color: #64748b;">${params.orderNumber}</p>
     </div>
 
-    <div style="background-color: #eff6ff; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-      <p style="margin: 0; font-size: 14px;">
-        ייתכן שהסיבה היא מחסור במקומות או אי התאמה בתאריכים.<br>
-        אנו ממליצים ליצור קשר עם צוות ניצת הדובדבן לבירור פרטים נוספים ולבדיקת אפשרויות חלופיות.
+    <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+      <p style="margin: 0 0 15px 0; font-size: 14px;">
+        ניתן ליצור קשר עם צוות ההנהלה לפרטים נוספים:
+      </p>
+      <p style="margin: 0; font-size: 16px; text-align: center;">
+        <strong style="color: #2563eb;">אורי בראון</strong><br>
+        <a href="mailto:Ori@nizat.co.il" style="color: #2563eb; text-decoration: none; font-size: 14px;">Ori@nizat.co.il</a>
       </p>
     </div>
 

@@ -115,6 +115,10 @@ export const appRouter = router({
             tourTitle: tour.title,
             datePreference: datePreferenceText,
             birthDate: new Date(input.participant.birthDate).toLocaleDateString('he-IL'),
+            phone: input.participant.phone,
+            email: input.participant.email,
+            additionalLuggage: input.participant.additionalLuggage,
+            singleRoomUpgrade: input.participant.singleRoomUpgrade,
           }).catch(err => 
             console.error("Failed to send customer confirmation email:", err)
           );
@@ -181,12 +185,20 @@ export const appRouter = router({
         // Send approval email to customer
         const participants = await db.getParticipantsByRegistrationId(input.registrationId);
         const tour = await db.getTourById(registration.tourId);
-        if (participants[0] && tour) {
+        if (participants[0] && tour && updated) {
+          const dateText = 
+            (updated.assignedDate || updated.datePreference) === "may_4_6" ? "4-6 במאי 2026" :
+            (updated.assignedDate || updated.datePreference) === "may_25_27" ? "25-27 במאי 2026" :
+            "תאריך יקבע בהמשך";
+          
           sendCustomerApprovalEmail({
             customerEmail: participants[0].email,
             orderNumber: registration.orderNumber,
             customerName: `${participants[0].firstNameHe} ${participants[0].lastNameHe}`,
             tourTitle: tour.title,
+            datePreference: dateText,
+            additionalLuggage: participants[0].additionalLuggage === 1,
+            singleRoomUpgrade: participants[0].singleRoomUpgrade === 1,
           }).catch(err => 
             console.error("Failed to send customer approval email:", err)
           );
@@ -223,12 +235,20 @@ export const appRouter = router({
         // Send approval email to customer
         const participants = await db.getParticipantsByRegistrationId(input.registrationId);
         const tour = await db.getTourById(registration.tourId);
-        if (participants[0] && tour) {
+        if (participants[0] && tour && updated) {
+          const dateText = 
+            (updated.assignedDate || updated.datePreference) === "may_4_6" ? "4-6 במאי 2026" :
+            (updated.assignedDate || updated.datePreference) === "may_25_27" ? "25-27 במאי 2026" :
+            "תאריך יקבע בהמשך";
+          
           sendCustomerApprovalEmail({
             customerEmail: participants[0].email,
             orderNumber: registration.orderNumber,
             customerName: `${participants[0].firstNameHe} ${participants[0].lastNameHe}`,
             tourTitle: tour.title,
+            datePreference: dateText,
+            additionalLuggage: participants[0].additionalLuggage === 1,
+            singleRoomUpgrade: participants[0].singleRoomUpgrade === 1,
           }).catch(err => 
             console.error("Failed to send customer approval email:", err)
           );
