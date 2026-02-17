@@ -231,3 +231,12 @@
 - [x] Add approval email with insurance reminder and add-ons notification
 - [x] Add rejection email with polite message and Ori's contact info
 - [x] Test all three email scenarios
+
+## Email Delivery Issues
+- [x] Debug why registration confirmation email not sent for order 1027 - Found: Resend requires domain verification
+- [ ] Configure Resend domain verification for nizat-venice.digital (pending user action)
+- [ ] Update email sender to noreply@nizat-venice.digital (pending domain verification)
+
+## Production Preparation
+- [x] Clean all test registrations from database
+- [x] Reset tour available spots to 32 for both dates
