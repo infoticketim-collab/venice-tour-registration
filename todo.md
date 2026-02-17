@@ -213,3 +213,11 @@
 
 ## Required Checkbox Indicator
 - [x] Add red asterisk (*) indicator to required checkboxes (passport and insurance)
+
+## Admin Dashboard Statistics Summary
+- [x] Add statistics summary for each tour date with:
+  - Group size (black bold)
+  - Number of registered (green bold)
+  - Available spots (red bold)
+  - Single room requests (blue bold)
+  - Additional luggage requests (purple bold)

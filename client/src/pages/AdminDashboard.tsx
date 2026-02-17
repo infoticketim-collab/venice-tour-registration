@@ -338,15 +338,25 @@ export default function AdminDashboard() {
     const pending = registrations.filter(r => r.status === "pending");
     const approved = registrations.filter(r => r.status === "approved");
     const rejected = registrations.filter(r => r.status === "rejected");
+    
+    // Calculate statistics
+    const singleRoomCount = approved.filter(r => r.participant.singleRoomUpgrade).length;
+    const luggageCount = approved.filter(r => r.participant.additionalLuggage).length;
 
     return (
       <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <Calendar className="w-6 h-6 text-primary" />
-          <h2 className="text-2xl font-bold">{title}</h2>
-          <Badge variant="outline" className="text-sm">
-            32 איש בקבוצה / {approved.length} רשומים / {32 - approved.length} מקומות פנויים
-          </Badge>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <Calendar className="w-6 h-6 text-primary" />
+            <h2 className="text-2xl font-bold">{title}</h2>
+          </div>
+          <div className="flex flex-wrap gap-4 text-sm">
+            <span className="font-bold text-black">גודל קבוצה: 32</span>
+            <span className="font-bold text-green-600">מספר נרשמים: {approved.length}</span>
+            <span className="font-bold text-red-600">מספר מקומות פנויים: {32 - approved.length}</span>
+            <span className="font-bold text-blue-600">מספר בקשות לחדר ליחיד: {singleRoomCount}</span>
+            <span className="font-bold text-purple-600">מספר בקשות למזוודה: {luggageCount}</span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
