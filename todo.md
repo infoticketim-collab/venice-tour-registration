@@ -204,3 +204,9 @@
 ## Logo Positioning Fix
 - [x] Fix logo positioning on mobile - make it full width above the title
 - [x] Ensure title is not covered by logo
+
+## Single Room Upgrade Feature
+- [x] Add optional checkbox for single room upgrade (275 EUR) to registration form
+- [x] Update database schema to include single room upgrade field
+- [x] Add single room upgrade field to admin dashboard display
+- [x] Update email templates to include single room upgrade information

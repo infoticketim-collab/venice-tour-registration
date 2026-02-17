@@ -1,0 +1,1 @@
+ALTER TABLE `participants` ADD `singleRoomUpgrade` int DEFAULT 0 NOT NULL;

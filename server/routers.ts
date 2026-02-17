@@ -64,6 +64,7 @@ export const appRouter = router({
           passportConfirmed: z.boolean(),
           insuranceAcknowledged: z.boolean(),
           additionalLuggage: z.boolean(),
+          singleRoomUpgrade: z.boolean(),
         }),
       }))
       .mutation(async ({ input }) => {
@@ -91,6 +92,7 @@ export const appRouter = router({
           passportConfirmed: input.participant.passportConfirmed ? 1 : 0,
           insuranceAcknowledged: input.participant.insuranceAcknowledged ? 1 : 0,
           additionalLuggage: input.participant.additionalLuggage ? 1 : 0,
+          singleRoomUpgrade: input.participant.singleRoomUpgrade ? 1 : 0,
         });
         
         // Send email notification to admin

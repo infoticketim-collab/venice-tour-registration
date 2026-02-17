@@ -21,6 +21,7 @@ export default function RegisterStep2() {
     passportConfirmed: false,
     insuranceAcknowledged: false,
     additionalLuggage: false,
+    singleRoomUpgrade: false,
   });
 
   const [step1Data, setStep1Data] = useState<any>(null);
@@ -67,6 +68,7 @@ export default function RegisterStep2() {
         passportConfirmed: formData.passportConfirmed,
         insuranceAcknowledged: formData.insuranceAcknowledged,
         additionalLuggage: formData.additionalLuggage,
+        singleRoomUpgrade: formData.singleRoomUpgrade,
       },
     });
   };
@@ -200,6 +202,25 @@ export default function RegisterStep2() {
                   className="text-sm font-medium leading-relaxed cursor-pointer flex-1"
                 >
                   ברצוני להוסיף מזוודה לשליחה לבטן המטוס בעלות של 60 יורו
+                  <span className="text-xs text-muted-foreground block mt-1">(אופציונלי)</span>
+                </Label>
+              </div>
+
+              {/* Single Room Upgrade (Optional) */}
+              <div className="flex items-start gap-3 p-4 border rounded-lg hover:bg-accent/20 transition-colors">
+                <Checkbox
+                  id="singleRoomUpgrade"
+                  checked={formData.singleRoomUpgrade}
+                  onCheckedChange={(checked) => 
+                    setFormData({ ...formData, singleRoomUpgrade: checked as boolean })
+                  }
+                  className="mt-0.5"
+                />
+                <Label 
+                  htmlFor="singleRoomUpgrade" 
+                  className="text-sm font-medium leading-relaxed cursor-pointer flex-1"
+                >
+                  אני מעוניין/ת בשדרוג חדר ליחיד בעלות של 275 יורו
                   <span className="text-xs text-muted-foreground block mt-1">(אופציונלי)</span>
                 </Label>
               </div>
