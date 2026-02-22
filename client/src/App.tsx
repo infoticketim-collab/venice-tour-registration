@@ -6,6 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Landing from "./pages/Landing";
 import RegionSelect from "./pages/RegionSelect";
+import TripDetails from "./pages/TripDetails";
 import TourInfo from "./pages/TourInfo";
 import RegisterStep1 from "./pages/RegisterStep1";
 import RegisterStep2 from "./pages/RegisterStep2";
@@ -18,6 +19,7 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Landing} />
       <Route path="/region-select" component={RegionSelect} />
+      <Route path="/trip-details" component={TripDetails} />
       <Route path="/tour-info" component={TourInfo} />
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin" component={AdminDashboard} />

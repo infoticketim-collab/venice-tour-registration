@@ -8,8 +8,8 @@ export default function RegionSelect() {
   const handleRegionSelect = (region: string) => {
     // Store region in sessionStorage to use in registration
     sessionStorage.setItem("selectedRegion", region);
-    // Navigate to registration with tour ID 1 (assuming first tour)
-    setLocation("/register/1");
+    // Navigate to trip details page
+    setLocation("/trip-details");
   };
 
   return (

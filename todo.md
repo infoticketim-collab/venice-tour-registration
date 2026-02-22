@@ -255,3 +255,7 @@
 ## Final Production Preparation
 - [x] Clean all test registrations from database before launch
 - [x] Reset order counter to start from 1000
+
+## Trip Details Page
+- [x] Restore trip details page with flight times, hotel, and itinerary
+- [x] Add trip details page to registration flow (after region selection, before registration form)
