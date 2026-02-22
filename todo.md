@@ -234,8 +234,8 @@
 
 ## Email Delivery Issues
 - [x] Debug why registration confirmation email not sent for order 1027 - Found: Resend requires domain verification
-- [ ] Configure Resend domain verification for nizat-venice.digital (pending user action)
-- [ ] Update email sender to noreply@nizat-venice.digital (pending domain verification)
+- [x] Configure Resend domain verification for nizat-venice.digital
+- [x] Update email sender to noreply@nizat-venice.digital
 
 ## Production Preparation
 - [x] Clean all test registrations from database
