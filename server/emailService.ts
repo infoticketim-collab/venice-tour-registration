@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import { ENV } from "./_core/env";
 
-const resend = new Resend(ENV.resendApiKey);
+const resend = new Resend(ENV.resendApiKey || "re_placeholder_key");
 
 export interface SendEmailParams {
   to: string | string[];
