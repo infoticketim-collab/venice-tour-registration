@@ -50,6 +50,7 @@ export const registrations = mysqlTable("registrations", {
   tourId: int("tourId").notNull(),
   orderNumber: int("orderNumber").notNull().unique(),
   status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("pending").notNull(),
+  region: varchar("region", { length: 100 }),
   datePreference: mysqlEnum("datePreference", ["may_4_6", "may_25_27", "no_preference"]),
   assignedDate: mysqlEnum("assignedDate", ["may_4_6", "may_25_27"]),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

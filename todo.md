@@ -240,3 +240,11 @@
 ## Production Preparation
 - [x] Clean all test registrations from database
 - [x] Reset tour available spots to 32 for both dates
+
+## Region-Based Registration Flow
+- [x] Upload logo and create new landing page with teaser text
+- [x] Create region selection page (Sharon/Center/South vs North/TA/Jerusalem)
+- [x] Update database schema to add region field
+- [x] Remove date selection from registration form (auto-assign based on region)
+- [x] Update admin dashboard to display region
+- [x] Test complete registration flow

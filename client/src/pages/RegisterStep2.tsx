@@ -56,7 +56,9 @@ export default function RegisterStep2() {
 
     createRegistration.mutate({
       tourId,
-      datePreference: step1Data.datePreference,
+      region: step1Data.region,
+      assignedDate: step1Data.assignedDate,
+      datePreference: step1Data.assignedDate, // Use assigned date as preference
       participant: {
         firstNameHe: step1Data.firstNameHe,
         lastNameHe: step1Data.lastNameHe,

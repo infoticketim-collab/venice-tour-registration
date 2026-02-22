@@ -18,14 +18,24 @@ export default function RegisterStep1() {
     lastNameHe: "",
     phone: "",
     email: "",
-    datePreference: "" as "" | "may_4_6" | "may_25_27" | "no_preference",
   });
+
+  // Get region from sessionStorage
+  const selectedRegion = sessionStorage.getItem("selectedRegion") || "";
+  
+  // Determine date based on region
+  const assignedDate = selectedRegion === "שרון, מרכז ודרום" ? "may_4_6" : "may_25_27";
 
   const { data: tour } = trpc.tours.getById.useQuery({ id: tourId });
 
   const handleContinue = () => {
-    // Store form data in sessionStorage to pass to next step
-    sessionStorage.setItem("registrationStep1", JSON.stringify(formData));
+    // Store form data with region and assigned date in sessionStorage
+    const dataToStore = {
+      ...formData,
+      region: selectedRegion,
+      assignedDate,
+    };
+    sessionStorage.setItem("registrationStep1", JSON.stringify(dataToStore));
     setLocation(`/register/${tourId}/step2`);
   };
 
@@ -34,7 +44,7 @@ export default function RegisterStep1() {
     formData.lastNameHe.trim() !== "" &&
     formData.phone.trim() !== "" &&
     formData.email.trim() !== "" &&
-    formData.datePreference !== "";
+    selectedRegion !== "";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background py-12">
@@ -43,7 +53,7 @@ export default function RegisterStep1() {
         <Button
           variant="ghost"
           className="mb-6"
-          onClick={() => setLocation("/")}
+          onClick={() => setLocation("/region-select")}
         >
           <ArrowRight className="w-4 h-4 ml-2" />
           חזרה
@@ -107,37 +117,16 @@ export default function RegisterStep1() {
               </div>
             </div>
 
-            {/* Date Preference */}
+            {/* Selected Region and Date Display */}
             <div className="space-y-4 pt-4 border-t">
-              <Label className="text-lg font-semibold text-right block">בחר את התאריך המועדף עליך</Label>
-              <RadioGroup
-                value={formData.datePreference}
-                onValueChange={(value) => setFormData({ ...formData, datePreference: value as any })}
-                className="space-y-3"
-                dir="rtl"
-              >
-                <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer">
-                  <RadioGroupItem value="may_4_6" id="may_4_6" />
-                  <Label htmlFor="may_4_6" className="flex-1 cursor-pointer font-normal text-right">
-                    <div className="font-semibold">סבב ראשון</div>
-                    <div className="text-sm text-muted-foreground">4-6 במאי 2026</div>
-                  </Label>
-                </div>
-                <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer">
-                  <RadioGroupItem value="may_25_27" id="may_25_27" />
-                  <Label htmlFor="may_25_27" className="flex-1 cursor-pointer font-normal text-right">
-                    <div className="font-semibold">סבב שני</div>
-                    <div className="text-sm text-muted-foreground">25-27 במאי 2026</div>
-                  </Label>
-                </div>
-                <div className="flex items-center gap-3 p-4 border rounded-lg hover:bg-accent/50 transition-colors cursor-pointer">
-                  <RadioGroupItem value="no_preference" id="no_preference" />
-                  <Label htmlFor="no_preference" className="flex-1 cursor-pointer font-normal text-right">
-                    <div className="font-semibold">אין לי העדפה</div>
-                    <div className="text-sm text-muted-foreground">כל תאריך מתאים לי</div>
-                  </Label>
-                </div>
-              </RadioGroup>
+              <div className="bg-blue-50 rounded-lg p-6 text-center">
+                <Label className="text-lg font-semibold block mb-2">האזור שנבחר</Label>
+                <p className="text-xl font-bold text-blue-700 mb-4">{selectedRegion}</p>
+                <Label className="text-lg font-semibold block mb-2">תאריך הסיור</Label>
+                <p className="text-xl font-bold text-gray-800">
+                  {assignedDate === "may_4_6" ? "4-6 במאי 2026" : "25-27 במאי 2026"}
+                </p>
+              </div>
             </div>
 
             {/* Continue Button */}

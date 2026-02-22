@@ -325,6 +325,7 @@ export default function AdminDashboard() {
           <TableRow className="bg-muted/20">
             <TableCell colSpan={showStatus ? (showDateSelector ? 6 : 5) : 4} className="py-2">
               <div className="text-xs space-y-1 pr-6">
+                {reg.region && <div><span className="font-medium">אזור:</span> <span className="text-blue-600 font-semibold">{reg.region}</span></div>}
                 <div><span className="font-medium">מייל:</span> {reg.participants[0]?.email}</div>
                 <div><span className="font-medium">טלפון:</span> {reg.participants[0]?.phone}</div>
                 <div><span className="font-medium">תאריך לידה:</span> {new Date(reg.participants[0]?.birthDate).toLocaleDateString('he-IL')}</div>

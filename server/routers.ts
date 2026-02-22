@@ -52,6 +52,8 @@ export const appRouter = router({
     create: publicProcedure
       .input(z.object({
         tourId: z.number(),
+        region: z.string().optional(),
+        assignedDate: z.enum(["may_4_6", "may_25_27"]).optional(),
         datePreference: z.enum(["may_4_6", "may_25_27", "no_preference"]).optional(),
         participant: z.object({
           firstNameHe: z.string().min(1),
@@ -75,6 +77,8 @@ export const appRouter = router({
         const registration = await db.createRegistration({
           tourId: input.tourId,
           orderNumber,
+          region: input.region,
+          assignedDate: input.assignedDate,
           datePreference: input.datePreference,
           status: "pending",
         });

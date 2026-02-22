@@ -4,6 +4,8 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import Landing from "./pages/Landing";
+import RegionSelect from "./pages/RegionSelect";
 import TourInfo from "./pages/TourInfo";
 import RegisterStep1 from "./pages/RegisterStep1";
 import RegisterStep2 from "./pages/RegisterStep2";
@@ -14,7 +16,9 @@ import AdminLogin from "./pages/AdminLogin";
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={TourInfo} />
+      <Route path={"/"} component={Landing} />
+      <Route path="/region-select" component={RegionSelect} />
+      <Route path="/tour-info" component={TourInfo} />
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/register/:tourId">

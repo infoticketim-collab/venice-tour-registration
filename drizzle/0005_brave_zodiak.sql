@@ -1,0 +1,1 @@
+ALTER TABLE `registrations` ADD `region` varchar(100);

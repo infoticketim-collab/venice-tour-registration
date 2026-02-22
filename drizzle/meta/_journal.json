@@ -36,6 +36,13 @@
       "when": 1771300154174,
       "tag": "0004_brave_king_bedlam",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1771752408453,
+      "tag": "0005_brave_zodiak",
+      "breakpoints": true
     }
   ]
 }
