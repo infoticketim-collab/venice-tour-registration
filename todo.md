@@ -248,3 +248,6 @@
 - [x] Remove date selection from registration form (auto-assign based on region)
 - [x] Update admin dashboard to display region
 - [x] Test complete registration flow
+
+## Bug Fixes
+- [x] Fix 404 error when selecting region - incorrect routing to registration page
