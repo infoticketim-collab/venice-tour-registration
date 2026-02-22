@@ -1,0 +1,10 @@
+[build]
+builder = "nixpacks"
+buildCommand = "pnpm install && pnpm run build"
+
+[deploy]
+startCommand = "pnpm run db:setup && node dist/index.js"
+healthcheckPath = "/"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
