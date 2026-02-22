@@ -87,7 +87,7 @@ export default function RegisterStep2() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background py-12">
+    <div className="min-h-screen bg-gradient-to-b from-red-50 to-background py-12">
       <div className="container max-w-2xl">
         {/* Back Button */}
         <Button
@@ -205,7 +205,7 @@ export default function RegisterStep2() {
                   htmlFor="additionalLuggage" 
                   className="text-sm font-medium leading-relaxed cursor-pointer flex-1"
                 >
-                  ברצוני להוסיף מזוודה לשליחה לבטן המטוס בעלות של 60 יורו
+                  ברצוני להוסיף מזוודה נוספת לבטן המטוס (בתשלום נפרד)
                   <span className="text-xs text-muted-foreground block mt-1">(אופציונלי)</span>
                 </Label>
               </div>
@@ -224,7 +224,7 @@ export default function RegisterStep2() {
                   htmlFor="singleRoomUpgrade" 
                   className="text-sm font-medium leading-relaxed cursor-pointer flex-1"
                 >
-                  אני מעוניין/ת בשדרוג חדר ליחיד בעלות של 275 יורו
+                  אני מעוניין/ת בשדרוג לחדר יחיד (275 דולר)
                   <span className="text-xs text-muted-foreground block mt-1">(אופציונלי)</span>
                 </Label>
               </div>

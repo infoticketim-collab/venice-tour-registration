@@ -53,8 +53,8 @@ export const appRouter = router({
       .input(z.object({
         tourId: z.number(),
         region: z.string().optional(),
-        assignedDate: z.enum(["may_4_6", "may_25_27"]).optional(),
-        datePreference: z.enum(["may_4_6", "may_25_27", "no_preference"]).optional(),
+        assignedDate: z.enum(["june_28_jul_1"]).optional(),
+        datePreference: z.enum(["june_28_jul_1", "no_preference"]).optional(),
         participant: z.object({
           firstNameHe: z.string().min(1),
           lastNameHe: z.string().min(1),
@@ -108,8 +108,8 @@ export const appRouter = router({
         const tour = await db.getTourById(input.tourId);
         if (tour) {
           const datePreferenceText = 
-            input.datePreference === "may_4_6" ? "4-6 במאי 2026" :
-            input.datePreference === "may_25_27" ? "25-27 במאי 2026" :
+            input.datePreference === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
+            input.datePreference === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
             "אין העדפה";
           
           sendCustomerConfirmationEmail({
@@ -158,7 +158,7 @@ export const appRouter = router({
     assignDateAndApprove: adminProcedure
       .input(z.object({ 
         registrationId: z.number(),
-        assignedDate: z.enum(["may_4_6", "may_25_27"])
+        assignedDate: z.enum(["june_28_jul_1"])
       }))
       .mutation(async ({ input }) => {
         const registration = await db.getRegistrationById(input.registrationId);
@@ -191,8 +191,8 @@ export const appRouter = router({
         const tour = await db.getTourById(registration.tourId);
         if (participants[0] && tour && updated) {
           const dateText = 
-            (updated.assignedDate || updated.datePreference) === "may_4_6" ? "4-6 במאי 2026" :
-            (updated.assignedDate || updated.datePreference) === "may_25_27" ? "25-27 במאי 2026" :
+            (updated.assignedDate || updated.datePreference) === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
+            (updated.assignedDate || updated.datePreference) === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
             "תאריך יקבע בהמשך";
           
           sendCustomerApprovalEmail({
@@ -241,8 +241,8 @@ export const appRouter = router({
         const tour = await db.getTourById(registration.tourId);
         if (participants[0] && tour && updated) {
           const dateText = 
-            (updated.assignedDate || updated.datePreference) === "may_4_6" ? "4-6 במאי 2026" :
-            (updated.assignedDate || updated.datePreference) === "may_25_27" ? "25-27 במאי 2026" :
+            (updated.assignedDate || updated.datePreference) === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
+            (updated.assignedDate || updated.datePreference) === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
             "תאריך יקבע בהמשך";
           
           sendCustomerApprovalEmail({

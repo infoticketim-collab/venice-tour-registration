@@ -9,7 +9,7 @@ export default function Confirmation() {
   const orderNumber = params.orderNumber;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background flex items-center justify-center py-12">
+    <div className="min-h-screen bg-gradient-to-b from-red-50 to-background flex items-center justify-center py-12">
       <div className="container max-w-2xl">
         <Card className="card-shadow-lg text-center">
           <CardHeader className="space-y-6 pb-8">
@@ -21,7 +21,7 @@ export default function Confirmation() {
             <div>
               <CardTitle className="text-3xl mb-3">ההרשמה התקבלה בהצלחה!</CardTitle>
               <CardDescription className="text-lg">
-                תודה שנרשמת לסיור הלימודי בוונציה
+                תודה שנרשמת לסיור לארמניה
               </CardDescription>
             </div>
           </CardHeader>
@@ -39,9 +39,9 @@ export default function Confirmation() {
                   ההזמנה שלך נקלטה במערכת ותאושר בהקדם האפשרי.
                 </p>
               </div>
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                <p className="text-sm leading-relaxed text-blue-900">
-                  <strong>שים לב:</strong> תקבל אישור סופי למייל שהזנת לאחר שההזמנה תאושר על ידי צוות ניצת הדובדבן.
+              <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                <p className="text-sm leading-relaxed text-red-900">
+                  <strong>שים לב:</strong> תקבל אישור סופי למייל שהזנת לאחר שההזמנה תאושר על ידי צוות ההסתדרות.
                   אנא שמור את מספר ההזמנה לצורך מעקב.
                 </p>
               </div>
@@ -62,13 +62,13 @@ export default function Confirmation() {
             {/* Contact Information */}
             <div className="pt-6 border-t">
               <p className="text-sm text-muted-foreground mb-2">
-                יש לך שאלות? צור קשר עם צוות ניצת הדובדבן
+                יש לך שאלות? צור קשר עם צוות ההסתדרות
               </p>
               <a 
-                href="mailto:Ori@nizat.co.il" 
+                href="mailto:info.yerevan@histadrut.org" 
                 className="text-primary hover:underline font-medium"
               >
-                Ori@nizat.co.il
+                info.yerevan@histadrut.org
               </a>
             </div>
           </CardContent>

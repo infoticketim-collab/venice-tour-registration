@@ -77,7 +77,7 @@ export async function sendCustomerConfirmationEmail(params: {
     </div>
 
     <p style="font-size: 18px; text-align: center; margin-bottom: 30px;">
-      תודה שנרשמת לסיור הלימודי בוונציה
+      תודה שנרשמת לסיור לארמניה
     </p>
 
     <div style="background-color: #dbeafe; padding: 20px; border-radius: 8px; border: 2px solid: #2563eb; margin-bottom: 20px; text-align: center;">
@@ -105,14 +105,14 @@ export async function sendCustomerConfirmationEmail(params: {
 
     <div style="background-color: #eff6ff; padding: 15px; border-radius: 8px; border-right: 4px solid #2563eb; margin-bottom: 20px;">
       <p style="margin: 0; font-size: 14px;">
-        <strong>שים לב:</strong> תקבל אישור סופי למייל שהזנת לאחר שההזמנה תאושר על ידי צוות ניצת הדובדבן.
+        <strong>שים לב:</strong> תקבל אישור סופי למייל שהזנת לאחר שההזמנה תאושר על ידי צוות ההסתדרות.
         אנא שמור את מספר ההזמנה לצורך מעקב.
       </p>
     </div>
 
     <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; margin-top: 30px; text-align: center;">
       <p style="color: #64748b; font-size: 14px; margin: 0;">
-        יש לך שאלות? צור קשר עם צוות ניצת הדובדבן
+        יש לך שאלות? צור קשר עם צוות ההסתדרות
       </p>
       <p style="color: #2563eb; font-size: 14px; margin: 5px 0 0 0;">
         <a href="mailto:${ENV.adminEmail}" style="color: #2563eb; text-decoration: none;">${ENV.adminEmail}</a>
@@ -125,7 +125,7 @@ export async function sendCustomerConfirmationEmail(params: {
 
   return sendEmail({
     to: params.customerEmail,
-    subject: `אישור הזמנה #${params.orderNumber} - סיור לימודי בוונציה`,
+    subject: `אישור הזמנה #${params.orderNumber} - סיור לארמניה`,
     html,
   });
 }
@@ -200,14 +200,14 @@ export async function sendCustomerApprovalEmail(params: {
       <p style="margin: 0; font-size: 14px;">
         <strong>הצעדים הבאים:</strong><br>
         • וודא שדרכונך בתוקף ל-6 חודשים מיום הנסיעה<br>
-        • צוות ניצת הדובדבן ייצור איתך קשר בקרוב עם פרטים נוספים<br>
+        • צוות ההסתדרות ייצור איתך קשר בקרוב עם פרטים נוספים<br>
         • שמור את מספר ההזמנה לצורך התכתבות
       </p>
     </div>
 
     <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; margin-top: 30px; text-align: center;">
       <p style="color: #64748b; font-size: 14px; margin: 0;">
-        יש לך שאלות? צור קשר עם צוות ניצת הדובדבן
+        יש לך שאלות? צור קשר עם צוות ההסתדרות
       </p>
       <p style="color: #2563eb; font-size: 14px; margin: 5px 0 0 0;">
         <a href="mailto:${ENV.adminEmail}" style="color: #2563eb; text-decoration: none;">${ENV.adminEmail}</a>
@@ -220,7 +220,7 @@ export async function sendCustomerApprovalEmail(params: {
 
   return sendEmail({
     to: params.customerEmail,
-    subject: `✅ הזמנה #${params.orderNumber} אושרה - סיור לימודי בוונציה`,
+    subject: `✅ הזמנה #${params.orderNumber} אושרה - סיור לארמניה`,
     html,
   });
 }
@@ -269,13 +269,13 @@ export async function sendCustomerRejectionEmail(params: {
       </p>
       <p style="margin: 0; font-size: 16px; text-align: center;">
         <strong style="color: #2563eb;">אורי בראון</strong><br>
-        <a href="mailto:Ori@nizat.co.il" style="color: #2563eb; text-decoration: none; font-size: 14px;">Ori@nizat.co.il</a>
+        <a href="mailto:info.yerevan@histadrut.org" style="color: #2563eb; text-decoration: none; font-size: 14px;">info.yerevan@histadrut.org</a>
       </p>
     </div>
 
     <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; margin-top: 30px; text-align: center;">
       <p style="color: #64748b; font-size: 14px; margin: 0;">
-        יש לך שאלות? צור קשר עם צוות ניצת הדובדבן
+        יש לך שאלות? צור קשר עם צוות ההסתדרות
       </p>
       <p style="color: #2563eb; font-size: 14px; margin: 5px 0 0 0;">
         <a href="mailto:${ENV.adminEmail}" style="color: #2563eb; text-decoration: none;">${ENV.adminEmail}</a>
@@ -288,7 +288,7 @@ export async function sendCustomerRejectionEmail(params: {
 
   return sendEmail({
     to: params.customerEmail,
-    subject: `עדכון הזמנה #${params.orderNumber} - סיור לימודי בוונציה`,
+    subject: `עדכון הזמנה #${params.orderNumber} - סיור לארמניה`,
     html,
   });
 }
@@ -377,7 +377,7 @@ export async function sendAdminDailySummaryEmail(params: {
 
     <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; margin-top: 30px; text-align: center;">
       <p style="color: #64748b; font-size: 14px; margin: 0;">
-        מערכת רישום לסיורים - ניצת הדובדבן
+        מערכת רישום לסיורים - ההסתדרות
       </p>
     </div>
   </div>

@@ -18,7 +18,7 @@ export default function AdminLogin() {
     try {
       // Simple client-side password check
       // In production, this should be verified server-side
-      const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
+      const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || "Yerevan2026!";
       
       if (password === adminPassword) {
         // Store authentication in localStorage
@@ -38,7 +38,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">כניסה לממשק ניהול</CardTitle>
