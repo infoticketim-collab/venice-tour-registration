@@ -251,3 +251,7 @@
 
 ## Bug Fixes
 - [x] Fix 404 error when selecting region - incorrect routing to registration page
+
+## Final Production Preparation
+- [x] Clean all test registrations from database before launch
+- [x] Reset order counter to start from 1000
