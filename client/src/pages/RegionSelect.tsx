@@ -22,7 +22,7 @@ export default function RegionSelect() {
           />
         </div>
 
-        <Card className="p-8 md:p-12 bg-white">
+        <Card className="p-8 md:p-12 bg-white" dir="rtl">
           <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">
             בחרו את המרחב שלכם
           </h1>
@@ -41,12 +41,6 @@ export default function RegionSelect() {
                 <h2 className="text-xl font-bold text-gray-800">
                   מרחב חיפה, צפון ושפלה
                 </h2>
-                <div className="bg-red-50 rounded-lg p-4 mt-4">
-                  <p className="text-sm font-semibold text-red-700">מלון</p>
-                  <p className="text-base font-bold text-gray-800 mt-1">
-                    Ani Grand Hotel ★★★★
-                  </p>
-                </div>
                 <Button
                   className="w-full mt-4 bg-red-700 hover:bg-red-800"
                   size="lg"
@@ -66,12 +60,6 @@ export default function RegionSelect() {
                 <h2 className="text-xl font-bold text-gray-800">
                   מרחב מרכז, גוש דן וירושלים
                 </h2>
-                <div className="bg-red-50 rounded-lg p-4 mt-4">
-                  <p className="text-sm font-semibold text-red-700">מלון</p>
-                  <p className="text-base font-bold text-gray-800 mt-1">
-                    Ani Plaza Hotel ★★★★
-                  </p>
-                </div>
                 <Button
                   className="w-full mt-4 bg-red-700 hover:bg-red-800"
                   size="lg"
@@ -91,12 +79,6 @@ export default function RegionSelect() {
                 <h2 className="text-xl font-bold text-gray-800">
                   מרחב דרום
                 </h2>
-                <div className="bg-red-50 rounded-lg p-4 mt-4">
-                  <p className="text-sm font-semibold text-red-700">מלון</p>
-                  <p className="text-base font-bold text-gray-800 mt-1">
-                    Ani Grand Hotel ★★★★
-                  </p>
-                </div>
                 <Button
                   className="w-full mt-4 bg-red-700 hover:bg-red-800"
                   size="lg"
@@ -116,12 +98,6 @@ export default function RegionSelect() {
                 <h2 className="text-xl font-bold text-gray-800">
                   בודדים שאינם משויכים למרחבים
                 </h2>
-                <div className="bg-red-50 rounded-lg p-4 mt-4">
-                  <p className="text-sm font-semibold text-red-700">מלון</p>
-                  <p className="text-base font-bold text-gray-800 mt-1">
-                    Ani Plaza Hotel ★★★★
-                  </p>
-                </div>
                 <Button
                   className="w-full mt-4 bg-red-700 hover:bg-red-800"
                   size="lg"

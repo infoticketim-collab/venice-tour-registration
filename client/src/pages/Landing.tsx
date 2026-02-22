@@ -9,38 +9,46 @@ export default function Landing() {
       <div className="max-w-3xl w-full bg-white rounded-2xl shadow-2xl p-8 md:p-12">
         {/* Logo */}
         <div className="flex justify-center mb-8">
-          <img 
-            src="/logo.png" 
+          <img
+            src="/logo.png"
             alt="ההסתדרות"
             className="h-24 md:h-32 w-auto"
           />
         </div>
 
-        {/* Teaser Text */}
-        <div className="text-center space-y-6">
+        {/* Main Content */}
+        <div className="text-center space-y-6" dir="rtl">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            ברוכים הבאים לארמניה! 🇦🇲
+            ארמניה: היכן שההיסטוריה פוגשת את הלב
           </h1>
-          
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-            הזמנה לחוות את ארמניה – לא רק כיעד, אלא כהרגשה. היכן שההיסטוריה פוגשת את הלב.
+
+          <p className="text-lg text-gray-700 leading-relaxed text-right">
+            המסע הזה הוא הזמנה לחוות את ארמניה לא רק כיעד, אלא כהרגשה. סעו אל נתיבי הציביליזציה כדי ליצור מגע עם המורשת האדירה ומגוון התרבות שארמניה מציעה כיעד תיירותי.
           </p>
-          
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-            שילוב מושלם בין סיור תרבותי מעשיר ומגבש, לבין הקסם הייחודי של ירוואן – "העיר הוורודה" – מטרופולין חי שמתפתח בצורה מדהימה.
+
+          <p className="text-lg text-gray-700 leading-relaxed text-right">
+            במהלך מספר ימים בקצב מחושב, תטבלו במדינה שבה היסטוריה עתיקה נושמת לצד חיים מודרניים, ושבה הכנסת אורחים אינה שירות, אלא דרך חיים. תנדדו ברחובות תוססים ובפינות שקטות, תרגישו את משקלן של מאות שנים חקוקות באבן, ותגלו מסורות שנשמרו באהבה ושופלו מדור לדור.
+          </p>
+
+          <p className="text-lg text-gray-700 leading-relaxed text-right">
+            הסיור הייחודי הזה מזמין אתכם ללכת בנתיבים של מנזרים בני אלפי שנים החצובים בצוקים, ולהשתאות מאתרי מורשת עולמית של אונסק"ו. ממפגשים תרבותיים ועד תענוגות קולינריים, תטעמו אותנטיות ותצרו זיכרונות שמרגישים אישיים ומתמשכים. המסע שלכם יוביל אתכם מאוצרות רוחניים נצחיים אל ארמניה המודרנית והתוססת, ויגיע לשיאו בבירה ירוואן – "העיר הוורודה", מטרופולין חי שבאופן מדהים מבוגר ב-29 שנים מרומא.
+          </p>
+
+          <p className="text-lg text-gray-700 leading-relaxed text-right">
+            זהו אינו רק סיור; זוהי חוויה מלאת נשמה שתופסת את המהות האמיתית של ארמניה – לבבית, עשירה ובלתי נשכחת.
           </p>
 
           <div className="bg-red-50 rounded-lg p-6 my-8 border border-red-100">
-            <p className="text-xl font-semibold text-gray-800 mb-4">
+            <p className="text-xl font-semibold text-gray-800 mb-4 text-center">
               שריינו את התאריכים:
             </p>
-            <div className="space-y-3 text-lg text-gray-700">
-              <p>🏔️ נסיעה לארמניה: 28.6.2026 – 1.7.2026</p>
+            <div className="space-y-3 text-lg text-gray-700 text-center">
+              <p>נסיעה לארמניה: 28.6.2026 – 1.7.2026</p>
               <p className="text-base text-gray-600">4 ימים / 3 לילות בירוואן</p>
             </div>
           </div>
 
-          <p className="text-lg md:text-xl font-bold text-red-700">
+          <p className="text-lg md:text-xl font-bold text-red-700 text-center">
             ההרשמה החלה! זה הזמן להבטיח לעצמכם מקום – מספר המקומות מוגבל!
           </p>
 

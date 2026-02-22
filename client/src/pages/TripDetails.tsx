@@ -1,34 +1,73 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { useEffect, useState } from "react";
-import { Plane, Luggage, Hotel, MapPin, ArrowRight } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
 
-function renderMarkdown(text: string) {
-  const withBold = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  return withBold.replace(/; /g, '<br/>');
-}
-
+// Hotel info by region
 function getHotelForRegion(region: string) {
   if (region === "מרחב חיפה, צפון ושפלה" || region === "מרחב דרום") {
     return {
       name: "Ani Grand Hotel Yerevan",
       stars: "★★★★",
       address: "65 Hanrapetutyan St, Yerevan 0010, ארמניה",
-      mapQuery: "Ani+Grand+Hotel+Yerevan+65+Hanrapetutyan+St",
-      mapLink: "https://maps.google.com/?q=Ani+Grand+Hotel+Yerevan,65+Hanrapetutyan+St+Yerevan",
+      mapLink: "https://maps.google.com/?q=Ani+Grand+Hotel+Yerevan,+65+Hanrapetutyan+St,+Yerevan",
     };
   }
   return {
     name: "Ani Plaza Hotel Yerevan",
     stars: "★★★★",
     address: "19 Sayat-Nova Ave, Yerevan 0001, ארמניה",
-    mapQuery: "Ani+Plaza+Hotel+Yerevan+19+Sayat-Nova+Ave",
-    mapLink: "https://maps.google.com/?q=Ani+Plaza+Hotel+Yerevan,19+Sayat-Nova+Ave+Yerevan",
+    mapLink: "https://maps.google.com/?q=Ani+Plaza+Hotel+Yerevan,+19+Sayat-Nova+Ave,+Yerevan",
   };
 }
 
-const tourImages = Array.from({ length: 32 }, (_, i) => `/images/armenia-${i + 1}.png`);
+// Rotating gallery component
+function Gallery({ images }: { images: string[] }) {
+  const [current, setCurrent] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 3000);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [images.length]);
+
+  const go = (dir: number) => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    setCurrent((c) => (c + dir + images.length) % images.length);
+    timerRef.current = setInterval(() => setCurrent((p) => (p + 1) % images.length), 3000);
+  };
+
+  return (
+    <div className="relative w-full overflow-hidden rounded-xl bg-gray-200" style={{ height: "260px" }}>
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === current ? "opacity-100" : "opacity-0"}`}
+        />
+      ))}
+      <button
+        onClick={() => go(-1)}
+        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white rounded-full w-9 h-9 flex items-center justify-center hover:bg-black/70 z-10 text-xl"
+      >‹</button>
+      <button
+        onClick={() => go(1)}
+        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white rounded-full w-9 h-9 flex items-center justify-center hover:bg-black/70 z-10 text-xl"
+      >›</button>
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-white" : "bg-white/50"}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function TripDetails() {
   const [, setLocation] = useLocation();
@@ -44,144 +83,294 @@ export default function TripDetails() {
   }, [setLocation]);
 
   const hotel = getHotelForRegion(selectedRegion);
+  const isGroupA = selectedRegion === "מרחב חיפה, צפון ושפלה" || selectedRegion === "מרחב דרום";
 
-  const description =
-    "סיור מאורגן של 4 ימים לארמניה – מסע ייחודי שמשלב היסטוריה עתיקה, תרבות עשירה, נופים מרהיבים ואירוח חם. הסיור יתחיל ויסתיים בירוואן, הבירה הוורודה, שם נחווה את הקסם הארמני האותנטי.";
+  // Gallery images per day
+  const day1Gallery = [
+    "/images/armenia-2.png",
+    "/images/armenia-5.png",
+    "/images/armenia-6.png",
+    "/images/armenia-7.png",
+    "/images/armenia-9.png",
+    "/images/armenia-10.png",
+    "/images/armenia-11.png",
+  ];
 
-  const flightDetails =
-    "**טיסות פרטיות ישירות לירוואן במטוס ההסתדרות**; הלוך (28.6.2026): המראה בשעות הבוקר המוקדמות לירוואן; חזור (1.7.2026): המראה בשעות הערב לתל אביב";
+  const day23GroupAGallery = [
+    "/images/armenia-1.png",
+    "/images/armenia-13.png",
+    "/images/armenia-14.png",
+    "/images/armenia-15.png",
+    "/images/armenia-16.png",
+    "/images/armenia-17.png",
+    "/images/armenia-19.png",
+    "/images/armenia-20.png",
+  ];
 
-  const luggageDetails =
-    "כל נוסע זכאי לתיק יד אישי; מזוודה אחת לנוסע (עד 23 ק\"ג); ניתן להוסיף מזוודה נוספת בתשלום נפרד";
+  const day23GroupBGallery = [
+    "/images/armenia-21.png",
+    "/images/armenia-22.png",
+    "/images/armenia-23.png",
+    "/images/armenia-24.png",
+    "/images/armenia-25.png",
+    "/images/armenia-26.png",
+    "/images/armenia-27.png",
+    "/images/armenia-29.png",
+    "/images/armenia-30.png",
+  ];
 
-  const hotelDetails = `שהייה של 3 לילות במלון ${hotel.name} ${hotel.stars} בירוואן; בסיס לינה וארוחת בוקר; חדרים זוגיים (שיתוף); תוספת לחדר יחיד בתשלום נפרד`;
-
-  const itinerary =
-    "**יום 1 (28.6): הגעה לירוואן**; נחיתה בנמל התעופה ירוואן, קבלת פנים חמה ממדריכינו. ארוחת צהריים ב-Agape Refectory – מבנה היסטורי מרשים משנת 1655. סיור בירוואן: מתחם הקסקד, בית האופרה, רחוב הצפון. ארוחת ערב חגיגית במרכז התרבות \"שטיחי מגריאן\" – כולל סדנת בישול עם השף המפורסם מר סרק מומולומי.; **יום 2 (29.6): גהרהגד, סימפוניית האבנים, שאבאל ויקב**; ארוחת בוקר במלון. נסיעה נופית לכפרים יגוטי וגרני. ביקור במנזר גהרהגד – אתר מורשת עולמי של יונסק\"ו. הופעת מקהלה בחדרי המנזר. סימפוניית האבנים – עמודי הבזלת המדהימים. סדנת אפיית לחם שאבאל מסורתי בתנור טוניר. ביקור במקדש הפגאני גרני. הופעת דודוק חי. ביקור ביקב \"ווסקבאז\" – טעימת יינות ארמניים.; **יום 3 (30.6): קניות ואנדרטאות**; ארוחת בוקר במלון. קניות בשוק הפשפשים \"ורניסאז'\" ובשוק GUM. ביקור באנדרטת \"אמא ארמניה\". זמן חופשי ומנוחה. ארוחת ערב פרידה ב-Tavern Yerevan Riverside – מוזיקה חיה ופולקלור.; **יום 4 (1.7): יום אחרון וחזרה**; ארוחת בוקר במלון. ביקור בפארק היהודי ובית הכנסת המקומי. חנות שוקולד Grand Candy. קניות אחרונות בקניון Dalma Garden Mall. העברה לנמל התעופה לקראת הטיסה חזרה.";
-
-  const handleContinue = () => {
-    setLocation("/register/1");
-  };
+  const day4Gallery = [
+    "/images/armenia-8.png",
+    "/images/armenia-28.png",
+    "/images/armenia-31.png",
+    "/images/armenia-32.png",
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-700 to-red-900 flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full">
-        <div className="flex justify-center mb-8">
-          <img src="/logo.png" alt="ההסתדרות" className="h-20 md:h-24 w-auto" />
+    <div className="min-h-screen bg-gray-50" dir="rtl">
+      {/* Header */}
+      <div className="bg-gradient-to-b from-red-700 to-red-800 py-8 px-4">
+        <div className="max-w-4xl mx-auto flex flex-col items-center">
+          <img src="/logo.png" alt="ההסתדרות" className="h-20 w-auto mb-4" />
+          <h1 className="text-3xl md:text-4xl font-bold text-white text-center">
+            סיור לארמניה
+          </h1>
+          <p className="text-red-200 text-lg mt-2 text-center">28.6.2026 – 1.7.2026 | 4 ימים / 3 לילות</p>
+          {selectedRegion && (
+            <p className="text-white/80 text-base mt-1 text-center">{selectedRegion}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 py-8">
+
+        {/* Flight Info */}
+        <div className="bg-white rounded-2xl shadow-md p-6 mb-8 border border-gray-100">
+          <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <span className="text-2xl">✈️</span> פרטי טיסות
+          </h2>
+          <div className="space-y-3 text-right">
+            <div className="flex items-start gap-3 justify-end">
+              <div>
+                <p className="font-semibold text-gray-800">28.6.2026 – המראה לירוואן</p>
+                <p className="text-gray-600 text-sm">טיסות פרטיות ישירות לירוואן במטוס ההסתדרות | המראה בשעות הבוקר המוקדמות</p>
+              </div>
+              <span className="text-2xl mt-0.5">🛫</span>
+            </div>
+            <div className="flex items-start gap-3 justify-end">
+              <div>
+                <p className="font-semibold text-gray-800">1.7.2026 – המראה לתל אביב</p>
+                <p className="text-gray-600 text-sm">טיסות פרטיות ישירות לתל אביב במטוס ההסתדרות | המראה בשעות הערב</p>
+              </div>
+              <span className="text-2xl mt-0.5">🛬</span>
+            </div>
+          </div>
         </div>
 
-        <Card className="p-8 md:p-12 bg-white">
-          <Button variant="ghost" className="mb-6" onClick={() => setLocation("/region-select")}>
-            <ArrowRight className="w-4 h-4 ml-2" />
-            חזרה לבחירת מרחב
-          </Button>
-
-          <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">
-            פרטי הנסיעה לארמניה
-          </h1>
-
-          <div className="text-center mb-8">
-            <p className="text-xl text-red-700 font-semibold">
-              {selectedRegion} &bull; 28.6.2026 &ndash; 1.7.2026
-            </p>
+        {/* Hotel Card */}
+        <div className="bg-white rounded-2xl shadow-md p-6 mb-8 border border-gray-100">
+          <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <span className="text-2xl">🏨</span> המלון שלכם
+          </h2>
+          <div className="text-right">
+            <p className="text-xl font-bold text-red-700">{hotel.name}</p>
+            <p className="text-yellow-500 text-lg mb-1">{hotel.stars}</p>
+            <p className="text-gray-600 mb-1">📍 {hotel.address}</p>
+            <p className="text-gray-700 text-sm mb-4">בסיס לינה וארוחת בוקר | חדרים זוגיים משותפים | תוספת לחדר יחיד בתשלום נפרד</p>
+            <a
+              href={hotel.mapLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition-colors text-sm"
+            >
+              📍 הצג במפות Google
+            </a>
           </div>
+        </div>
 
-          <div className="mb-8">
-            <Card className="p-6 bg-red-50 border border-red-100">
-              <p className="text-lg text-gray-700 leading-relaxed text-center">{description}</p>
-            </Card>
-          </div>
+        {/* Day-by-day itinerary */}
+        <div className="bg-white rounded-2xl shadow-md p-6 mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-8 text-right border-b border-gray-200 pb-4">
+            תוכנית הסיור יום אחר יום
+          </h2>
 
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">גלריית תמונות</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {tourImages.map((img, idx) => (
-                <div key={idx} className="aspect-video overflow-hidden rounded-lg shadow">
-                  <img
-                    src={img}
-                    alt={`ארמניה ${idx + 1}`}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).parentElement!.style.display = "none";
-                    }}
-                  />
-                </div>
-              ))}
+          {/* Day 1 */}
+          <div className="mb-12 border-b border-gray-100 pb-10">
+            <h3 className="text-xl font-bold text-red-700 mb-3 text-right">
+              יום 1 – ראשון, 28.6.2026: הגעה לירוואן
+            </h3>
+            <div className="w-full rounded-xl overflow-hidden mb-5">
+              <img src="/images/armenia-12.png" alt="כיכר הרפובליקה ירוואן" className="w-full object-cover" style={{ maxHeight: "340px" }} />
+            </div>
+            <div className="text-gray-700 leading-relaxed text-right space-y-3 mb-6">
+              <p>ברוכים הבאים לירוואן, בירתה התוססת של ארמניה! המדריכים וראשי הקבוצות שלנו יקבלו את פניכם בחמימות בנמל התעופה זבארטנוץ ויסייעו בכל שירותי הקרקע.</p>
+              <p>לפני תחילת הסיור, נהנה מ<strong>ארוחת צהריים ב-"Agape Refectory"</strong>. מבנה היסטורי זה הוא חדר אוכל של נזירים ששוחזר להפליא ומתוארך לשנת 1655. כיום הוא משמש כמסעדה אלגנטית המציעה מבחר מעודן של מטבח ארמני קלאסי ומודרני.</p>
+              <p>זמן לחקור את <strong>הבירה הארמנית בת ה-2807</strong>, עיר מודרנית הממוקמת בצילו של הר אררט המקראי. נחקור את <strong>מתחם הקסקד</strong> האייקוני, ביקור בבית האופרה האלגנטי, <strong>שדרת הצפון</strong> התוססת, <strong>כיכר הרפובליקה</strong> המפורסמת, פארקי העיר, <strong>מוזיאון גפסיאן לאמנות</strong> וגן הפסלים המודרניים.</p>
+              <p><strong>ארוחת הערב החגיגית</strong> תאורגן במרכז התרבות <strong>"שטיחי מגריאן"</strong>, כולל ביקור במפעל ובמוזיאון לשטיחים ארמניים בעבודת יד. תשתתפו ב<strong>סדנת אמן אינטראקטיבית</strong> להכנת מאכל ארמני מסורתי, בהנחיית השף המפורסם מר סדראק מומוליאן.</p>
+            </div>
+            <Gallery images={day1Gallery} />
+            <div className="grid md:grid-cols-3 gap-4 mt-5">
+              <div className="bg-red-50 rounded-lg p-4">
+                <h4 className="font-bold text-red-700 mb-2 text-right text-sm">פעילויות</h4>
+                <ul className="space-y-1 text-right text-sm text-gray-700">
+                  <li>• סיור בעיר ירוואן</li>
+                  <li>• מתחם הקסקד</li>
+                  <li>• כיכר הרפובליקה</li>
+                  <li>• מוזיאון גפסיאן לאמנות</li>
+                  <li>• מפעל שטיחים ארמניים</li>
+                  <li>• סדנת בישול עם השף מומוליאן</li>
+                </ul>
+              </div>
+              <div className="bg-orange-50 rounded-lg p-4">
+                <h4 className="font-bold text-orange-700 mb-2 text-right text-sm">ארוחות</h4>
+                <ul className="space-y-1 text-right text-sm text-gray-700">
+                  <li>• ארוחת צהריים ב-Agape Refectory</li>
+                  <li>• ארוחת ערב חגיגית בשטיחי מגריאן</li>
+                </ul>
+              </div>
+              <div className="bg-blue-50 rounded-lg p-4">
+                <h4 className="font-bold text-blue-700 mb-2 text-right text-sm">לינה</h4>
+                <p className="text-sm text-gray-700 text-right">{hotel.name} {hotel.stars}</p>
+              </div>
             </div>
           </div>
 
-          <div className="space-y-6">
-            <Card className="p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <Plane className="w-6 h-6 text-red-700" />
-                פרטי טיסה
+          {/* Day 2+3 */}
+          {isGroupA ? (
+            <div className="mb-12 border-b border-gray-100 pb-10">
+              <h3 className="text-xl font-bold text-red-700 mb-3 text-right">
+                ימים 2–3 – שני-שלישי, 29–30.6.2026: גגהארד, סימפוניית האבנות, גרני ויקב ווסקבאז
               </h3>
-              <div className="text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: renderMarkdown(flightDetails) }} />
-            </Card>
-
-            <Card className="p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <Luggage className="w-6 h-6 text-red-700" />
-                כבודה
-              </h3>
-              <div className="text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: renderMarkdown(luggageDetails) }} />
-            </Card>
-
-            <Card className="p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <Hotel className="w-6 h-6 text-red-700" />
-                מלון
-              </h3>
-              <div className="text-gray-600 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: renderMarkdown(hotelDetails) }} />
-
-              <div className="bg-red-50 border border-red-100 rounded-lg p-4 mt-4">
-                <div className="flex items-start gap-2 mb-2">
-                  <MapPin className="w-5 h-5 text-red-700 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold text-gray-800">{hotel.name} {hotel.stars}</p>
-                    <p className="text-gray-600 text-sm">{hotel.address}</p>
-                  </div>
-                </div>
-                <div className="mt-3 rounded-lg overflow-hidden border border-red-200">
-                  <img
-                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${hotel.mapQuery}&zoom=15&size=600x250&markers=color:red%7C${hotel.mapQuery}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU3Kqo`}
-                    alt={`מיקום ${hotel.name}`}
-                    className="w-full"
-                    onError={(e) => {
-                      const el = e.target as HTMLImageElement;
-                      el.parentElement!.innerHTML = `<div class="bg-gray-100 flex items-center justify-center h-32 text-gray-500 text-sm">לחץ על הקישור למטה לפתיחת המפה</div>`;
-                    }}
-                  />
-                </div>
-                <a
-                  href={hotel.mapLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-2 text-sm text-red-700 hover:underline"
-                >
-                  פתח במפות Google ↗
-                </a>
+              <div className="w-full rounded-xl overflow-hidden mb-5">
+                <img src="/images/armenia-3.png" alt="מקדש גרני" className="w-full object-cover" style={{ maxHeight: "340px" }} />
               </div>
-            </Card>
-
-            <Card className="p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <span className="text-2xl">📅</span>
-                תוכנית הסיור
+              <div className="text-gray-700 leading-relaxed text-right space-y-3 mb-6">
+                <p>ארוחת בוקר במלון. היום מתחיל בנסיעה נופית לכפרים גוטי וגרני. התחנה הראשונה היא <strong>מנזר גגהארד</strong>, קומפלקס ימי-ביניימי מדהים החצוב בחלקו בצוקים הסמוכים – <strong>אתר מורשת עולמית של אונסק"ו</strong>. תהיה לכם הזדמנות ייחודית לחוות הופעה של מקהלה מוכשרת באחד מחדרי המנזר, הידוע באקוסטיקה יוצאת הדופן שלו.</p>
+                <p>לאחר מכן, ממשיכים ל<strong>סימפוניית האבנות</strong> – עמודי בזלת משושים המתנשאים לגובה של עד 50 מטרים, דומים לצינורות של אורגן כנסייה ענק.</p>
+                <p>הזדמנות ייחודית לקחת חלק ב<strong>סדנת אמן לאפיית לחם הלאבאש הארמני</strong> המסורתי, שנאפה בתנור טוניר – מוכר על ידי אונסק"ו כחלק מהמורשת התרבותית הבלתי מוחשית של האנושות.</p>
+                <p>ביקור ב<strong>מקדש גרני</strong> – המקדש הפגאני בעל העמודים בסגנון יווני-רומי היחיד שנותר עומד בארמניה, שנבנה במאה ה-1 לספירה. כאן נהנה מ<strong>הופעה חיה של דודוק</strong>, כלי נגינה ארמני עתיק העשוי מעץ משמש.</p>
+                <p>ביקור ב<strong>אנדרטת האלפבית הארמני</strong>, ולסיום – <strong>טעימות יין ביקב "ווסקבאז"</strong> עם ארוחת ערב חגיגית.</p>
+              </div>
+              <Gallery images={day23GroupAGallery} />
+              <div className="grid md:grid-cols-3 gap-4 mt-5">
+                <div className="bg-red-50 rounded-lg p-4">
+                  <h4 className="font-bold text-red-700 mb-2 text-right text-sm">פעילויות</h4>
+                  <ul className="space-y-1 text-right text-sm text-gray-700">
+                    <li>• מנזר גגהארד (אונסק"ו)</li>
+                    <li>• הופעת מקהלה במנזר</li>
+                    <li>• סימפוניית האבנות</li>
+                    <li>• סדנת אפיית לאבאש</li>
+                    <li>• מקדש גרני</li>
+                    <li>• הופעת דודוק</li>
+                    <li>• אנדרטת האלפבית הארמני</li>
+                    <li>• טעימות יין ביקב ווסקבאז</li>
+                  </ul>
+                </div>
+                <div className="bg-orange-50 rounded-lg p-4">
+                  <h4 className="font-bold text-orange-700 mb-2 text-right text-sm">ארוחות</h4>
+                  <ul className="space-y-1 text-right text-sm text-gray-700">
+                    <li>• ארוחת בוקר במלון</li>
+                    <li>• ארוחת ערב ביקב ווסקבאז</li>
+                  </ul>
+                </div>
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <h4 className="font-bold text-blue-700 mb-2 text-right text-sm">לינה</h4>
+                  <p className="text-sm text-gray-700 text-right">{hotel.name} {hotel.stars}</p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="mb-12 border-b border-gray-100 pb-10">
+              <h3 className="text-xl font-bold text-red-700 mb-3 text-right">
+                ימים 2–3 – שני-שלישי, 29–30.6.2026: שוק ורניסאז', שוק GUM ואנדרטת אמא ארמניה
               </h3>
-              <div className="text-gray-600 leading-relaxed space-y-3" dangerouslySetInnerHTML={{ __html: renderMarkdown(itinerary) }} />
-            </Card>
-          </div>
+              <div className="w-full rounded-xl overflow-hidden mb-5">
+                <img src="/images/armenia-12.png" alt="ירוואן" className="w-full object-cover" style={{ maxHeight: "340px" }} />
+              </div>
+              <div className="text-gray-700 leading-relaxed text-right space-y-3 mb-6">
+                <p>ארוחת בוקר במלון. היום מתחיל בחוויית קניות סוחפת המציגה את התרבות היומיומית התוססת של ירוואן. נתחיל בביקור ב<strong>שוק הפשפשים ורניסאז'</strong> – שוק פתוח ותוסס שבו אמנים מקומיים מציגים עבודות יד, מזכרות מסורתיות, תכשיטים, ציורים, שטיחים ומזכרות ייחודיות.</p>
+                <p>החוויה ממשיכה ב<strong>שוק GUM</strong>, שוק אוכל מקומי אהוב מלא בצבעים, ניחוחות וטעמים – פירות יבשים, אגוזים, תבלינים, ממתקים ומומחיות אזורית.</p>
+                <p>לאחר מכן, נבקר ב<strong>אנדרטת אמא ארמניה</strong> – אחד מסימני ההיכר האייקוניים של ירוואן, הניצבת גבוה מעל העיר ומציעה נופים פנורמיים גורפים.</p>
+                <p><strong>ארוחת הערב הפרידה</strong> תתקיים ב-<strong>"Tavern Yerevan Riverside"</strong>, עם תפריט עשיר של מאכלים ארמניים אותנטיים, מוזיקת פולקלור והופעות חיות.</p>
+              </div>
+              <Gallery images={day23GroupBGallery} />
+              <div className="grid md:grid-cols-3 gap-4 mt-5">
+                <div className="bg-red-50 rounded-lg p-4">
+                  <h4 className="font-bold text-red-700 mb-2 text-right text-sm">פעילויות</h4>
+                  <ul className="space-y-1 text-right text-sm text-gray-700">
+                    <li>• שוק הפשפשים ורניסאז'</li>
+                    <li>• שוק GUM</li>
+                    <li>• אנדרטת אמא ארמניה</li>
+                  </ul>
+                </div>
+                <div className="bg-orange-50 rounded-lg p-4">
+                  <h4 className="font-bold text-orange-700 mb-2 text-right text-sm">ארוחות</h4>
+                  <ul className="space-y-1 text-right text-sm text-gray-700">
+                    <li>• ארוחת בוקר במלון</li>
+                    <li>• ארוחת ערב ב-Tavern Yerevan Riverside</li>
+                  </ul>
+                </div>
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <h4 className="font-bold text-blue-700 mb-2 text-right text-sm">לינה</h4>
+                  <p className="text-sm text-gray-700 text-right">{hotel.name} {hotel.stars}</p>
+                </div>
+              </div>
+            </div>
+          )}
 
-          <div className="mt-10 text-center">
-            <Button
-              onClick={handleContinue}
-              className="bg-red-700 hover:bg-red-800 text-white text-lg px-10 py-6 rounded-xl shadow-lg"
-            >
-              אני מעוניין להירשם
-            </Button>
+          {/* Day 4 */}
+          <div className="mb-6">
+            <h3 className="text-xl font-bold text-red-700 mb-3 text-right">
+              יום 4 – רביעי, 1.7.2026: הפארק היהודי, Grand Candy, קניון דלמה גרדן ועזיבה
+            </h3>
+            <div className="w-full rounded-xl overflow-hidden mb-5">
+              <img src="/images/armenia-4.png" alt="קניון דלמה גרדן עם הר אררט" className="w-full object-cover" style={{ maxHeight: "220px" }} />
+            </div>
+            <div className="text-gray-700 leading-relaxed text-right space-y-3 mb-6">
+              <p>ארוחת בוקר במלון. היום מתחיל בביקור תרבותי משמעותי המציע תובנה עמוקה למורשת ולקהילה היהודית בארמניה. בסביבת פארק רגועה, האורחים ילמדו על הנוכחות ההיסטורית של הקהילה היהודית במדינה. הביקור ממשיך ל<strong>בית הכנסת המקומי</strong>.</p>
+              <p>עצירה מתוקה ב<strong>חנות השוקולד Grand Candy</strong> – יעד מקומי אהוב שבו האורחים יכולים לגלות את מסורות המגדנאות הארמניות ולרכוש פינוקים ומתנות.</p>
+              <p>זמן חופשי ב<strong>קניון דלמה גרדן (Dalma Garden Mall)</strong> לקניות של הרגע האחרון, חקירת מותגים מקומיים ובינלאומיים, וסיום מהנה לפני העזיבה.</p>
+              <p>היום מסתיים בהעברה לשדה התעופה. נתראה בקרוב בארמניה!</p>
+            </div>
+            <Gallery images={day4Gallery} />
+            <div className="grid md:grid-cols-2 gap-4 mt-5">
+              <div className="bg-red-50 rounded-lg p-4">
+                <h4 className="font-bold text-red-700 mb-2 text-right text-sm">פעילויות</h4>
+                <ul className="space-y-1 text-right text-sm text-gray-700">
+                  <li>• הפארק היהודי ובית הכנסת</li>
+                  <li>• חנות השוקולד Grand Candy</li>
+                  <li>• קניון דלמה גרדן</li>
+                  <li>• העברה לשדה התעופה</li>
+                </ul>
+              </div>
+              <div className="bg-orange-50 rounded-lg p-4">
+                <h4 className="font-bold text-orange-700 mb-2 text-right text-sm">ארוחות</h4>
+                <ul className="space-y-1 text-right text-sm text-gray-700">
+                  <li>• ארוחת בוקר במלון</li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </Card>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+          <Button
+            onClick={() => setLocation("/register/1")}
+            size="lg"
+            className="text-xl px-12 py-6 bg-red-700 hover:bg-red-800"
+          >
+            אני מעוניין להירשם
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => setLocation("/region-select")}
+            size="lg"
+            className="text-xl px-8 py-6"
+          >
+            ← חזרה
+          </Button>
+        </div>
       </div>
     </div>
   );
