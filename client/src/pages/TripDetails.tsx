@@ -10,19 +10,19 @@ function renderMarkdown(text: string) {
 }
 
 function getHotelForRegion(region: string) {
-  if (region === "\u05de\u05e8\u05d7\u05d1 \u05d7\u05d9\u05e4\u05d4, \u05e6\u05e4\u05d5\u05df \u05d5\u05e9\u05e4\u05dc\u05d4" || region === "\u05de\u05e8\u05d7\u05d1 \u05d3\u05e8\u05d5\u05dd") {
+  if (region === "מרחב חיפה, צפון ושפלה" || region === "מרחב דרום") {
     return {
       name: "Ani Grand Hotel Yerevan",
-      stars: "\u2605\u2605\u2605\u2605",
-      address: "65 Hanrapetutyan St, Yerevan 0010, \u05d0\u05e8\u05de\u05e0\u05d9\u05d4",
+      stars: "★★★★",
+      address: "65 Hanrapetutyan St, Yerevan 0010, ארמניה",
       mapQuery: "Ani+Grand+Hotel+Yerevan+65+Hanrapetutyan+St",
       mapLink: "https://maps.google.com/?q=Ani+Grand+Hotel+Yerevan,65+Hanrapetutyan+St+Yerevan",
     };
   }
   return {
     name: "Ani Plaza Hotel Yerevan",
-    stars: "\u2605\u2605\u2605\u2605",
-    address: "19 Sayat-Nova Ave, Yerevan 0001, \u05d0\u05e8\u05de\u05e0\u05d9\u05d4",
+    stars: "★★★★",
+    address: "19 Sayat-Nova Ave, Yerevan 0001, ארמניה",
     mapQuery: "Ani+Plaza+Hotel+Yerevan+19+Sayat-Nova+Ave",
     mapLink: "https://maps.google.com/?q=Ani+Plaza+Hotel+Yerevan,19+Sayat-Nova+Ave+Yerevan",
   };
@@ -46,18 +46,18 @@ export default function TripDetails() {
   const hotel = getHotelForRegion(selectedRegion);
 
   const description =
-    "\u05e1\u05d9\u05d5\u05e8 \u05de\u05d0\u05d5\u05e8\u05d2\u05df \u05e9\u05dc 4 \u05d9\u05de\u05d9\u05dd \u05dc\u05d0\u05e8\u05de\u05e0\u05d9\u05d4 \u2013 \u05de\u05e1\u05e2 \u05d9\u05d9\u05d7\u05d5\u05d3\u05d9 \u05e9\u05de\u05e9\u05dc\u05d1 \u05d4\u05d9\u05e1\u05d8\u05d5\u05e8\u05d9\u05d4 \u05e2\u05ea\u05d9\u05e7\u05d4, \u05ea\u05e8\u05d1\u05d5\u05ea \u05e2\u05e9\u05d9\u05e8\u05d4, \u05e0\u05d5\u05e4\u05d9\u05dd \u05de\u05e8\u05d4\u05d9\u05d1\u05d9\u05dd \u05d5\u05d0\u05d9\u05e8\u05d5\u05d7 \u05d7\u05dd. \u05d4\u05e1\u05d9\u05d5\u05e8 \u05d9\u05ea\u05d7\u05d9\u05dc \u05d5\u05d9\u05e1\u05ea\u05d9\u05d9\u05dd \u05d1\u05d9\u05e8\u05d5\u05d5\u05d0\u05df, \u05d4\u05d1\u05d9\u05e8\u05d4 \u05d4\u05d5\u05d5\u05e8\u05d5\u05d3\u05d4, \u05e9\u05dd \u05e0\u05d7\u05d5\u05d5\u05d4 \u05d0\u05ea \u05d4\u05e7\u05e1\u05dd \u05d4\u05d0\u05e8\u05de\u05e0\u05d9 \u05d4\u05d0\u05d5\u05ea\u05e0\u05d8\u05d9.";
+    "סיור מאורגן של 4 ימים לארמניה – מסע ייחודי שמשלב היסטוריה עתיקה, תרבות עשירה, נופים מרהיבים ואירוח חם. הסיור יתחיל ויסתיים בירוואן, הבירה הוורודה, שם נחווה את הקסם הארמני האותנטי.";
 
   const flightDetails =
-    "**\u05d8\u05d9\u05e1\u05d5\u05ea \u05e4\u05e8\u05d8\u05d9\u05d5\u05ea \u05d9\u05e9\u05d9\u05e8\u05d5\u05ea \u05dc\u05d9\u05e8\u05d5\u05d5\u05d0\u05df \u05d1\u05de\u05d8\u05d5\u05e1 \u05d4\u05d4\u05e1\u05ea\u05d3\u05e8\u05d5\u05ea**; \u05d4\u05dc\u05d5\u05da (28.6.2026): \u05d4\u05de\u05e8\u05d0\u05d4 \u05d1\u05e9\u05e2\u05d5\u05ea \u05d4\u05d1\u05d5\u05e7\u05e8 \u05d4\u05de\u05d5\u05e7\u05d3\u05de\u05d5\u05ea \u05dc\u05d9\u05e8\u05d5\u05d5\u05d0\u05df; \u05d7\u05d6\u05d5\u05e8 (1.7.2026): \u05d4\u05de\u05e8\u05d0\u05d4 \u05d1\u05e9\u05e2\u05d5\u05ea \u05d4\u05e2\u05e8\u05d1 \u05dc\u05ea\u05dc \u05d0\u05d1\u05d9\u05d1";
+    "**טיסות פרטיות ישירות לירוואן במטוס ההסתדרות**; הלוך (28.6.2026): המראה בשעות הבוקר המוקדמות לירוואן; חזור (1.7.2026): המראה בשעות הערב לתל אביב";
 
   const luggageDetails =
-    "\u05db\u05dc \u05e0\u05d5\u05e1\u05e2 \u05d6\u05db\u05d0\u05d9 \u05dc\u05ea\u05d9\u05e7 \u05d9\u05d3 \u05d0\u05d9\u05e9\u05d9; \u05de\u05d6\u05d5\u05d5\u05d3\u05d4 \u05d0\u05d7\u05ea \u05dc\u05e0\u05d5\u05e1\u05e2 (\u05e2\u05d3 23 \u05e7\"\u05d2); \u05e0\u05d9\u05ea\u05df \u05dc\u05d4\u05d5\u05e1\u05d9\u05e3 \u05de\u05d6\u05d5\u05d5\u05d3\u05d4 \u05e0\u05d5\u05e1\u05e4\u05ea \u05d1\u05ea\u05e9\u05dc\u05d5\u05dd \u05e0\u05e4\u05e8\u05d3";
+    "כל נוסע זכאי לתיק יד אישי; מזוודה אחת לנוסע (עד 23 ק\"ג); ניתן להוסיף מזוודה נוספת בתשלום נפרד";
 
-  const hotelDetails = `\u05e9\u05d4\u05d9\u05d9\u05d4 \u05e9\u05dc 3 \u05dc\u05d9\u05dc\u05d5\u05ea \u05d1\u05de\u05dc\u05d5\u05df ${hotel.name} ${hotel.stars} \u05d1\u05d9\u05e8\u05d5\u05d5\u05d0\u05df; \u05d1\u05e1\u05d9\u05e1 \u05dc\u05d9\u05e0\u05d4 \u05d5\u05d0\u05e8\u05d5\u05d7\u05ea \u05d1\u05d5\u05e7\u05e8; \u05d7\u05d3\u05e8\u05d9\u05dd \u05d6\u05d5\u05d2\u05d9\u05d9\u05dd (\u05e9\u05d9\u05ea\u05d5\u05e3); \u05ea\u05d5\u05e1\u05e4\u05ea \u05dc\u05d7\u05d3\u05e8 \u05d9\u05d7\u05d9\u05d3 \u05d1\u05ea\u05e9\u05dc\u05d5\u05dd \u05e0\u05e4\u05e8\u05d3`;
+  const hotelDetails = `שהייה של 3 לילות במלון ${hotel.name} ${hotel.stars} בירוואן; בסיס לינה וארוחת בוקר; חדרים זוגיים (שיתוף); תוספת לחדר יחיד בתשלום נפרד`;
 
   const itinerary =
-    "**\u05d9\u05d5\u05dd 1 (28.6): \u05d4\u05d2\u05e2\u05d4 \u05dc\u05d9\u05e8\u05d5\u05d5\u05d0\u05df**; \u05e0\u05d7\u05d9\u05ea\u05d4 \u05d1\u05e0\u05de\u05dc \u05d4\u05ea\u05e2\u05d5\u05e4\u05d4 \u05d9\u05e8\u05d5\u05d5\u05d0\u05df, \u05e7\u05d1\u05dc\u05ea \u05e4\u05e0\u05d9\u05dd \u05d7\u05de\u05d4 \u05de\u05de\u05d3\u05e8\u05d9\u05db\u05d9\u05e0\u05d5. \u05d0\u05e8\u05d5\u05d7\u05ea \u05e6\u05d4\u05e8\u05d9\u05d9\u05dd \u05d1-Agape Refectory \u2013 \u05de\u05d1\u05e0\u05d4 \u05d4\u05d9\u05e1\u05d8\u05d5\u05e8\u05d9 \u05de\u05e8\u05e9\u05d9\u05dd \u05de\u05e9\u05e0\u05ea 1655. \u05e1\u05d9\u05d5\u05e8 \u05d1\u05d9\u05e8\u05d5\u05d5\u05d0\u05df: \u05de\u05ea\u05d7\u05dd \u05d4\u05e7\u05e1\u05e7\u05d3, \u05d1\u05d9\u05ea \u05d4\u05d0\u05d5\u05e4\u05e8\u05d4, \u05e8\u05d7\u05d5\u05d1 \u05d4\u05e6\u05e4\u05d5\u05df. \u05d0\u05e8\u05d5\u05d7\u05ea \u05e2\u05e8\u05d1 \u05d7\u05d2\u05d9\u05d2\u05d9\u05ea \u05d1\u05de\u05e8\u05db\u05d6 \u05d4\u05ea\u05e8\u05d1\u05d5\u05ea \"\u05e9\u05d8\u05d9\u05d7\u05d9 \u05de\u05d2\u05e8\u05d9\u05d0\u05df\" \u2013 \u05db\u05d5\u05dc\u05dc \u05e1\u05d3\u05e0\u05ea \u05d1\u05d9\u05e9\u05d5\u05dc \u05e2\u05dd \u05d4\u05e9\u05e3 \u05d4\u05de\u05e4\u05d5\u05e8\u05e1\u05dd \u05de\u05e8 \u05e1\u05e8\u05e7 \u05de\u05d5\u05de\u05d5\u05dc\u05d5\u05de\u05d9.; **\u05d9\u05d5\u05dd 2 (29.6): \u05d2\u05d4\u05e8\u05d4\u05d2\u05d3, \u05e1\u05d9\u05de\u05e4\u05d5\u05e0\u05d9\u05d9\u05ea \u05d4\u05d0\u05d1\u05e0\u05d9\u05dd, \u05e9\u05d0\u05d1\u05d0\u05dc \u05d5\u05d9\u05e7\u05d1**; \u05d0\u05e8\u05d5\u05d7\u05ea \u05d1\u05d5\u05e7\u05e8 \u05d1\u05de\u05dc\u05d5\u05df. \u05e0\u05e1\u05d9\u05e2\u05d4 \u05e0\u05d5\u05e4\u05d9\u05ea \u05dc\u05db\u05e4\u05e8\u05d9\u05dd \u05d9\u05d2\u05d5\u05d8\u05d9 \u05d5\u05d2\u05e8\u05e0\u05d9. \u05d1\u05d9\u05e7\u05d5\u05e8 \u05d1\u05de\u05e0\u05d6\u05e8 \u05d2\u05d4\u05e8\u05d4\u05d2\u05d3 \u2013 \u05d0\u05ea\u05e8 \u05de\u05d5\u05e8\u05e9\u05ea \u05e2\u05d5\u05dc\u05de\u05d9 \u05e9\u05dc \u05d9\u05d5\u05e0\u05e1\u05e7\"\u05d5. \u05d4\u05d5\u05e4\u05e2\u05ea \u05de\u05e7\u05d4\u05dc\u05d4 \u05d1\u05d7\u05d3\u05e8\u05d9 \u05d4\u05de\u05e0\u05d6\u05e8. \u05e1\u05d9\u05de\u05e4\u05d5\u05e0\u05d9\u05d9\u05ea \u05d4\u05d0\u05d1\u05e0\u05d9\u05dd \u2013 \u05e2\u05de\u05d5\u05d3\u05d9 \u05d4\u05d1\u05d6\u05dc\u05ea \u05d4\u05de\u05d3\u05d4\u05d9\u05de\u05d9\u05dd. \u05e1\u05d3\u05e0\u05ea \u05d0\u05e4\u05d9\u05d9\u05ea \u05dc\u05d7\u05dd \u05e9\u05d0\u05d1\u05d0\u05dc \u05de\u05e1\u05d5\u05e8\u05ea\u05d9 \u05d1\u05ea\u05e0\u05d5\u05e8 \u05d8\u05d5\u05e0\u05d9\u05e8. \u05d1\u05d9\u05e7\u05d5\u05e8 \u05d1\u05de\u05e7\u05d3\u05e9 \u05d4\u05e4\u05d2\u05d0\u05e0\u05d9 \u05d2\u05e8\u05e0\u05d9. \u05d4\u05d5\u05e4\u05e2\u05ea \u05d3\u05d5\u05d3\u05d5\u05e7 \u05d7\u05d9. \u05d1\u05d9\u05e7\u05d5\u05e8 \u05d1\u05d9\u05e7\u05d1 \"\u05d5\u05d5\u05e1\u05e7\u05d1\u05d0\u05d6\" \u2013 \u05d8\u05e2\u05d9\u05de\u05ea \u05d9\u05d9\u05e0\u05d5\u05ea \u05d0\u05e8\u05de\u05e0\u05d9\u05d9\u05dd.; **\u05d9\u05d5\u05dd 3 (30.6): \u05e7\u05e0\u05d9\u05d5\u05ea \u05d5\u05d0\u05e0\u05d3\u05e8\u05d8\u05d0\u05d5\u05ea**; \u05d0\u05e8\u05d5\u05d7\u05ea \u05d1\u05d5\u05e7\u05e8 \u05d1\u05de\u05dc\u05d5\u05df. \u05e7\u05e0\u05d9\u05d5\u05ea \u05d1\u05e9\u05d5\u05e7 \u05d4\u05e4\u05e9\u05e4\u05e9\u05d9\u05dd \"\u05d5\u05e8\u05e0\u05d9\u05e1\u05d0\u05d6'\" \u05d5\u05d1\u05e9\u05d5\u05e7 GUM. \u05d1\u05d9\u05e7\u05d5\u05e8 \u05d1\u05d0\u05e0\u05d3\u05e8\u05d8\u05ea \"\u05d0\u05de\u05d0 \u05d0\u05e8\u05de\u05e0\u05d9\u05d4\". \u05d6\u05de\u05df \u05d7\u05d5\u05e4\u05e9\u05d9 \u05d5\u05de\u05e0\u05d5\u05d7\u05d4. \u05d0\u05e8\u05d5\u05d7\u05ea \u05e2\u05e8\u05d1 \u05e4\u05e8\u05d9\u05d3\u05d4 \u05d1-Tavern Yerevan Riverside \u2013 \u05de\u05d5\u05d6\u05d9\u05e7\u05d4 \u05d7\u05d9\u05d4 \u05d5\u05e4\u05d5\u05dc\u05e7\u05dc\u05d5\u05e8.; **\u05d9\u05d5\u05dd 4 (1.7): \u05d9\u05d5\u05dd \u05d0\u05d7\u05e8\u05d5\u05df \u05d5\u05d7\u05d6\u05e8\u05d4**; \u05d0\u05e8\u05d5\u05d7\u05ea \u05d1\u05d5\u05e7\u05e8 \u05d1\u05de\u05dc\u05d5\u05df. \u05d1\u05d9\u05e7\u05d5\u05e8 \u05d1\u05e4\u05d0\u05e8\u05e7 \u05d4\u05d9\u05d4\u05d5\u05d3\u05d9 \u05d5\u05d1\u05d9\u05ea \u05d4\u05db\u05e0\u05e1\u05ea \u05d4\u05de\u05e7\u05d5\u05de\u05d9. \u05d7\u05e0\u05d5\u05ea \u05e9\u05d5\u05e7\u05d5\u05dc\u05d3 Grand Candy. \u05e7\u05e0\u05d9\u05d5\u05ea \u05d0\u05d7\u05e8\u05d5\u05e0\u05d5\u05ea \u05d1\u05e7\u05e0\u05d9\u05d5\u05df Dalma Garden Mall. \u05d4\u05e2\u05d1\u05e8\u05d4 \u05dc\u05e0\u05de\u05dc \u05d4\u05ea\u05e2\u05d5\u05e4\u05d4 \u05dc\u05e7\u05e8\u05d0\u05ea \u05d4\u05d8\u05d9\u05e1\u05d4 \u05d7\u05d6\u05e8\u05d4.";
+    "**יום 1 (28.6): הגעה לירוואן**; נחיתה בנמל התעופה ירוואן, קבלת פנים חמה ממדריכינו. ארוחת צהריים ב-Agape Refectory – מבנה היסטורי מרשים משנת 1655. סיור בירוואן: מתחם הקסקד, בית האופרה, רחוב הצפון. ארוחת ערב חגיגית במרכז התרבות \"שטיחי מגריאן\" – כולל סדנת בישול עם השף המפורסם מר סרק מומולומי.; **יום 2 (29.6): גהרהגד, סימפוניית האבנים, שאבאל ויקב**; ארוחת בוקר במלון. נסיעה נופית לכפרים יגוטי וגרני. ביקור במנזר גהרהגד – אתר מורשת עולמי של יונסק\"ו. הופעת מקהלה בחדרי המנזר. סימפוניית האבנים – עמודי הבזלת המדהימים. סדנת אפיית לחם שאבאל מסורתי בתנור טוניר. ביקור במקדש הפגאני גרני. הופעת דודוק חי. ביקור ביקב \"ווסקבאז\" – טעימת יינות ארמניים.; **יום 3 (30.6): קניות ואנדרטאות**; ארוחת בוקר במלון. קניות בשוק הפשפשים \"ורניסאז'\" ובשוק GUM. ביקור באנדרטת \"אמא ארמניה\". זמן חופשי ומנוחה. ארוחת ערב פרידה ב-Tavern Yerevan Riverside – מוזיקה חיה ופולקלור.; **יום 4 (1.7): יום אחרון וחזרה**; ארוחת בוקר במלון. ביקור בפארק היהודי ובית הכנסת המקומי. חנות שוקולד Grand Candy. קניות אחרונות בקניון Dalma Garden Mall. העברה לנמל התעופה לקראת הטיסה חזרה.";
 
   const handleContinue = () => {
     setLocation("/register/1");
@@ -67,17 +67,17 @@ export default function TripDetails() {
     <div className="min-h-screen bg-gradient-to-b from-red-700 to-red-900 flex items-center justify-center p-4">
       <div className="max-w-4xl w-full">
         <div className="flex justify-center mb-8">
-          <img src="/logo.png" alt="\u05d4\u05d4\u05e1\u05ea\u05d3\u05e8\u05d5\u05ea" className="h-20 md:h-24 w-auto" />
+          <img src="/logo.png" alt="ההסתדרות" className="h-20 md:h-24 w-auto" />
         </div>
 
         <Card className="p-8 md:p-12 bg-white">
           <Button variant="ghost" className="mb-6" onClick={() => setLocation("/region-select")}>
             <ArrowRight className="w-4 h-4 ml-2" />
-            \u05d7\u05d6\u05e8\u05d4 \u05dc\u05d1\u05d7\u05d9\u05e8\u05ea \u05de\u05e8\u05d7\u05d1
+            חזרה לבחירת מרחב
           </Button>
 
           <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">
-            \u05e4\u05e8\u05d8\u05d9 \u05d4\u05e0\u05e1\u05d9\u05e2\u05d4 \u05dc\u05d0\u05e8\u05de\u05e0\u05d9\u05d4
+            פרטי הנסיעה לארמניה
           </h1>
 
           <div className="text-center mb-8">
@@ -93,13 +93,13 @@ export default function TripDetails() {
           </div>
 
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">\u05d2\u05dc\u05e8\u05d9\u05d9\u05ea \u05ea\u05de\u05d5\u05e0\u05d5\u05ea</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">גלריית תמונות</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {tourImages.map((img, idx) => (
                 <div key={idx} className="aspect-video overflow-hidden rounded-lg shadow">
                   <img
                     src={img}
-                    alt={`\u05d0\u05e8\u05de\u05e0\u05d9\u05d4 ${idx + 1}`}
+                    alt={`ארמניה ${idx + 1}`}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
                       (e.target as HTMLImageElement).parentElement!.style.display = "none";
@@ -114,7 +114,7 @@ export default function TripDetails() {
             <Card className="p-6">
               <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
                 <Plane className="w-6 h-6 text-red-700" />
-                \u05e4\u05e8\u05d8\u05d9 \u05d8\u05d9\u05e1\u05d4
+                פרטי טיסה
               </h3>
               <div className="text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: renderMarkdown(flightDetails) }} />
             </Card>
@@ -122,7 +122,7 @@ export default function TripDetails() {
             <Card className="p-6">
               <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
                 <Luggage className="w-6 h-6 text-red-700" />
-                \u05db\u05d1\u05d5\u05d3\u05d4
+                כבודה
               </h3>
               <div className="text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: renderMarkdown(luggageDetails) }} />
             </Card>
@@ -130,45 +130,55 @@ export default function TripDetails() {
             <Card className="p-6">
               <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
                 <Hotel className="w-6 h-6 text-red-700" />
-                \u05de\u05dc\u05d5\u05df
+                מלון
               </h3>
               <div className="text-gray-600 leading-relaxed mb-4" dangerouslySetInnerHTML={{ __html: renderMarkdown(hotelDetails) }} />
-              <div className="bg-red-50 rounded-lg p-4 border border-red-100 mb-4">
-                <p className="font-bold text-gray-800 text-lg">{hotel.name} {hotel.stars}</p>
-                <p className="text-gray-600 flex items-center gap-1 mt-1">
-                  <MapPin className="w-4 h-4 flex-shrink-0" />
-                  {hotel.address}
-                </p>
-                <a href={hotel.mapLink} target="_blank" rel="noopener noreferrer" className="text-red-700 hover:underline text-sm mt-2 inline-block">
-                  \u05e4\u05ea\u05d7 \u05d1\u05de\u05e4\u05d5\u05ea Google \u2197
+
+              <div className="bg-red-50 border border-red-100 rounded-lg p-4 mt-4">
+                <div className="flex items-start gap-2 mb-2">
+                  <MapPin className="w-5 h-5 text-red-700 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-gray-800">{hotel.name} {hotel.stars}</p>
+                    <p className="text-gray-600 text-sm">{hotel.address}</p>
+                  </div>
+                </div>
+                <div className="mt-3 rounded-lg overflow-hidden border border-red-200">
+                  <img
+                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${hotel.mapQuery}&zoom=15&size=600x250&markers=color:red%7C${hotel.mapQuery}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU3Kqo`}
+                    alt={`מיקום ${hotel.name}`}
+                    className="w-full"
+                    onError={(e) => {
+                      const el = e.target as HTMLImageElement;
+                      el.parentElement!.innerHTML = `<div class="bg-gray-100 flex items-center justify-center h-32 text-gray-500 text-sm">לחץ על הקישור למטה לפתיחת המפה</div>`;
+                    }}
+                  />
+                </div>
+                <a
+                  href={hotel.mapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-2 text-sm text-red-700 hover:underline"
+                >
+                  פתח במפות Google ↗
                 </a>
-              </div>
-              <div className="rounded-lg overflow-hidden border border-gray-200 h-64">
-                <iframe
-                  title="\u05de\u05d9\u05e7\u05d5\u05dd \u05d4\u05de\u05dc\u05d5\u05df"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                  allowFullScreen
-                  referrerPolicy="no-referrer-when-downgrade"
-                  src={`https://maps.google.com/maps?q=${hotel.mapQuery}&output=embed&z=15`}
-                />
               </div>
             </Card>
 
             <Card className="p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <MapPin className="w-6 h-6 text-red-700" />
-                \u05ea\u05d5\u05db\u05e0\u05d9\u05ea \u05d4\u05e1\u05d9\u05d5\u05e8
+              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span className="text-2xl">📅</span>
+                תוכנית הסיור
               </h3>
-              <div className="text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: renderMarkdown(itinerary) }} />
+              <div className="text-gray-600 leading-relaxed space-y-3" dangerouslySetInnerHTML={{ __html: renderMarkdown(itinerary) }} />
             </Card>
           </div>
 
-          <div className="flex justify-center pt-8">
-            <Button size="lg" className="text-lg px-12 py-6 h-auto bg-red-700 hover:bg-red-800" onClick={handleContinue}>
-              \u05d0\u05e0\u05d9 \u05de\u05e2\u05d5\u05e0\u05d9\u05d9\u05df \u05dc\u05d4\u05d9\u05e8\u05e9\u05dd
+          <div className="mt-10 text-center">
+            <Button
+              onClick={handleContinue}
+              className="bg-red-700 hover:bg-red-800 text-white text-lg px-10 py-6 rounded-xl shadow-lg"
+            >
+              אני מעוניין להירשם
             </Button>
           </div>
         </Card>

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,14 +35,12 @@ import {
 } from "@/components/ui/collapsible";
 import { Check, X, Loader2, Calendar, Users, ChevronDown, ChevronLeft, LogOut } from "lucide-react";
 import { toast } from "sonner";
-import { getLoginUrl } from "@/const";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
 
 type DateOption = "june_28_jul_1";
 
 export default function AdminDashboard() {
-  const { user, loading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
 
   // Check password authentication
@@ -72,6 +69,7 @@ export default function AdminDashboard() {
   const handleLogout = () => {
     localStorage.removeItem("adminAuthenticated");
     localStorage.removeItem("adminAuthTime");
+    localStorage.removeItem("adminToken");
     toast.success("התנתקת בהצלחה");
     setLocation("/admin/login");
   };
@@ -83,7 +81,7 @@ export default function AdminDashboard() {
   const { data: registrations, isLoading, refetch } = trpc.admin.getAllRegistrations.useQuery(
     undefined,
     { 
-      enabled: user?.role === "admin",
+      enabled: true,
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       staleTime: 0,
@@ -165,44 +163,6 @@ export default function AdminDashboard() {
   const toggleRow = (id: number) => {
     setExpandedRows(prev => ({ ...prev, [id]: !prev[id] }));
   };
-
-  // Auth check
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background flex items-center justify-center">
-        <Card className="max-w-md">
-          <CardHeader>
-            <CardTitle>נדרשת התחברות</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Button onClick={() => window.location.href = getLoginUrl()} className="w-full">
-              התחבר
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  if (user.role !== "admin") {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background flex items-center justify-center">
-        <Card className="max-w-md">
-          <CardHeader>
-            <CardTitle>אין הרשאה</CardTitle>
-          </CardHeader>
-        </Card>
-      </div>
-    );
-  }
 
   // Separate registrations by date
   const getEffectiveDate = (reg: any) => {

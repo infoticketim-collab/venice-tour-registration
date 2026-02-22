@@ -1,7 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { publicProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
@@ -9,14 +9,21 @@ import * as db from "./db";
 import { registrations } from "../drizzle/schema";
 import { notifyAdminNewRegistration, notifyRegistrationApproved, notifyRegistrationRejected, sendDailySummaryEmail } from "./emailNotifications";
 import { sendCustomerConfirmationEmail, sendCustomerApprovalEmail, sendCustomerRejectionEmail } from "./emailService";
+import { ENV } from "./_core/env";
 
-// Admin-only procedure
-const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
-  if (ctx.user.role !== 'admin') {
-    throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
+// Admin session tokens stored in memory (simple approach)
+const adminSessions = new Set<string>();
+
+// Admin-only procedure - checks admin session token from header
+const adminProcedure = publicProcedure.use(({ ctx, next }) => {
+  const adminToken = ctx.req.headers['x-admin-token'] as string;
+  if (!adminToken || !adminSessions.has(adminToken)) {
+    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Admin authentication required' });
   }
   return next({ ctx });
 });
+
+export { adminSessions };
 
 export const appRouter = router({
   system: systemRouter,
@@ -28,6 +35,24 @@ export const appRouter = router({
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
       return { success: true } as const;
     }),
+    adminLogin: publicProcedure
+      .input(z.object({ password: z.string() }))
+      .mutation(({ input }) => {
+        const adminPassword = ENV.adminPassword || 'Yerevan2026!';
+        if (input.password !== adminPassword) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'סיסמה שגויה' });
+        }
+        // Generate a simple session token
+        const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+        adminSessions.add(token);
+        return { success: true, token };
+      }),
+    adminLogout: publicProcedure
+      .input(z.object({ token: z.string() }))
+      .mutation(({ input }) => {
+        adminSessions.delete(input.token);
+        return { success: true };
+      }),
   }),
 
   // Public tour procedures
