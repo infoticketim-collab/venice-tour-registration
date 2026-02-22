@@ -259,3 +259,7 @@
 ## Trip Details Page
 - [x] Restore trip details page with flight times, hotel, and itinerary
 - [x] Add trip details page to registration flow (after region selection, before registration form)
+
+## Trip Details Content Fix
+- [x] Replace invented content with actual tour information from TourInfo page
+- [x] Copy correct flight details, hotel info, and itinerary
