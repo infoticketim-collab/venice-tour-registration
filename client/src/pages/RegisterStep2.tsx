@@ -87,7 +87,10 @@ export default function RegisterStep2() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-50 to-background py-12">
+    <div className="min-h-screen bg-white py-6">
+      <div className="w-full flex justify-center py-4 border-b border-gray-100 mb-6">
+        <img src="/logo.png" alt="ההסתדרות" className="h-16 md:h-20 w-auto" />
+      </div>
       <div className="container max-w-2xl">
         {/* Back Button */}
         <Button

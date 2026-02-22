@@ -127,17 +127,17 @@ export default function TripDetails() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50" dir="rtl">
+    <div className="min-h-screen bg-white" dir="rtl">
       {/* Header */}
-      <div className="bg-gradient-to-b from-red-700 to-red-800 py-8 px-4">
+      <div className="bg-white border-b border-gray-100 py-6 px-4">
         <div className="max-w-4xl mx-auto flex flex-col items-center">
           <img src="/logo.png" alt="ההסתדרות" className="h-20 w-auto mb-4" />
-          <h1 className="text-3xl md:text-4xl font-bold text-white text-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 text-center">
             סיור לארמניה
           </h1>
-          <p className="text-red-200 text-lg mt-2 text-center">28.6.2026 – 1.7.2026 | 4 ימים / 3 לילות</p>
+          <p className="text-gray-500 text-lg mt-2 text-center">28.6.2026 – 1.7.2026 | 4 ימים / 3 לילות</p>
           {selectedRegion && (
-            <p className="text-white/80 text-base mt-1 text-center">{selectedRegion}</p>
+            <p className="text-red-700 font-medium text-base mt-1 text-center">{selectedRegion}</p>
           )}
         </div>
       </div>
@@ -149,20 +149,20 @@ export default function TripDetails() {
           <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
             <span className="text-2xl">✈️</span> פרטי טיסות
           </h2>
-          <div className="space-y-3 text-right">
-            <div className="flex items-start gap-3 justify-end">
-              <div>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl mt-0.5">🛫</span>
+              <div className="text-right">
                 <p className="font-semibold text-gray-800">28.6.2026 – המראה לירוואן</p>
                 <p className="text-gray-600 text-sm">טיסות פרטיות ישירות לירוואן במטוס ההסתדרות | המראה בשעות הבוקר המוקדמות</p>
               </div>
-              <span className="text-2xl mt-0.5">🛫</span>
             </div>
-            <div className="flex items-start gap-3 justify-end">
-              <div>
+            <div className="flex items-start gap-3">
+              <span className="text-2xl mt-0.5">🛬</span>
+              <div className="text-right">
                 <p className="font-semibold text-gray-800">1.7.2026 – המראה לתל אביב</p>
                 <p className="text-gray-600 text-sm">טיסות פרטיות ישירות לתל אביב במטוס ההסתדרות | המראה בשעות הערב</p>
               </div>
-              <span className="text-2xl mt-0.5">🛬</span>
             </div>
           </div>
         </div>

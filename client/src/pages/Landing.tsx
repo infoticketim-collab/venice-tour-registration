@@ -5,20 +5,20 @@ export default function Landing() {
   const [, setLocation] = useLocation();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-700 to-red-900 flex items-center justify-center p-4">
-      <div className="max-w-3xl w-full bg-white rounded-2xl shadow-2xl p-8 md:p-12">
-        {/* Logo */}
-        <div className="flex justify-center mb-8">
-          <img
-            src="/logo.png"
-            alt="ההסתדרות"
-            className="h-24 md:h-32 w-auto"
-          />
-        </div>
+    <div className="min-h-screen bg-white flex flex-col items-center p-4" dir="rtl">
+      {/* Logo at top */}
+      <div className="w-full flex justify-center py-6 border-b border-gray-100 mb-8">
+        <img
+          src="/logo.png"
+          alt="ההסתדרות"
+          className="h-24 md:h-32 w-auto"
+        />
+      </div>
 
+      <div className="max-w-3xl w-full">
         {/* Main Content */}
-        <div className="text-center space-y-6" dir="rtl">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        <div className="space-y-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">
             ארמניה: היכן שההיסטוריה פוגשת את הלב
           </h1>
 
@@ -53,7 +53,7 @@ export default function Landing() {
           </p>
 
           {/* CTA Button */}
-          <div className="pt-6">
+          <div className="pt-6 flex justify-center">
             <Button
               onClick={() => setLocation("/region-select")}
               size="lg"
