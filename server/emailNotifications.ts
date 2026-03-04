@@ -30,7 +30,6 @@ export async function notifyAdminNewRegistration(
 
     const datePreferenceText = 
       registration.datePreference === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
-      registration.datePreference === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
       "אין העדפה";
 
     const title = `🎉 רישום חדש לסיור לארמניה - #${registration.orderNumber}`;

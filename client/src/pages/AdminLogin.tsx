@@ -13,10 +13,7 @@ export default function AdminLogin() {
   const [, setLocation] = useLocation();
   
   const adminLoginMutation = trpc.auth.adminLogin.useMutation({
-    onSuccess: (data) => {
-      localStorage.setItem("adminToken", data.token);
-      localStorage.setItem("adminAuthenticated", "true");
-      localStorage.setItem("adminAuthTime", Date.now().toString());
+    onSuccess: () => {
       toast.success("התחברת בהצלחה");
       setLocation("/admin");
     },

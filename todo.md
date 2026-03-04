@@ -263,3 +263,8 @@
 ## Trip Details Content Fix
 - [x] Replace invented content with actual tour information from TourInfo page
 - [x] Copy correct flight details, hotel info, and itinerary
+
+## Admin Authentication Fix
+- [x] Replace Manus OAuth requirement for admin panel with standalone password auth
+- [x] Admin should be able to log in with password only (no Manus account needed)
+- [x] Admin session should persist independently of Manus OAuth (JWT cookie-based)

@@ -87,43 +87,43 @@ export default function TripDetails() {
 
   // Gallery images per day
   const day1Gallery = [
-    "/images/armenia-2.png",
-    "/images/armenia-5.png",
-    "/images/armenia-6.png",
-    "/images/armenia-7.png",
-    "/images/armenia-9.png",
-    "/images/armenia-10.png",
-    "/images/armenia-11.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-2_0cd28d81.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-5_4febb7b3.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-6_f8c5071c.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-7_00d1e565.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-9_3dd8b678.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-10_3f5329cd.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-11_545e6d18.png",
   ];
 
   const day23GroupAGallery = [
-    "/images/armenia-1.png",
-    "/images/armenia-13.png",
-    "/images/armenia-14.png",
-    "/images/armenia-15.png",
-    "/images/armenia-16.png",
-    "/images/armenia-17.png",
-    "/images/armenia-19.png",
-    "/images/armenia-20.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-1_a82d88e0.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-13_3ed51e46.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-14_4793a5d6.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-15_2b556e3b.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-16_f417b502.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-17_e9820e67.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-19_6bfd330a.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-20_e8fa1f04.png",
   ];
 
   const day23GroupBGallery = [
-    "/images/armenia-21.png",
-    "/images/armenia-22.png",
-    "/images/armenia-23.png",
-    "/images/armenia-24.png",
-    "/images/armenia-25.png",
-    "/images/armenia-26.png",
-    "/images/armenia-27.png",
-    "/images/armenia-29.png",
-    "/images/armenia-30.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-21_b1c8a1ef.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-22_405ecee6.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-23_f036611b.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-24_4cac1ddf.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-25_985a9951.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-26_bc22247e.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-27_30a08020.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-29_d883d7c7.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-30_1e692d1b.png",
   ];
 
   const day4Gallery = [
-    "/images/armenia-8.png",
-    "/images/armenia-28.png",
-    "/images/armenia-31.png",
-    "/images/armenia-32.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-8_df6248e3.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-28_cf2c3ebe.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-31_0730e884.png",
+    "https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-32_3b601555.png",
   ];
 
   return (
@@ -200,7 +200,7 @@ export default function TripDetails() {
               יום 1 – ראשון, 28.6.2026: הגעה לירוואן
             </h3>
             <div className="w-full rounded-xl overflow-hidden mb-5">
-              <img src="/images/armenia-12.png" alt="כיכר הרפובליקה ירוואן" className="w-full object-cover" style={{ maxHeight: "340px" }} />
+              <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-12_7957df17.png" alt="כיכר הרפובליקה ירוואן" className="w-full object-cover" style={{ maxHeight: "340px" }} />
             </div>
             <div className="text-gray-700 leading-relaxed text-right space-y-3 mb-6">
               <p>ברוכים הבאים לירוואן, בירתה התוססת של ארמניה! המדריכים וראשי הקבוצות שלנו יקבלו את פניכם בחמימות בנמל התעופה זבארטנוץ ויסייעו בכל שירותי הקרקע.</p>
@@ -242,7 +242,7 @@ export default function TripDetails() {
                 ימים 2–3 – שני-שלישי, 29–30.6.2026: גגהארד, סימפוניית האבנות, גרני ויקב ווסקבאז
               </h3>
               <div className="w-full rounded-xl overflow-hidden mb-5">
-                <img src="/images/armenia-3.png" alt="מקדש גרני" className="w-full object-cover" style={{ maxHeight: "340px" }} />
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-3_f000ce79.png" alt="מקדש גרני" className="w-full object-cover" style={{ maxHeight: "340px" }} />
               </div>
               <div className="text-gray-700 leading-relaxed text-right space-y-3 mb-6">
                 <p>ארוחת בוקר במלון. היום מתחיל בנסיעה נופית לכפרים גוטי וגרני. התחנה הראשונה היא <strong>מנזר גגהארד</strong>, קומפלקס ימי-ביניימי מדהים החצוב בחלקו בצוקים הסמוכים – <strong>אתר מורשת עולמית של אונסק"ו</strong>. תהיה לכם הזדמנות ייחודית לחוות הופעה של מקהלה מוכשרת באחד מחדרי המנזר, הידוע באקוסטיקה יוצאת הדופן שלו.</p>
@@ -285,7 +285,7 @@ export default function TripDetails() {
                 ימים 2–3 – שני-שלישי, 29–30.6.2026: שוק ורניסאז', שוק GUM ואנדרטת אמא ארמניה
               </h3>
               <div className="w-full rounded-xl overflow-hidden mb-5">
-                <img src="/images/armenia-12.png" alt="ירוואן" className="w-full object-cover" style={{ maxHeight: "340px" }} />
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-12_7957df17.png" alt="ירוואן" className="w-full object-cover" style={{ maxHeight: "340px" }} />
               </div>
               <div className="text-gray-700 leading-relaxed text-right space-y-3 mb-6">
                 <p>ארוחת בוקר במלון. היום מתחיל בחוויית קניות סוחפת המציגה את התרבות היומיומית התוססת של ירוואן. נתחיל בביקור ב<strong>שוק הפשפשים ורניסאז'</strong> – שוק פתוח ותוסס שבו אמנים מקומיים מציגים עבודות יד, מזכרות מסורתיות, תכשיטים, ציורים, שטיחים ומזכרות ייחודיות.</p>
@@ -324,7 +324,7 @@ export default function TripDetails() {
               יום 4 – רביעי, 1.7.2026: הפארק היהודי, Grand Candy, קניון דלמה גרדן ועזיבה
             </h3>
             <div className="w-full rounded-xl overflow-hidden mb-5">
-              <img src="/images/armenia-4.png" alt="קניון דלמה גרדן עם הר אררט" className="w-full object-cover" style={{ maxHeight: "220px" }} />
+              <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663308534186/mDCqxtLbyjEfeXNALj3Bf7/armenia-4_2bdafe03.png" alt="קניון דלמה גרדן עם הר אררט" className="w-full object-cover" style={{ maxHeight: "220px" }} />
             </div>
             <div className="text-gray-700 leading-relaxed text-right space-y-3 mb-6">
               <p>ארוחת בוקר במלון. היום מתחיל בביקור תרבותי משמעותי המציע תובנה עמוקה למורשת ולקהילה היהודית בארמניה. בסביבת פארק רגועה, האורחים ילמדו על הנוכחות ההיסטורית של הקהילה היהודית במדינה. הביקור ממשיך ל<strong>בית הכנסת המקומי</strong>.</p>

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,57 +35,45 @@ import {
 import { Check, X, Loader2, Calendar, Users, ChevronDown, ChevronLeft, LogOut } from "lucide-react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type DateOption = "june_28_jul_1";
 
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
 
-  // Check password authentication
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("adminAuthenticated");
-    const authTime = localStorage.getItem("adminAuthTime");
-    
-    if (!isAuthenticated) {
+  const adminLogoutMutation = trpc.auth.adminLogout.useMutation({
+    onSuccess: () => {
+      toast.success("התנתקת בהצלחה");
       setLocation("/admin/login");
-      return;
-    }
-    
-    // Check if session is expired (24 hours)
-    if (authTime) {
-      const elapsed = Date.now() - parseInt(authTime);
-      const twentyFourHours = 24 * 60 * 60 * 1000;
-      if (elapsed > twentyFourHours) {
-        localStorage.removeItem("adminAuthenticated");
-        localStorage.removeItem("adminAuthTime");
-        toast.error("פג תוקף ההתחברות");
-        setLocation("/admin/login");
-      }
-    }
-  }, [setLocation]);
+    },
+  });
 
   const handleLogout = () => {
-    localStorage.removeItem("adminAuthenticated");
-    localStorage.removeItem("adminAuthTime");
-    localStorage.removeItem("adminToken");
-    toast.success("התנתקת בהצלחה");
-    setLocation("/admin/login");
+    adminLogoutMutation.mutate();
   };
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
   const [selectedRegistrationId, setSelectedRegistrationId] = useState<number | null>(null);
   const [selectedDates, setSelectedDates] = useState<Record<number, DateOption>>({});
   const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>({});
 
-  const { data: registrations, isLoading, refetch } = trpc.admin.getAllRegistrations.useQuery(
+  const { data: registrations, isLoading, refetch, error: registrationsError } = trpc.admin.getAllRegistrations.useQuery(
     undefined,
     { 
       enabled: true,
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       staleTime: 0,
+      retry: false,
     }
   );
+
+  // Redirect to login if FORBIDDEN (admin not authenticated)
+  useEffect(() => {
+    if (registrationsError?.data?.code === 'FORBIDDEN' || registrationsError?.data?.code === 'UNAUTHORIZED') {
+      setLocation('/admin/login');
+    }
+  }, [registrationsError, setLocation]);
 
   const utils = trpc.useUtils();
 

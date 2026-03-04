@@ -21,19 +21,19 @@ async function seed() {
   console.log("[Seed] Creating Armenia tour...");
 
   // Insert the Armenia tour
-  await db.insert(tours).values({
+  await db.insert(tours).values([{
     title: "סיור לארמניה - ירוואן 2026",
     description: "סיור מיוחד לארמניה בארגון ההסתדרות - 4 ימים / 3 לילות בירוואן",
-    startDate: "2026-06-28",
-    endDate: "2026-07-01",
+    startDate: new Date("2026-06-28"),
+    endDate: new Date("2026-07-01"),
     flightDetails: "טיסות פרטיות ישירות לירוואן במטוס ההסתדרות | המראה 28.6.2026 בשעות הבוקר המוקדמות | חזרה 1.7.2026 בשעות הערב",
     luggageDetails: "כבודה אישית בהתאם להנחיות ההסתדרות",
     hotelDetails: "מרחב חיפה, צפון ושפלה + מרחב דרום: Ani Grand Hotel Yerevan (4 כוכבים) | מרחב מרכז, גוש דן וירושלים + בודדים: Ani Plaza Hotel Yerevan (4 כוכבים)",
-    itinerary: "יום 1: הגעה לירוואן, סיור בעיר, ארוחת ערב חגיגית | יום 2-3: גגהארד, גרני, סימפוניית האבנות, יקב ווסקבאז | יום 4: הפארק היהודי, Grand Candy, קניון דלמה גרדן, עזיבה",
+    itinerary: "יום 1: הגעה לירוואן, סיור בעיר, ארוחת ערב חגיגית | יום 2-3: גגהארד, גרני, סימפוניית האבנים, יקב ווסקבאז | יום 4: הפארק היהודי, Grand Candy, קניון דלמה גרדן, עזיבה",
     capacity: 32,
     availableSpots: 32,
     isActive: 1,
-  });
+  }]);
 
   // Insert admin email
   const adminEmail = process.env.ADMIN_EMAIL || "info.yerevan@histadrut.org";

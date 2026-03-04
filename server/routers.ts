@@ -10,20 +10,43 @@ import { registrations } from "../drizzle/schema";
 import { notifyAdminNewRegistration, notifyRegistrationApproved, notifyRegistrationRejected, sendDailySummaryEmail } from "./emailNotifications";
 import { sendCustomerConfirmationEmail, sendCustomerApprovalEmail, sendCustomerRejectionEmail } from "./emailService";
 import { ENV } from "./_core/env";
+import { SignJWT, jwtVerify } from "jose";
 
-// Admin session tokens stored in memory (simple approach)
-const adminSessions = new Set<string>();
+const ADMIN_COOKIE_NAME = "admin_session";
 
-// Admin-only procedure - checks admin session token from header
-const adminProcedure = publicProcedure.use(({ ctx, next }) => {
-  const adminToken = ctx.req.headers['x-admin-token'] as string;
-  if (!adminToken || !adminSessions.has(adminToken)) {
-    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Admin authentication required' });
+// Sign a JWT for admin session
+async function signAdminToken(): Promise<string> {
+  const secret = new TextEncoder().encode(ENV.cookieSecret || "admin-secret-fallback");
+  return new SignJWT({ role: "admin" })
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("24h")
+    .sign(secret);
+}
+
+// Verify admin JWT
+async function verifyAdminToken(token: string): Promise<boolean> {
+  try {
+    const secret = new TextEncoder().encode(ENV.cookieSecret || "admin-secret-fallback");
+    const { payload } = await jwtVerify(token, secret);
+    return payload.role === "admin";
+  } catch {
+    return false;
+  }
+}
+
+// Admin-only procedure - checks admin session cookie
+const adminProcedure = publicProcedure.use(async ({ ctx, next }) => {
+  const cookieHeader = ctx.req.headers['cookie'] || '';
+  const cookies = Object.fromEntries(
+    cookieHeader.split(';').map(c => c.trim().split('=').map(decodeURIComponent))
+  );
+  const adminToken = cookies[ADMIN_COOKIE_NAME];
+  if (!adminToken || !(await verifyAdminToken(adminToken))) {
+    throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin authentication required' });
   }
   return next({ ctx });
 });
-
-export { adminSessions };
 
 export const appRouter = router({
   system: systemRouter,
@@ -37,20 +60,24 @@ export const appRouter = router({
     }),
     adminLogin: publicProcedure
       .input(z.object({ password: z.string() }))
-      .mutation(({ input }) => {
-        const adminPassword = ENV.adminPassword || 'Yerevan2026!';
+      .mutation(async ({ input, ctx }) => {
+        const adminPassword = ENV.adminPassword || 'Venice2026!';
         if (input.password !== adminPassword) {
           throw new TRPCError({ code: 'UNAUTHORIZED', message: 'סיסמה שגויה' });
         }
-        // Generate a simple session token
-        const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
-        adminSessions.add(token);
-        return { success: true, token };
+        // Generate JWT and set as httpOnly cookie
+        const token = await signAdminToken();
+        const cookieOptions = getSessionCookieOptions(ctx.req);
+        ctx.res.cookie(ADMIN_COOKIE_NAME, token, {
+          ...cookieOptions,
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        });
+        return { success: true };
       }),
     adminLogout: publicProcedure
-      .input(z.object({ token: z.string() }))
-      .mutation(({ input }) => {
-        adminSessions.delete(input.token);
+      .mutation(({ ctx }) => {
+        const cookieOptions = getSessionCookieOptions(ctx.req);
+        ctx.res.clearCookie(ADMIN_COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
         return { success: true };
       }),
   }),
@@ -133,7 +160,6 @@ export const appRouter = router({
         const tour = await db.getTourById(input.tourId);
         if (tour) {
           const datePreferenceText = 
-            input.datePreference === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
             input.datePreference === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
             "אין העדפה";
           
