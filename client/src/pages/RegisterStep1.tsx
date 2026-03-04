@@ -23,8 +23,8 @@ export default function RegisterStep1() {
   // Get region from sessionStorage
   const selectedRegion = sessionStorage.getItem("selectedRegion") || "";
   
-  // All regions go to the same tour date
-  const assignedDate = "june_28_jul_1";
+  // Determine date based on region
+  const assignedDate = selectedRegion === "שרון, מרכז ודרום" ? "may_4_6" : "may_25_27";
 
   const { data: tour } = trpc.tours.getById.useQuery({ id: tourId });
 
@@ -47,16 +47,13 @@ export default function RegisterStep1() {
     selectedRegion !== "";
 
   return (
-    <div className="min-h-screen bg-white py-6">
-      <div className="w-full flex justify-center py-4 border-b border-gray-100 mb-6">
-        <img src="/logo.png" alt="ההסתדרות" className="h-16 md:h-20 w-auto" />
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background py-12">
       <div className="container max-w-2xl">
         {/* Back Button */}
         <Button
           variant="ghost"
           className="mb-6"
-          onClick={() => setLocation("/trip-details")}
+          onClick={() => setLocation("/region-select")}
         >
           <ArrowRight className="w-4 h-4 ml-2" />
           חזרה
@@ -66,7 +63,7 @@ export default function RegisterStep1() {
           <CardHeader className="text-center">
             <CardTitle className="text-3xl">פרטי הנוסע</CardTitle>
             <CardDescription className="text-lg mt-2">
-              שלום! נשמח לקבל את פרטיך על מנת להשלים את ההרשמה לסיור לארמניה
+              שלום! נשמח לקבל את פרטיך על מנת להשלים את ההרשמה לסיור
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -122,12 +119,12 @@ export default function RegisterStep1() {
 
             {/* Selected Region and Date Display */}
             <div className="space-y-4 pt-4 border-t">
-              <div className="bg-red-50 rounded-lg p-6 text-center border border-red-100">
-                <Label className="text-lg font-semibold block mb-2">המרחב שנבחר</Label>
-                <p className="text-xl font-bold text-red-700 mb-4">{selectedRegion}</p>
+              <div className="bg-blue-50 rounded-lg p-6 text-center">
+                <Label className="text-lg font-semibold block mb-2">האזור שנבחר</Label>
+                <p className="text-xl font-bold text-blue-700 mb-4">{selectedRegion}</p>
                 <Label className="text-lg font-semibold block mb-2">תאריך הסיור</Label>
                 <p className="text-xl font-bold text-gray-800">
-                  28.6.2026 – 1.7.2026
+                  {assignedDate === "may_4_6" ? "4-6 במאי 2026" : "25-27 במאי 2026"}
                 </p>
               </div>
             </div>

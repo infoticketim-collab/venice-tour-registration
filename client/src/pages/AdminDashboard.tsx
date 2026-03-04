@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,46 +36,59 @@ import {
 } from "@/components/ui/collapsible";
 import { Check, X, Loader2, Calendar, Users, ChevronDown, ChevronLeft, LogOut } from "lucide-react";
 import { toast } from "sonner";
+import { getLoginUrl } from "@/const";
 import { useLocation } from "wouter";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-type DateOption = "june_28_jul_1";
+type DateOption = "may_4_6" | "may_25_27";
 
 export default function AdminDashboard() {
+  const { user, loading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
 
-  const adminLogoutMutation = trpc.auth.adminLogout.useMutation({
-    onSuccess: () => {
-      toast.success("התנתקת בהצלחה");
+  // Check password authentication
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("adminAuthenticated");
+    const authTime = localStorage.getItem("adminAuthTime");
+    
+    if (!isAuthenticated) {
       setLocation("/admin/login");
-    },
-  });
+      return;
+    }
+    
+    // Check if session is expired (24 hours)
+    if (authTime) {
+      const elapsed = Date.now() - parseInt(authTime);
+      const twentyFourHours = 24 * 60 * 60 * 1000;
+      if (elapsed > twentyFourHours) {
+        localStorage.removeItem("adminAuthenticated");
+        localStorage.removeItem("adminAuthTime");
+        toast.error("פג תוקף ההתחברות");
+        setLocation("/admin/login");
+      }
+    }
+  }, [setLocation]);
 
   const handleLogout = () => {
-    adminLogoutMutation.mutate();
+    localStorage.removeItem("adminAuthenticated");
+    localStorage.removeItem("adminAuthTime");
+    toast.success("התנתקת בהצלחה");
+    setLocation("/admin/login");
   };
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
   const [selectedRegistrationId, setSelectedRegistrationId] = useState<number | null>(null);
   const [selectedDates, setSelectedDates] = useState<Record<number, DateOption>>({});
   const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>({});
 
-  const { data: registrations, isLoading, refetch, error: registrationsError } = trpc.admin.getAllRegistrations.useQuery(
+  const { data: registrations, isLoading, refetch } = trpc.admin.getAllRegistrations.useQuery(
     undefined,
     { 
-      enabled: true,
+      enabled: user?.role === "admin",
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       staleTime: 0,
-      retry: false,
     }
   );
-
-  // Redirect to login if FORBIDDEN (admin not authenticated)
-  useEffect(() => {
-    if (registrationsError?.data?.code === 'FORBIDDEN' || registrationsError?.data?.code === 'UNAUTHORIZED') {
-      setLocation('/admin/login');
-    }
-  }, [registrationsError, setLocation]);
 
   const utils = trpc.useUtils();
 
@@ -151,6 +166,44 @@ export default function AdminDashboard() {
     setExpandedRows(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
+  // Auth check
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background flex items-center justify-center">
+        <Card className="max-w-md">
+          <CardHeader>
+            <CardTitle>נדרשת התחברות</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Button onClick={() => window.location.href = getLoginUrl()} className="w-full">
+              התחבר
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (user.role !== "admin") {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background flex items-center justify-center">
+        <Card className="max-w-md">
+          <CardHeader>
+            <CardTitle>אין הרשאה</CardTitle>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
+
   // Separate registrations by date
   const getEffectiveDate = (reg: any) => {
     if (reg.assignedDate) return reg.assignedDate;
@@ -158,8 +211,9 @@ export default function AdminDashboard() {
     return reg.datePreference;
   };
 
-  const june28Registrations = registrations || [];
-  const noPreferenceRegistrations: any[] = [];
+  const may4_6Registrations = registrations?.filter(r => getEffectiveDate(r) === "may_4_6") || [];
+  const may25_27Registrations = registrations?.filter(r => getEffectiveDate(r) === "may_25_27") || [];
+  const noPreferenceRegistrations = registrations?.filter(r => getEffectiveDate(r) === null) || [];
 
   const renderRegistrationRow = (reg: any, showDateSelector: boolean = false, showStatus: boolean = true) => {
     const isPending = reg.status === "pending";
@@ -197,7 +251,8 @@ export default function AdminDashboard() {
                   <SelectValue placeholder="בחר תאריך" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="june_28_jul_1">28.6 – 1.7.2026</SelectItem>
+                  <SelectItem value="may_4_6">4-6 במאי</SelectItem>
+                  <SelectItem value="may_25_27">25-27 במאי</SelectItem>
                 </SelectContent>
               </Select>
             </TableCell>
@@ -270,7 +325,7 @@ export default function AdminDashboard() {
           <TableRow className="bg-muted/20">
             <TableCell colSpan={showStatus ? (showDateSelector ? 6 : 5) : 4} className="py-2">
               <div className="text-xs space-y-1 pr-6">
-                {reg.region && <div><span className="font-medium">מרחב:</span> <span className="text-red-600 font-semibold">{reg.region}</span></div>}
+                {reg.region && <div><span className="font-medium">אזור:</span> <span className="text-blue-600 font-semibold">{reg.region}</span></div>}
                 <div><span className="font-medium">מייל:</span> {reg.participants[0]?.email}</div>
                 <div><span className="font-medium">טלפון:</span> {reg.participants[0]?.phone}</div>
                 <div><span className="font-medium">תאריך לידה:</span> {new Date(reg.participants[0]?.birthDate).toLocaleDateString('he-IL')}</div>
@@ -305,7 +360,7 @@ export default function AdminDashboard() {
             <span className="font-bold text-black">גודל קבוצה: 32</span>
             <span className="font-bold text-green-600">מספר נרשמים: {approved.length}</span>
             <span className="font-bold text-red-600">מספר מקומות פנויים: {32 - approved.length}</span>
-            <span className="font-bold text-red-600">מספר בקשות לחדר יחיד: {singleRoomCount}</span>
+            <span className="font-bold text-blue-600">מספר בקשות לחדר ליחיד: {singleRoomCount}</span>
             <span className="font-bold text-purple-600">מספר בקשות למזוודה: {luggageCount}</span>
           </div>
         </div>
@@ -404,14 +459,14 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-50 to-background">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background">
       {/* Header */}
-      <div className="bg-gradient-to-r from-red-700 to-red-900 text-white py-6">
+      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-6">
         <div className="container">
           <div className="flex items-center justify-between">
             <div>
-               <h1 className="text-2xl font-bold">ממשק ניהול - סיור לארמניה</h1>
-              <p className="text-red-100 mt-1 text-sm">ניהול הרשמות - 28.6.2026 – 1.7.2026</p>
+              <h1 className="text-2xl font-bold">ממשק ניהול - סיורים בוונציה</h1>
+              <p className="text-blue-100 mt-1 text-sm">ניהול הרשמות לפי תאריכים</p>
             </div>
             <Button 
               onClick={handleLogout}
@@ -467,8 +522,11 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* Armenia June 28 - July 1 Section */}
-            {renderDateSection("28.6.2026 – 1.7.2026 | סיור לארמניה", "june_28_jul_1", june28Registrations)}
+            {/* May 4-6 Section */}
+            {renderDateSection("4-6 במאי 2026", "may_4_6", may4_6Registrations)}
+
+            {/* May 25-27 Section */}
+            {renderDateSection("25-27 במאי 2026", "may_25_27", may25_27Registrations)}
           </>
         )}
       </div>

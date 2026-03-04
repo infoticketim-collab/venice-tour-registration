@@ -1,7 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
@@ -9,41 +9,11 @@ import * as db from "./db";
 import { registrations } from "../drizzle/schema";
 import { notifyAdminNewRegistration, notifyRegistrationApproved, notifyRegistrationRejected, sendDailySummaryEmail } from "./emailNotifications";
 import { sendCustomerConfirmationEmail, sendCustomerApprovalEmail, sendCustomerRejectionEmail } from "./emailService";
-import { ENV } from "./_core/env";
-import { SignJWT, jwtVerify } from "jose";
 
-const ADMIN_COOKIE_NAME = "admin_session";
-
-// Sign a JWT for admin session
-async function signAdminToken(): Promise<string> {
-  const secret = new TextEncoder().encode(ENV.cookieSecret || "admin-secret-fallback");
-  return new SignJWT({ role: "admin" })
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime("24h")
-    .sign(secret);
-}
-
-// Verify admin JWT
-async function verifyAdminToken(token: string): Promise<boolean> {
-  try {
-    const secret = new TextEncoder().encode(ENV.cookieSecret || "admin-secret-fallback");
-    const { payload } = await jwtVerify(token, secret);
-    return payload.role === "admin";
-  } catch {
-    return false;
-  }
-}
-
-// Admin-only procedure - checks admin session cookie
-const adminProcedure = publicProcedure.use(async ({ ctx, next }) => {
-  const cookieHeader = ctx.req.headers['cookie'] || '';
-  const cookies = Object.fromEntries(
-    cookieHeader.split(';').map(c => c.trim().split('=').map(decodeURIComponent))
-  );
-  const adminToken = cookies[ADMIN_COOKIE_NAME];
-  if (!adminToken || !(await verifyAdminToken(adminToken))) {
-    throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin authentication required' });
+// Admin-only procedure
+const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
+  if (ctx.user.role !== 'admin') {
+    throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
   }
   return next({ ctx });
 });
@@ -58,28 +28,6 @@ export const appRouter = router({
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
       return { success: true } as const;
     }),
-    adminLogin: publicProcedure
-      .input(z.object({ password: z.string() }))
-      .mutation(async ({ input, ctx }) => {
-        const adminPassword = ENV.adminPassword || 'Venice2026!';
-        if (input.password !== adminPassword) {
-          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'סיסמה שגויה' });
-        }
-        // Generate JWT and set as httpOnly cookie
-        const token = await signAdminToken();
-        const cookieOptions = getSessionCookieOptions(ctx.req);
-        ctx.res.cookie(ADMIN_COOKIE_NAME, token, {
-          ...cookieOptions,
-          maxAge: 24 * 60 * 60 * 1000, // 24 hours
-        });
-        return { success: true };
-      }),
-    adminLogout: publicProcedure
-      .mutation(({ ctx }) => {
-        const cookieOptions = getSessionCookieOptions(ctx.req);
-        ctx.res.clearCookie(ADMIN_COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
-        return { success: true };
-      }),
   }),
 
   // Public tour procedures
@@ -105,8 +53,8 @@ export const appRouter = router({
       .input(z.object({
         tourId: z.number(),
         region: z.string().optional(),
-        assignedDate: z.enum(["june_28_jul_1"]).optional(),
-        datePreference: z.enum(["june_28_jul_1", "no_preference"]).optional(),
+        assignedDate: z.enum(["may_4_6", "may_25_27"]).optional(),
+        datePreference: z.enum(["may_4_6", "may_25_27", "no_preference"]).optional(),
         participant: z.object({
           firstNameHe: z.string().min(1),
           lastNameHe: z.string().min(1),
@@ -160,7 +108,8 @@ export const appRouter = router({
         const tour = await db.getTourById(input.tourId);
         if (tour) {
           const datePreferenceText = 
-            input.datePreference === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
+            input.datePreference === "may_4_6" ? "4-6 במאי 2026" :
+            input.datePreference === "may_25_27" ? "25-27 במאי 2026" :
             "אין העדפה";
           
           sendCustomerConfirmationEmail({
@@ -209,7 +158,7 @@ export const appRouter = router({
     assignDateAndApprove: adminProcedure
       .input(z.object({ 
         registrationId: z.number(),
-        assignedDate: z.enum(["june_28_jul_1"])
+        assignedDate: z.enum(["may_4_6", "may_25_27"])
       }))
       .mutation(async ({ input }) => {
         const registration = await db.getRegistrationById(input.registrationId);
@@ -242,8 +191,8 @@ export const appRouter = router({
         const tour = await db.getTourById(registration.tourId);
         if (participants[0] && tour && updated) {
           const dateText = 
-            (updated.assignedDate || updated.datePreference) === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
-            (updated.assignedDate || updated.datePreference) === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
+            (updated.assignedDate || updated.datePreference) === "may_4_6" ? "4-6 במאי 2026" :
+            (updated.assignedDate || updated.datePreference) === "may_25_27" ? "25-27 במאי 2026" :
             "תאריך יקבע בהמשך";
           
           sendCustomerApprovalEmail({
@@ -292,8 +241,8 @@ export const appRouter = router({
         const tour = await db.getTourById(registration.tourId);
         if (participants[0] && tour && updated) {
           const dateText = 
-            (updated.assignedDate || updated.datePreference) === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
-            (updated.assignedDate || updated.datePreference) === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
+            (updated.assignedDate || updated.datePreference) === "may_4_6" ? "4-6 במאי 2026" :
+            (updated.assignedDate || updated.datePreference) === "may_25_27" ? "25-27 במאי 2026" :
             "תאריך יקבע בהמשך";
           
           sendCustomerApprovalEmail({

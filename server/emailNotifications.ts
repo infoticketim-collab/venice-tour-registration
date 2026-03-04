@@ -29,10 +29,11 @@ export async function notifyAdminNewRegistration(
     }
 
     const datePreferenceText = 
-      registration.datePreference === "june_28_jul_1" ? "28.6.2026 – 1.7.2026" :
+      registration.datePreference === "may_4_6" ? "4-6 במאי" :
+      registration.datePreference === "may_25_27" ? "25-27 במאי" :
       "אין העדפה";
 
-    const title = `🎉 רישום חדש לסיור לארמניה - #${registration.orderNumber}`;
+    const title = `🎉 רישום חדש לסיור בוונציה - #${registration.orderNumber}`;
     
     const content = `
 רישום חדש התקבל למערכת!
