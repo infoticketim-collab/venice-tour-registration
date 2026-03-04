@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useAuth } from "@/_core/hooks/useAuth";
+import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,59 +35,43 @@ import {
 } from "@/components/ui/collapsible";
 import { Check, X, Loader2, Calendar, Users, ChevronDown, ChevronLeft, LogOut } from "lucide-react";
 import { toast } from "sonner";
-import { getLoginUrl } from "@/const";
 import { useLocation } from "wouter";
-import { useEffect } from "react";
 
 type DateOption = "may_4_6" | "may_25_27";
 
 export default function AdminDashboard() {
-  const { user, loading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
 
-  // Check password authentication
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("adminAuthenticated");
-    const authTime = localStorage.getItem("adminAuthTime");
-    
-    if (!isAuthenticated) {
+  const adminLogoutMutation = trpc.auth.adminLogout.useMutation({
+    onSuccess: () => {
+      toast.success("התנתקת בהצלחה");
       setLocation("/admin/login");
-      return;
-    }
-    
-    // Check if session is expired (24 hours)
-    if (authTime) {
-      const elapsed = Date.now() - parseInt(authTime);
-      const twentyFourHours = 24 * 60 * 60 * 1000;
-      if (elapsed > twentyFourHours) {
-        localStorage.removeItem("adminAuthenticated");
-        localStorage.removeItem("adminAuthTime");
-        toast.error("פג תוקף ההתחברות");
-        setLocation("/admin/login");
-      }
-    }
-  }, [setLocation]);
+    },
+  });
 
   const handleLogout = () => {
-    localStorage.removeItem("adminAuthenticated");
-    localStorage.removeItem("adminAuthTime");
-    toast.success("התנתקת בהצלחה");
-    setLocation("/admin/login");
+    adminLogoutMutation.mutate();
   };
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
   const [selectedRegistrationId, setSelectedRegistrationId] = useState<number | null>(null);
   const [selectedDates, setSelectedDates] = useState<Record<number, DateOption>>({});
   const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>({});
 
-  const { data: registrations, isLoading, refetch } = trpc.admin.getAllRegistrations.useQuery(
+  const { data: registrations, isLoading, refetch, error: registrationsError } = trpc.admin.getAllRegistrations.useQuery(
     undefined,
     { 
-      enabled: user?.role === "admin",
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       staleTime: 0,
+      retry: false,
     }
   );
+
+  useEffect(() => {
+    if (registrationsError && (registrationsError as any)?.data?.code === 'FORBIDDEN') {
+      setLocation("/admin/login");
+    }
+  }, [registrationsError, setLocation]);
 
   const utils = trpc.useUtils();
 
@@ -166,40 +149,11 @@ export default function AdminDashboard() {
     setExpandedRows(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  // Auth check
-  if (authLoading) {
+  // Show loading while fetching
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background flex items-center justify-center">
-        <Card className="max-w-md">
-          <CardHeader>
-            <CardTitle>נדרשת התחברות</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Button onClick={() => window.location.href = getLoginUrl()} className="w-full">
-              התחבר
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  if (user.role !== "admin") {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-background flex items-center justify-center">
-        <Card className="max-w-md">
-          <CardHeader>
-            <CardTitle>אין הרשאה</CardTitle>
-          </CardHeader>
-        </Card>
       </div>
     );
   }

@@ -5,36 +5,26 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
 
 export default function AdminLogin() {
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [, setLocation] = useLocation();
+
+  const adminLoginMutation = trpc.auth.adminLogin.useMutation({
+    onSuccess: () => {
+      toast.success("התחברת בהצלחה");
+      setLocation("/admin");
+    },
+    onError: () => {
+      toast.error("סיסמה שגויה");
+      setPassword("");
+    },
+  });
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      // Simple client-side password check
-      // In production, this should be verified server-side
-      const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
-      
-      if (password === adminPassword) {
-        // Store authentication in localStorage
-        localStorage.setItem("adminAuthenticated", "true");
-        localStorage.setItem("adminAuthTime", Date.now().toString());
-        toast.success("התחברת בהצלחה");
-        setLocation("/admin");
-      } else {
-        toast.error("סיסמה שגויה");
-      }
-    } catch (error) {
-      toast.error("שגיאה בהתחברות");
-    } finally {
-      setIsLoading(false);
-      setPassword("");
-    }
+    adminLoginMutation.mutate({ password });
   };
 
   return (
@@ -55,17 +45,17 @@ export default function AdminLogin() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="הזן סיסמה"
                 required
-                disabled={isLoading}
+                disabled={adminLoginMutation.isPending}
                 className="text-right"
                 dir="rtl"
               />
             </div>
-            <Button 
-              type="submit" 
-              className="w-full" 
-              disabled={isLoading}
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={adminLoginMutation.isPending}
             >
-              {isLoading ? "מתחבר..." : "התחבר"}
+              {adminLoginMutation.isPending ? "מתחבר..." : "התחבר"}
             </Button>
           </form>
         </CardContent>

@@ -1,0 +1,2 @@
+ALTER TABLE `registrations` MODIFY COLUMN `datePreference` enum('may_4_6','may_25_27','no_preference');--> statement-breakpoint
+ALTER TABLE `registrations` MODIFY COLUMN `assignedDate` enum('may_4_6','may_25_27');
