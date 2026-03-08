@@ -263,3 +263,6 @@
 ## Trip Details Content Fix
 - [x] Replace invented content with actual tour information from TourInfo page
 - [x] Copy correct flight details, hotel info, and itinerary
+
+## Bug Fix - Approval Spots Check
+- [x] Fix "Not enough available spots" error when approving registrations despite available spots

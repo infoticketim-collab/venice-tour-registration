@@ -215,17 +215,18 @@ export const appRouter = router({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Registration not found' });
         }
         
+        // Check spots per assigned date
+        if (registration.status !== "approved") {
+          const approvedCount = await db.getApprovedCountByDate(registration.tourId, input.assignedDate);
+          if (approvedCount >= 32) {
+            throw new TRPCError({ code: 'FORBIDDEN', message: 'אין מקומות פנויים בקבוצה זו' });
+          }
+        }
+        
         // Update assigned date
         const dbInstance = await db.getDb();
         if (dbInstance) {
           await dbInstance.update(registrations).set({ assignedDate: input.assignedDate }).where(eq(registrations.id, input.registrationId));
-        }
-        
-        // Decrease available spots
-        if (registration.status === "pending") {
-          await db.updateTourAvailableSpots(registration.tourId, -1);
-        } else if (registration.status === "rejected") {
-          await db.updateTourAvailableSpots(registration.tourId, -1);
         }
         
         const updated = await db.updateRegistrationStatus(input.registrationId, "approved");
@@ -269,13 +270,15 @@ export const appRouter = router({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Registration not found' });
         }
         
-        // If moving from pending to approved, decrease available spots
-        if (registration.status === "pending") {
-          await db.updateTourAvailableSpots(registration.tourId, -1);
-        }
-        // If moving from rejected to approved, decrease available spots
-        else if (registration.status === "rejected") {
-          await db.updateTourAvailableSpots(registration.tourId, -1);
+        // Check spots per date (not global availableSpots)
+        if (registration.status !== "approved") {
+          const effectiveDate = registration.assignedDate || registration.datePreference;
+          if (effectiveDate === "may_4_6" || effectiveDate === "may_25_27") {
+            const approvedCount = await db.getApprovedCountByDate(registration.tourId, effectiveDate);
+            if (approvedCount >= 32) {
+              throw new TRPCError({ code: 'FORBIDDEN', message: 'אין מקומות פנויים בקבוצה זו' });
+            }
+          }
         }
         
         const updated = await db.updateRegistrationStatus(input.registrationId, "approved");
@@ -319,10 +322,7 @@ export const appRouter = router({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Registration not found' });
         }
         
-        // If moving from approved to rejected, increase available spots
-        if (registration.status === "approved") {
-          await db.updateTourAvailableSpots(registration.tourId, 1);
-        }
+        // No need to update availableSpots - we count per date dynamically
         
         const updated = await db.updateRegistrationStatus(input.registrationId, "rejected");
         
@@ -361,8 +361,7 @@ export const appRouter = router({
           throw new TRPCError({ code: 'BAD_REQUEST', message: 'Can only cancel approved registrations' });
         }
         
-        // Increase available spots when canceling
-        await db.updateTourAvailableSpots(registration.tourId, 1);
+        // No need to update availableSpots - we count per date dynamically
         
         const updated = await db.updateRegistrationStatus(input.registrationId, "rejected");
         return { success: true, registration: updated };

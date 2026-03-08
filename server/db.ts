@@ -158,6 +158,17 @@ export async function updateTourAvailableSpots(tourId: number, delta: number): P
 
 // ============= Registration Functions =============
 
+export async function getApprovedCountByDate(tourId: number, dateKey: "may_4_6" | "may_25_27"): Promise<number> {
+  const db = await getDb();
+  if (!db) return 0;
+  const result = await db.select().from(registrations)
+    .where(and(eq(registrations.tourId, tourId), eq(registrations.status, "approved")));
+  return result.filter(r => {
+    const effectiveDate = r.assignedDate || r.datePreference;
+    return effectiveDate === dateKey;
+  }).length;
+}
+
 export async function getNextOrderNumber(): Promise<number> {
   const db = await getDb();
   if (!db) return 1000;

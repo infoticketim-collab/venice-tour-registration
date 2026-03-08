@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, title, capacity, availableSpots FROM tours;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3B86zBQzCDtZnPP.42020c08beca --database mDCqxtLbyjEfeXNALj3Bf7 --execute SELECT id, title, capacity, availableSpots FROM tours;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "סיור לימודי לצפון איטליה - מאי 2026",
+      "capacity": "32",
+      "availableSpots": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tcapacity\tavailableSpots\n1\tסיור לימודי לצפון איטליה - מאי 2026\t32\t0\n",
+  "stderr": "",
+  "execution_time_ms": 1620
+}
